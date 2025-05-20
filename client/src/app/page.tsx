@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+
 import { LogoCITi } from "../assets";
 
 export default function Home() {
