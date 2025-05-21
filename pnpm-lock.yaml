@@ -7,8 +7,11 @@ settings:
 importers:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   .: {}
 =======
+=======
+>>>>>>> e3d25f34ba630f3058c8211a3828e5aeaa643c02
   .:
     devDependencies:
       cssnano:
@@ -672,4 +675,7 @@ snapshots:
       picocolors: 1.1.1
 
   util-deprecate@1.0.2: {}
+<<<<<<< HEAD
+>>>>>>> e3d25f34ba630f3058c8211a3828e5aeaa643c02
+=======
 >>>>>>> e3d25f34ba630f3058c8211a3828e5aeaa643c02
