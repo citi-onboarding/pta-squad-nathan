@@ -158,41 +158,61 @@ function Form() {
       </div>
 
 
-<div className='flex justify-end'>
-<Dialog>
-  <Trigger asChild>
-    
-    <Button className='py-2 px-6 bg-[#50E678] text-white rounded-full transition'>
-      Finalizar Cadastro
-    </Button>
-  </Trigger>
+    <div className='flex justify-end'>
+      <Dialog>
+        <Trigger asChild>
+          <Button className='py-2 px-6 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition'>
+            Finalizar Cadastro
+          </Button>
+        </Trigger>
 
-  <Portal>
-    <Content className="fixed top-1/2 left-1/2 w-[500px] h-[400px] bg-white rounded-lg shadow-lg transform -translate-x-1/2 -translate-y-1/2 p-6">
-    <Close asChild>
+        <Content className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center p-4">
+          <div className="w-[408px] h-[423px] bg-white rounded-3xl shadow-lg p-8 relative flex flex-col items-center justify-center">
+
+            
+
+              <Close asChild>
     <button
       type="button"
       aria-label="Fechar"
       className="absolute top-12 right-12 text-black text-2xl font-bold"
     >
-      <Image className="w-189 h-74" src={closeButton} alt="Logo" />
+      <Image className="w-189 h-74" src={closeButton} alt="CloseButton" />
     </button>
   </Close>
-  <Image className="w-189 h-74" src={LeftContent} alt="Logo" />
-          <label><b>Cadastro finalizado!</b> Envie o comprovante para o <b>tutor</b></label>
-          <label className='block mb-1'>E-mail</label>
-          <input
-            type='text'
-            className='w-full p-2 border rounded'
-          />
-              <Button className='py-2 px-6 bg-[#50E678] text-white rounded-full transition'>
-      Enviar
-    </Button>
+            
+            <Image className="w-189 h-74 mb-6" src={LeftContent} alt="Logo" />
+            {/* Conteúdo do modal */}
+            <div className="text-center">
+              <h2 className="text-xl font-SF SF Pro Display mb-4">
+                <b>Cadastro finalizado!</b> Envie o
+                comprovante para o <b>tutor</b>
+              </h2>
 
-    </Content>
-  </Portal>
-</Dialog>
-  </div>
+              
+              
+              <div className="mb-6">
+                <label className="block text-left text-sm font-bold mb-1">
+                  <b>E-mail</b>
+                </label>
+                <input
+                  type="email"
+                  placeholder="Digite aqui..."
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#50E678] focus:border-transparent"
+                />
+              </div>
+
+              <Button 
+                className="w-full py-3 bg-[#50E678] hover:bg-[#40C768] text-white rounded-3xl font-SF Pro Display"
+              >
+                Enviar
+              </Button>
+            </div>
+          </div>
+        </Content>
+      </Dialog>
+    </div>
+
     </form>
   );
   
