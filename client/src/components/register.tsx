@@ -5,8 +5,8 @@ import Image from "next/image"
 import { LeftContent } from "@/assets"
 import { Buttongroups } from "@/assets"
 import { closeButton } from "@/assets"
-import { cat, cow, dog, horse, pig, pork, sheep } from "@/assets"
-import { Dialog, Trigger, Portal, Content, Close } from "@radix-ui/react-dialog"
+import { cat, cow, dog, horse, pig, sheep } from "@/assets"
+import { Dialog, Trigger, Content, Close } from "@radix-ui/react-dialog"
 import { Button } from './ui/button'
 
 
@@ -99,10 +99,15 @@ function Form() {
 
       <div className='flex gap-16'>
         <div className='flex-1'>
-          <label className='block mb-40'>Qual é a espécie do paciente?</label>
-          <input
-            type=''
-          />
+          <label className='block mb-10'>Qual é a espécie do paciente?</label>
+          <div className='flex'>
+<Image className="w-[100px] h-[100px] m-10" src={sheep} alt="Sheep" />
+        <Image className="w-[98.37px] h-[99.66px] m-10" src={cat} alt="Cat" />  
+        <Image className="w-[100px] h-[100px] m-10" src={pig} alt="Pig" />
+        <Image className="w-[100px] h-[100px] m-10" src={cow} alt="Cow" />
+        <Image className="w-[100px] h-[100px] m-10" src={horse} alt="Horse" />
+        <Image className="w-[82px] h-[99px] m-10" src={dog} alt="Dog" />
+        </div>
         </div>
       </div>
 
@@ -184,7 +189,7 @@ function Form() {
             <Image className="w-189 h-74 mb-6" src={LeftContent} alt="Logo" />
             {/* Conteúdo do modal */}
             <div className="text-center">
-              <h2 className="text-xl font-SF SF Pro Display mb-4">
+              <h2 className="text-xl font-SF Pro Display m-2 scale-90">
                 <b>Cadastro finalizado!</b> Envie o
                 comprovante para o <b>tutor</b>
               </h2>
@@ -192,7 +197,7 @@ function Form() {
               
               
               <div className="mb-6">
-                <label className="block text-left text-sm font-bold mb-1">
+                <label className="block text-left text-sm font-bold mb-2">
                   <b>E-mail</b>
                 </label>
                 <input

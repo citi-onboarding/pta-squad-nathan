@@ -76,3 +76,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('/fonts/SF-Pro-Display.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
