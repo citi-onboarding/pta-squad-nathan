@@ -156,12 +156,15 @@ function Form() {
       </div>
 
 
+<div className='flex justify-end'>
 <Dialog.Root>
   <Dialog.Trigger asChild>
-    <Button className='w-4 h-4 mr-2'>
-      Teste
+    
+    <Button className='py-2 px-6 bg-[#50E678] text-white rounded-full transition'>
+      Finalizar Cadastro
     </Button>
   </Dialog.Trigger>
+
   <Dialog.Portal>
     <Dialog.Content
       style={{
@@ -181,18 +184,30 @@ function Form() {
     justifyContent: 'center'
   }}
 >
+    <Dialog.Close asChild>
+    <button
+      type="button"
+      aria-label="Fechar"
+      className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
+    >
+      x
+    </button>
+  </Dialog.Close>
   <Image className="w-189 h-74" src={LeftContent} alt="Logo" />
-
+          <label><b>Cadastro finalizado!</b> Envie o comprovante para o <b>tutor</b></label>
           <label className='block mb-1'>E-mail</label>
           <input
             type='text'
             className='w-full p-2 border rounded'
           />
+              <Button className='py-2 px-6 bg-[#50E678] text-white rounded-full transition'>
+      Enviar
+    </Button>
 
     </Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>
-
+  </div>
     </form>
   );
   
