@@ -1,8 +1,56 @@
-'use client';
+'use client'
 
-import {useState} from 'react';
+import { useState } from 'react';
+import Image from "next/image";
+import { LeftContent } from "@/assets";
+import { Buttongroups } from "@/assets"
+
 
 export default function Register() {
+  return (
+    <div className="register">
+      <Header/>
+      <Form/>
+    </div>
+  );
+}
+
+
+function Header() {
+  const [active, setActive] = useState("atendimento");
+  return (
+    <>
+      <div className="gap-x-3 pb-[20px] pt-[20px] flex h-[114px] flex-row relative items-center bg-white">
+        <Image className="pl-8 w-[200px] h-[74px]" src={LeftContent} alt="Logo" />
+        
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-[42px] w-[196px] gap-x-[48px] flex-row justify-start items-center">
+          <div className="flex flex-col items-center cursor-pointer" onClick={() => setActive("atendimento")}>
+            <h2>Atendimento</h2>
+            {active === "atendimento" && (
+              <div className="w-full h-1 bg-green-500 rounded" />
+            )}
+          </div>
+
+          <div className="flex flex-col items-center cursor pointer" onClick={() => setActive("cadastro")}>
+            <h2>Cadastro</h2>
+            {active === "cadastro" && (
+              <div className="w-full h-1 bg-green-500 rounded" />
+            )}
+          </div>
+        </div>
+
+        <div className="ml-auto pr-8">
+          <Image className="w-[220px] h-[24px] gap-x-[8px]" src={Buttongroups} alt="Logo" />
+        </div>
+      </div>
+
+      <div className="w-full h-[2px] bg-gray-200"></div>
+    </>
+  );
+}
+
+
+function Form() {
   const [nomePaciente, setNomePaciente] = useState('');
   const [nomeTutor, setNomeTutor] = useState('');
   const [especiePaciente, setEspeciePaciente] = useState('');
@@ -12,7 +60,6 @@ export default function Register() {
   const [dataAtendimento, setDataAtendimento] = useState('');
   const [horarioAtendimento, setHorarioAtendimento] = useState('');
   const [descricaoProblema, setDescricaoProblema] = useState('');
-
 
   const handleSubmit = (e: React.FormEvent) => {
     console.log('Nome do Paciente', nomePaciente);
@@ -46,79 +93,74 @@ export default function Register() {
         </div>
       </div>
 
-
       <div className='flex gap-16'>
         <div className='flex-1'>
-          <label className='block mb-60'>Qual é a espécie do paciente?</label>
+          <label className='block mb-40'>Qual é a espécie do paciente?</label>
+          <input
+            type=''
+          />
         </div>
       </div>
 
+      <div className='flex gap-16'>
+        <div className='flex-1'>
+          <label className='block mb-1'>Idade do Paciente</label>
+          <input
+            type='number'
+            className='w-full p-2 border rounded'
+          />
+        </div>
 
-    <div className='flex gap-16'>
-      <div className='flex-1'>
-        <label className='block mb-1'>Idade do Paciente</label>
-        <input
-        type='number'
-        className='w-full p-2 border rounded'
-        />
+        <div className='flex-1'>
+          <label className='block mb-1'>Tipo de consulta</label>
+          <input
+            type='text'
+            className='w-full p-2 border rounded'
+          />
+        </div>
       </div>
 
-      <div className='flex-1'>
-        <label className='block mb-1'>Tipo de consulta</label>
-        <input
-        type='text'
-        className='w-full p-2 border rounded'
-        />
+      <div className='flex gap-16'>
+        <div className='flex-1'>
+          <label className='block mb-1'>Médico Responsável</label>
+          <input
+            type='text'
+            className='w-full p-2 border rounded'
+          />
+        </div>
+
+        <div className='flex-1'>
+          <label className='block mb-1'>Data do atendimento</label>
+          <input
+            type='date'
+            className='w-full p-2 border rounded'
+          />
+        </div>
+
+        <div className='flex-1'>
+          <label className='block mb-1'>Horário do atendimento</label>
+          <input
+            type='time'
+            className='w-full p-2 border rounded'
+          />
+        </div>
       </div>
-    </div>
 
-
-    <div className='flex gap-16'>
-      <div className='flex-1'>
-        <label className='block mb-1'>Médico Responsável</label>
-        <input
-        type='text'
-        className='w-full p-2 border rounded'
-        />
+      <div className='flex gap-16'>
+        <div className='flex-1'>
+          <label className='block mb-1'>Descrição do Problema</label>
+          <input type="text" className="w-full p-10 border rounded" />
+        </div>
       </div>
 
-      <div className='flex-1'>
-        <label className='block mb-1'>Data do atendimento</label>
-        <input
-        type='date'
-        className='w-full p-2 border rounded'
-        />
+    <div className="flex justify-end">
+      <button
+        type="submit"
+        className="py-2 px-6 bg-green-500 hover:bg-green-600 text-white rounded-full transition">
+        Finalizar Cadastro
+      </button>
       </div>
-
-      <div className='flex-1'>
-        <label className='block mb-1'>Horário do atendimento</label>
-        <input
-        type='time'
-        className='w-full p-2 border rounded'
-        />
-      </div>
-    </div>
-
-
-    <div className='flex gap-16'>
-      <div className='flex-1'>
-        <label className='block mb-1'>Descrição do Problema</label>
-        <input
-        type='text'
-        className='w-full p-10 border rounded'
-        />
-      </div>
-    </div>
-
-
-    <button
-      type="submit"
-      className="w-80 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full transition float-left">
-      Finalizar Cadastro
-    </button>
-
-  </form>
-
+    </form>
   );
-
+  
 }
