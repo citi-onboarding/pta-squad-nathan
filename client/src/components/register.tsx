@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Image from "next/image";
 import { LeftContent } from "@/assets";
 import { Buttongroups } from "@/assets"
+import * as Dialog from "@radix-ui/react-dialog";
+import { Button } from './ui/button';
 
 
 export default function Register() {
@@ -31,7 +33,7 @@ function Header() {
             )}
           </div>
 
-          <div className="flex flex-col items-center cursor pointer" onClick={() => setActive("cadastro")}>
+          <div className="flex flex-col items-center cursor-pointer" onClick={() => setActive("cadastro")}>
             <h2>Cadastro</h2>
             {active === "cadastro" && (
               <div className="w-full h-1 bg-green-500 rounded" />
@@ -153,13 +155,44 @@ function Form() {
         </div>
       </div>
 
-    <div className="flex justify-end">
-      <button
-        type="submit"
-        className="py-2 px-6 bg-green-500 hover:bg-green-600 text-white rounded-full transition">
-        Finalizar Cadastro
-      </button>
-      </div>
+
+<Dialog.Root>
+  <Dialog.Trigger asChild>
+    <Button className='w-4 h-4 mr-2'>
+      Teste
+    </Button>
+  </Dialog.Trigger>
+  <Dialog.Portal>
+    <Dialog.Content
+      style={{
+    background: '#FFFFFF',
+    padding: 24,
+    borderRadius: 8,
+    boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+    width: 408,
+    height: 423,
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }}
+>
+  <Image className="w-189 h-74" src={LeftContent} alt="Logo" />
+
+          <label className='block mb-1'>E-mail</label>
+          <input
+            type='text'
+            className='w-full p-2 border rounded'
+          />
+
+    </Dialog.Content>
+  </Dialog.Portal>
+</Dialog.Root>
+
     </form>
   );
   
