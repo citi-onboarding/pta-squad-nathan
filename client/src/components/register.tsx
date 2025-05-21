@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react';
-import Image from "next/image";
-import { LeftContent } from "@/assets";
+import { useState } from 'react'
+import Image from "next/image"
+import { LeftContent } from "@/assets"
 import { Buttongroups } from "@/assets"
-import * as Dialog from "@radix-ui/react-dialog";
-import { Button } from './ui/button';
+import { closeButton } from "@/assets"
+import { cat, cow, dog, horse, pig, pork, sheep } from "@/assets"
+import { Dialog, Trigger, Portal, Content, Close } from "@radix-ui/react-dialog"
+import { Button } from './ui/button'
 
 
 export default function Register() {
@@ -157,42 +159,25 @@ function Form() {
 
 
 <div className='flex justify-end'>
-<Dialog.Root>
-  <Dialog.Trigger asChild>
+<Dialog>
+  <Trigger asChild>
     
     <Button className='py-2 px-6 bg-[#50E678] text-white rounded-full transition'>
       Finalizar Cadastro
     </Button>
-  </Dialog.Trigger>
+  </Trigger>
 
-  <Dialog.Portal>
-    <Dialog.Content
-      style={{
-    background: '#FFFFFF',
-    padding: 24,
-    borderRadius: 8,
-    boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
-    width: 408,
-    height: 423,
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }}
->
-    <Dialog.Close asChild>
+  <Portal>
+    <Content className="fixed top-1/2 left-1/2 w-[500px] h-[400px] bg-white rounded-lg shadow-lg transform -translate-x-1/2 -translate-y-1/2 p-6">
+    <Close asChild>
     <button
       type="button"
       aria-label="Fechar"
-      className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
+      className="absolute top-12 right-12 text-black text-2xl font-bold"
     >
-      x
+      <Image className="w-189 h-74" src={closeButton} alt="Logo" />
     </button>
-  </Dialog.Close>
+  </Close>
   <Image className="w-189 h-74" src={LeftContent} alt="Logo" />
           <label><b>Cadastro finalizado!</b> Envie o comprovante para o <b>tutor</b></label>
           <label className='block mb-1'>E-mail</label>
@@ -204,9 +189,9 @@ function Form() {
       Enviar
     </Button>
 
-    </Dialog.Content>
-  </Dialog.Portal>
-</Dialog.Root>
+    </Content>
+  </Portal>
+</Dialog>
   </div>
     </form>
   );
