@@ -8,6 +8,13 @@ import { ok } from "@/assets"
 import ConsultCard from "@/components/ConsultCard"
 
 export default function details() {
+   const consults = [
+    { date: "18/02", time: "13:00", title: "Primeira consulta", doctor: "Dr. José Carlos" },
+    { date: "20/03", time: "13:00", title: "Primeira consulta", doctor: "Dr. José Carlos" },
+    { date: "15/04", time: "14:00", title: "Primeira consulta", doctor: "Dr. José Carlos" },
+    { date: "20/05", time: "10:00", title: "Primeira consulta", doctor: "Dr. José Carlos" },
+  ];
+
   
   return (
     <>
@@ -89,10 +96,16 @@ export default function details() {
 
             {/* Carde de consulta */}
 
-            <ConsultCard date="18/02" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
-            <ConsultCard date="20/03" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
-            <ConsultCard date="15/04" time="14:00" title="Primeira consulta" doctor="Dr. José Carlos" />
-            <ConsultCard date="20/03" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
+           {consults.map((consult, index) => (
+              <ConsultCard
+                key={index}
+                date={consult.date}
+                time={consult.time}
+                title={consult.title}
+                doctor={consult.doctor}
+              />
+            ))}
+            
 
 
 
