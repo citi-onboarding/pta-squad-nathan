@@ -1,20 +1,91 @@
-import Image from "next/image";
+import { useState } from 'react';
+import CustomButton from "@/components/ui/customButton";
+import Header from "@/components/ui/header";
+import Textblock from "@/components/ui/textBlock";
 
-import { LogoCITi } from "../assets";
 
 export default function Home() {
+
   return (
-    <div className="flex flex-1 flex-col h-full justify-around items-center bg-black">
-      <div>
-        <Image src={LogoCITi} alt="Logo citi" />
+
+    <div className="w-[1920px] h-[1080px]">
+      <Header />
+
+      <div className="flex items-center gap-4 ml-[194px] mt-[48px]">
+        <h2 className="text-[48px] ml-[10.5px]">Atendimento</h2>
       </div>
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="text-white text-4xl font-bold">NextJS Boilerplate</h1>
-        <p className="text-white text-xl">
-          Made with <strong>&lt; &#x0002F; &gt;</strong> and{" "}
-          <strong>&hearts;</strong> by CITi
-        </p>
+
+      <div className="ml-[194px] mt-[32px]">
+        <p className="text-[24px]">Qual é o médico?</p>
+
+        <div className="flex items-center gap-6 mt-[26px]">
+          <input
+            placeholder="Pesquise aqui..."
+            type="text"
+            className="border-black w-[520px] h-[50px] border rounded-[8px] placeholder-[#D9D9D9] text-[16px] font-normal leading-[110%] tracking-[0%] pl-4"
+          />
+          <CustomButton 
+            text="Buscar"
+            className="text-white bg-[#7D1AD7] hover:bg-[#690EB8] w-[116px] h-[42px] rounded-[24px] font-bold shadow-md"
+          />
+        </div>
       </div>
+
+      <div className="flex flex-wrap gap-6 ml-[194px] mt-[130px]">
+        <Textblock
+          nomeMedico="Dr. José Carlos"
+          nomePet="Luna"
+          nomeDono="João Alves"
+          data="18/02"
+          horario="13:00"
+          categoriaConsulta="Primeira Consulta"
+        />
+        <Textblock
+          nomeMedico="Dr. José Carlos"
+          nomePet="Luna"
+          nomeDono="João Alves"
+          data="18/02"
+          horario="13:00"
+          categoriaConsulta="Primeira Consulta"
+        />
+        <Textblock
+          nomeMedico="Dr. José Carlos"
+          nomePet="Luna"
+          nomeDono="João Alves"
+          data="18/02"
+          horario="13:00"
+          categoriaConsulta="Primeira Consulta"
+        />
+        <Textblock
+          nomeMedico="Dr. José Carlos"
+          nomePet="Luna"
+          nomeDono="João Alves"
+          data="18/02"
+          horario="13:00"
+          categoriaConsulta="Primeira Consulta"
+        />
+        <Textblock
+          nomeMedico="Dr. José Carlos"
+          nomePet="Luna"
+          nomeDono="João Alves"
+          data="18/02"
+          horario="13:00"
+          categoriaConsulta="Primeira Consulta"
+        />
+        <Textblock
+          nomeMedico="Dr. José Carlos"
+          nomePet="Luna"
+          nomeDono="João Alves"
+          data="18/02"
+          horario="13:00"
+          categoriaConsulta="Primeira Consulta"
+        />
+      </div>
+
+      <CustomButton 
+        text="⊕ Nova Consulta" 
+        className="text-white bg-[#50E678] hover:bg-[#3CBF62] w-[205px] h-[48px] rounded-[24px] font-bold shadow-md mt-[185px] ml-[1521px]"
+      />
     </div>
   );
 }
