@@ -8,5 +8,6 @@ import dog from "./dog.png"
 import horse from "./horse.png"
 import pig from "./pig.png"
 import sheep from "./sheep.png"
+import arrowBack from "./arrowBack.svg"
 
-export { LogoCITi, LeftContent, Buttongroups, closeButton, cat, cow, dog, horse, pig, sheep };
+export { LogoCITi, LeftContent, Buttongroups, closeButton, cat, cow, dog, horse, pig, sheep, arrowBack };

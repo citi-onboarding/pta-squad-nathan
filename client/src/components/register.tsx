@@ -6,7 +6,7 @@ import Image from "next/image"
 import { LeftContent } from "@/assets"
 import { Buttongroups } from "@/assets"
 import { closeButton } from "@/assets"
-import { cat, cow, dog, horse, pig, sheep } from "@/assets"
+import { cat, cow, dog, horse, pig, sheep, arrowBack } from "@/assets"
 import { Button } from "./ui/button"
 import { Dialog, Trigger, Content, Close } from "@radix-ui/react-dialog"
 
@@ -60,7 +60,7 @@ function Header() {
 function Form() {
   const [nomePaciente, setNomePaciente] = useState("")
   const [nomeTutor, setNomeTutor] = useState("")
-  const [especiePaciente, setEspeciePaciente] = useState("")
+  const [especieSelecionada, setEspecieSelecionada] = useState<string | null>(null)
   const [idadePaciente, setIdadePaciente] = useState("")
   const [tipoConsulta, setTipoConsulta] = useState("")
   const [medicoResponsavel, setMedicoResponsavel] = useState("")
@@ -72,7 +72,7 @@ function Form() {
   const handleSubmit = (e: React.FormEvent) => {
     console.log("Nome do Paciente", nomePaciente);
     console.log("Nome do Tutor", nomeTutor);
-    console.log("Qual é a espécie do paciente?", especiePaciente);
+    console.log("Qual é a espécie do paciente?", especieSelecionada);
     console.log("Idade do Paciente", idadePaciente);
     console.log("Tipo de consulta", tipoConsulta);
     console.log("Médico Responsável", medicoResponsavel);
@@ -81,90 +81,147 @@ function Form() {
     console.log("Descrição do Problema", descricaoProblema);
   };
 
+    // Função para lidar com a seleção da espécie
+    const handleSelecionarEspecie = (especie: string) => {
+      if (especieSelecionada === especie) {
+    setEspecieSelecionada(null);
+  } else {
+    setEspecieSelecionada(especie);
+  }
+  };
+
   // Função para lidar com a mudança de valor dos campos do formulário
   return (
     <form onSubmit={handleSubmit} className="max-w-1xl mx-auto space-y-4 p-6">
-  
-      <div className="flex gap-16">
-        <div className="flex-1">
-          <label className="block mb-1">Nome do Paciente</label>
-          <input
-            type="text"
-            className="w-full p-2 border rounded"
-          />
-        </div>
 
-        <div className="flex-1">
-          <label className="block mb-1">Nome do Tutor</label>
-          <input
-            type="text"
-            className="w-full p-2 border rounded"
-          />
-        </div>
+      <div className="flex">
+        <Image className="w-[15.7px] h-[26.67px]" src={arrowBack} alt="arrowBack"/>
+        <label className="text-5xl font-bold ml-6"> Cadastro</label>
       </div>
 
       <div className="flex gap-16">
         <div className="flex-1">
-          <label className="block mb-4">Qual é a espécie do paciente?</label>
-          <div className="flex">
-            <Image className="w-[100px] h-[100px] m-10" src={sheep} alt="Sheep"/>
-            <Image className="w-[98.37px] h-[99.66px] m-10" src={cat} alt="Cat"/>  
-            <Image className="w-[100px] h-[100px] m-10" src={pig} alt="Pig"/>
-            <Image className="w-[100px] h-[100px] m-10" src={cow} alt="Cow"/>
-            <Image className="w-[100px] h-[100px] m-10" src={horse} alt="Horse"/>
-            <Image className="w-[82px] h-[99px] m-10" src={dog} alt="Dog"/>
-          </div>
+          <label className="block mb-1 font-sf">Nome do Paciente</label>
+          <input
+            type="text"
+            className="w-full p-2 border rounded border-black"
+          />
+        </div>
+
+        <div className="flex-1">
+          <label className="block mb-1 font-sf">Nome do Tutor</label>
+          <input
+            type="text"
+            className="w-full p-2 border rounded border-black"
+          />
         </div>
       </div>
 
+      <div className="flex gap-14">
+  <div
+    className={`m-4 p-2 rounded-lg cursor-pointer ${
+      especieSelecionada === "sheep" ? "bg-[#D9D9D9]" : ""
+    }`}
+    onClick={() => handleSelecionarEspecie("sheep")}
+  >
+    <Image className="w-[100px] h-[100px]" src={sheep} alt="Sheep" />
+  </div>
+
+  <div
+    className={`m-4 p-2 rounded-lg cursor-pointer ${
+      especieSelecionada === "cat" ? "bg-[#D9D9D9]" : ""
+    }`}
+    onClick={() => handleSelecionarEspecie("cat")}
+  >
+    <Image className="w-[98.37px] h-[99.66px]" src={cat} alt="Cat" />
+  </div>
+
+  <div
+    className={`m-4 p-2 rounded-lg cursor-pointer ${
+      especieSelecionada === "pig" ? "bg-[#D9D9D9]" : ""
+    }`}
+    onClick={() => handleSelecionarEspecie("pig")}
+  >
+    <Image className="w-[100px] h-[100px]" src={pig} alt="Pig" />
+  </div>
+
+  <div
+    className={`m-4 p-2 rounded-lg cursor-pointer ${
+      especieSelecionada === "cow" ? "bg-[#D9D9D9]" : ""
+    }`}
+    onClick={() => handleSelecionarEspecie("cow")}
+  >
+    <Image className="w-[100px] h-[100px]" src={cow} alt="Cow" />
+  </div>
+
+  <div
+    className={`m-4 p-2 rounded-lg cursor-pointer ${
+      especieSelecionada === "horse" ? "bg-[#D9D9D9]" : ""
+    }`}
+    onClick={() => handleSelecionarEspecie("horse")}
+  >
+    <Image className="w-[100px] h-[100px]" src={horse} alt="Horse" />
+  </div>
+
+  <div
+    className={`m-4 p-4 rounded-lg cursor-pointer ${
+      especieSelecionada === "dog" ? "bg-[#D9D9D9]" : ""
+    }`}
+    onClick={() => handleSelecionarEspecie("dog")}
+  >
+    <Image className="w-[82px] h-[99px]" src={dog} alt="Dog" />
+  </div>
+</div>
+
+
       <div className="flex gap-16">
         <div className="flex-1">
-          <label className="block mb-1">Idade do Paciente</label>
+          <label className="block mb-1 font-sf">Idade do Paciente</label>
           <input
             type="number"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded border-black"
           />
         </div>
 
         <div className="flex-1">
-          <label className="block mb-1">Tipo de consulta</label>
+          <label className="block mb-1 font-sf">Tipo de consulta</label>
           <input
             type="text"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded border-black"
           />
         </div>
       </div>
 
       <div className="flex gap-16">
         <div className="flex-1">
-          <label className="block mb-1">Médico Responsável</label>
+          <label className="block mb-1 font-sf">Médico Responsável</label>
           <input
             type="text"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded border-black"
           />
         </div>
 
         <div className="flex-1">
-          <label className="block mb-1">Data do atendimento</label>
+          <label className="block mb-1 font-sf">Data do atendimento</label>
           <input
             type="date"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded border-black"
           />
         </div>
 
         <div className="flex-1">
-          <label className="block mb-1">Horário do atendimento</label>
+          <label className="block mb-1 font-sf">Horário do atendimento</label>
           <input
             type="time"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded border-black"
           />
         </div>
       </div>
 
       <div className="flex gap-16">
         <div className="flex-1">
-          <label className="block mb-1">Descrição do Problema</label>
-          <input type="text" className="w-full p-10 border rounded" />
+          <label className="block mb-1 font-sf">Descrição do Problema</label>
+          <input type="text" className="w-full p-10 border rounded border-black"/>
         </div>
       </div>
 
@@ -191,7 +248,7 @@ function Form() {
             <Image className="w-189 h-74 mb-6" src={LeftContent} alt="Logo" />
             
             <div className="text-center">
-              <h2 className="text-xl font-SF Pro Display m-2 scale-90">
+              <h2 className="text-xl font-sf m-2 scale-90">
                 <b>Cadastro finalizado!</b> Envie o comprovante para o <b>tutor</b>
               </h2>
               
@@ -202,7 +259,7 @@ function Form() {
                 <input
                   type="email"
                   placeholder="Digite aqui..."
-                  className="w-full p-3 border border-black rounded-lg focus:ring-2 focus:ring-[#50E678] focus:border-transparent"
+                  className="w-full p-3 border-black rounded-lg focus:ring-2 focus:ring-[#50E678] focus:border-transparent"
                 />
               </div>
               
