@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import CustomButton from "@/components/ui/customButton";
-import Header from "@/components/ui/header";
+import Header from "@/components/ui/Header";
 import Textblock from "@/components/ui/textBlock";
+import { Cross } from "@/assets";
 
 
 export default function Home() {
@@ -83,7 +84,8 @@ export default function Home() {
       </div>
 
       <CustomButton 
-        text="⊕ Nova Consulta" 
+        text="Nova Consulta"
+        icon={ Cross }
         className="text-white bg-[#50E678] hover:bg-[#3CBF62] w-[205px] h-[48px] rounded-[24px] font-bold shadow-md mt-[185px] ml-[1521px]"
       />
     </div>
