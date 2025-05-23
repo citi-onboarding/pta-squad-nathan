@@ -14,7 +14,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, className = "", icon 
     >
       {icon && (
         <Image
-          src={icon} alt="Ícone Botão" className="w-[20px] h-[20px] mr-[12px] filter invert" />
+          src={ icon } alt="Ícone Botão" className="w-[20px] h-[20px] mr-[12px]" />
       )}
       {text}
     </button>

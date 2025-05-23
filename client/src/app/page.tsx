@@ -1,8 +1,11 @@
+"use client";
+
 import { useState } from 'react';
 import CustomButton from "@/components/ui/customButton";
 import Header from "@/components/ui/Header";
 import Textblock from "@/components/ui/textBlock";
 import { Cross } from "@/assets";
+import Switch from '@/components/ui/switch';
 
 
 export default function Home() {
@@ -32,7 +35,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-6 ml-[194px] mt-[130px]">
+      <div className='mt-[40px]'>
+        <span className='ml-[194px] inline-block'><Switch primeiro='Histórico' segundo='Agendamento'/></span>
+      </div>
+
+      <div className="flex flex-wrap gap-6 ml-[194px] mt-[32px]">
         <Textblock
           nomeMedico="Dr. José Carlos"
           nomePet="Luna"
