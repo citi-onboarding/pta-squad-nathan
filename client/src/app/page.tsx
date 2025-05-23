@@ -6,6 +6,7 @@ import Header from "@/components/ui/Header";
 import Textblock from "@/components/ui/textBlock";
 import { Cross } from "@/assets";
 import Switch from '@/components/ui/switch';
+import Calendar from '@/components/ui/calendarBox'
 
 
 export default function Home() {
@@ -35,8 +36,10 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='mt-[40px]'>
+      <div className='mt-[40px] flex'>
         <span className='ml-[194px] inline-block'><Switch primeiro='Histórico' segundo='Agendamento'/></span>
+        <Calendar text='dd/mm/aa' className='ml-[1021px]'/>
+        <Calendar text='dd/mm/aa' className='ml-[16px]'/>
       </div>
 
       <div className="flex flex-wrap gap-6 ml-[194px] mt-[32px]">

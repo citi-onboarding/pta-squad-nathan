@@ -5,5 +5,6 @@ import Arrow from "./arrow.svg";
 import LeftContent from "./LeftContent.png";
 import Buttongroups from "./Buttongroups.png";
 import Cross from "./Cross.svg";
+import Calendar_icon from "./calendar.svg"
 
-export { Cat, Alarm, Vector, Arrow, LeftContent, Buttongroups, Cross };
+export { Cat, Alarm, Vector, Arrow, LeftContent, Buttongroups, Cross, Calendar_icon };

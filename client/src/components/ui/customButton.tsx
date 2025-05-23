@@ -4,7 +4,7 @@ import React from "react";
 interface CustomButtonProps {
   text: string;
   className?: string;
-  icon?: StaticImageData; // Agora o tipo é StaticImageData.
+  icon?: StaticImageData;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({ text, className = "", icon }) => {
