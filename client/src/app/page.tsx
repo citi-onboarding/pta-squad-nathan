@@ -38,8 +38,8 @@ export default function Home() {
 
       <div className='mt-[40px] flex'>
         <span className='ml-[194px] inline-block'><Switch primeiro='Histórico' segundo='Agendamento'/></span>
-        <Calendar text='dd/mm/aa' className='ml-[1021px]'/>
-        <Calendar text='dd/mm/aa' className='ml-[16px]'/>
+        <Calendar text='dd/mm/aa' className='ml-[1021px]' popUpPosition='absolute bottom-[70px] right-[120px]'/>
+        <Calendar text='dd/mm/aa' className='ml-[16px]' popUpPosition='absolute bottom-[70px] right-[5px]'/>
       </div>
 
       <div className="flex flex-wrap gap-6 ml-[194px] mt-[32px]">

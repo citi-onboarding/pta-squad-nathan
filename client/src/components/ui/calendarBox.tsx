@@ -1,19 +1,48 @@
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
-import React from "react";
-import { Calendar_icon } from '@/assets';
+import { Calendar_icon } from "@/assets";
+import ReactCalendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
-interface CustomButtonProps {
+interface CalendarBoxProps {
   text: string;
   className?: string;
-};
-
-const Calendar: React.FC<CustomButtonProps> = ({ text, className = "" }) => {
-  return (
-    <div className={`w-[126px] h-[56px] flex items-center justify-between border border-[##D9D9D9] rounded-[8px] bg-[#FFFFFF] pr-2  ${className}`} >
-        <span className="pl-2">{text}</span>
-        <Image src={ Calendar_icon } alt="Ícone Calendário" className="w-[28px] h-[20px]" />
-    </div>
-  );
+  popUpPosition?: string;
 }
 
-export default Calendar;
+const CalendarBox: React.FC<CalendarBoxProps> = ({ 
+  text, 
+  className = "",
+  popUpPosition = "absolute top-full left-0 mt-2" // valor padrão
+}) => {
+  const [open, setOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+  const toggleCalendar = () => {
+    setOpen((prev) => !prev);
+  };
+
+  return (
+    <div className="relative">
+      <div 
+        onClick={toggleCalendar} 
+        className={`w-[126px] h-[56px] flex items-center justify-between border border-[#D9D9D9] rounded-[8px] bg-[#FFFFFF] pr-2 cursor-pointer ${className}`}
+      >
+        <span className="pl-2">{text}</span>
+        <Image 
+          src={Calendar_icon} 
+          alt="Ícone Calendário" 
+          className="w-[28px] h-[20px]" 
+        />
+      </div>
+      {open && (
+        <div className={`${popUpPosition} z-50 bg-white shadow-md p-4`}>
+          <ReactCalendar value={selectedDate} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CalendarBox;
