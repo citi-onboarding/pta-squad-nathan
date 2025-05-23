@@ -12,7 +12,7 @@ export default function Header() {
   const [active, setActive] = useState("atendimento");
   return (
     <>
-    <div className=" gap-x-3 pb-[20px] pt-[20px] flex h-[114px]  flex-row  relative items-center bg-[#D9D9D9]">
+    <div className=" gap-x-3 pb-[20px] pt-[20px] flex h-[114px]  flex-row  relative items-center bg-[#FFFFFF]">
      
       <Image className="pl-8 ml-[10px] w-[220px] h-[74px]" src={LeftContent} alt="Logo" />
       
@@ -40,7 +40,7 @@ export default function Header() {
 
       </div>
 
-      <div className="w-full h-[2px] bg-gray-200"></div>
+      <div className="w-full h-[2px] bg-[#D9D9D9]"></div>
       </>
       
     
