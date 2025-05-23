@@ -6,6 +6,8 @@ import cat6 from "./cat6.png"
 import ok from "./ok.png"
 import setinha from "./setinha_back.png"
 import close from "./close.png"
+import setinhaa from "./setinhaa.png"
+import calendar from "./calendar.png"
 
-export { LogoCITi, LeftContent, Buttongroups, arrow, cat6, ok, setinha, close }; 
+export { LogoCITi, LeftContent, Buttongroups, arrow, cat6, ok, setinha, close, setinhaa, calendar }; 
 
