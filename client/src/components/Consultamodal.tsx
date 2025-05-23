@@ -3,9 +3,10 @@ import { LeftContent, close, calendar, setinhaa } from "@/assets"
 import Image from "next/image"
 import { Button } from "./ui/button"
 import { useRef } from "react"
+import { useState } from "react"
 
 
-export default function ConsultaModal() {
+export default function ConsultaModal({ isOpen, setModalOpen } : { isOpen: boolean; setModalOpen: (value: boolean) => void }) {
     const inputRef = useRef<HTMLInputElement>(null);
 
   const abrirCalendario = () => {
@@ -14,8 +15,12 @@ export default function ConsultaModal() {
     
     } 
   };
-    return (
-        <div className="flex flex-col items-center justify-center h-screen bg-black">
+   
+  if (!isOpen) return null;
+    return ( <div className="flex flex-col items-center justify-center h-screen fixed transition-opacity z-50 inset-0 bg-[rgb(0, 0, 0, 0.7)] backdrop-blur-3x1 bg-black/90 "> 
+    
+
+
             <div className="bg-white relative rounded-[24px] shadow-lg pt-10 pb-10 px-6 w-[824px] h-[493px]">
 
                 {/* LOGO + BOTÃO DE FECHAR + TEXTO */}
@@ -24,7 +29,7 @@ export default function ConsultaModal() {
                     <Image className="w-[182px] h-[74px]" src={LeftContent} alt="Logo" />
 
 
-                    <Image className="absolute right-0 top-0 w-[24px] h-[24px] cursor-pointer" src={close} alt="Fechar" />
+                    <Image onClick={() => setModalOpen(false) } className="absolute right-0 top-0 w-[24px] h-[24px] cursor-pointer" src={close} alt="Fechar" />
 
 
                     <p className="pt-[25px] text-center text-[16px]">
@@ -103,5 +108,8 @@ export default function ConsultaModal() {
                 </div>
             </div>
         </div>
+    
     )
 }
+
+

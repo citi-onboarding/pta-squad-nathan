@@ -6,16 +6,20 @@ import { arrow } from "@/assets"
 import { cat6 } from "@/assets"
 import { ok } from "@/assets"
 import ConsultCard from "@/components/ConsultCard"
+import ConsultaModal from "@/components/Consultamodal"
+import { useState } from "react"
 
 export default function details() {
+  const[openmodal, setOpenModal] = useState(false)
   
   return (
     <>
       <Header />
+      <ConsultaModal isOpen={openmodal} setModalOpen={() => setOpenModal (!openmodal)}/>
       <div className="flex flex-row h-full w-full justify-around  bg-[#FFFFFF] text-black mt-14">
 
         {/* COMEÇO LADO ESQUERDO */}
-        <div className="flex-1 flex flex-col ml-[200px]">
+        <div className="flex-1 flex flex-col ml-[200px]"> 
 
           {/* detalhes da consulta */}
           <div className="flex flex-row items-baseline w-[576px] h-[53px] mr-[50px]">
@@ -65,7 +69,7 @@ export default function details() {
               <h2 className="font-bold ">Deseja realizar outra consulta?</h2>
               <div className="flex flex-row gap-x-[1px]">
 
-                <Button className="w-[576px] h-[48px]  pt-[12px] pb-[12px] bg-[#50E678] border-[1px] rounded-[50px]">
+                <Button onClick={() => setOpenModal(true)} className="w-[576px] h-[48px]  pt-[12px] pb-[12px] bg-[#50E678] border-[1px] rounded-[50px]">
                   <Image className="w-[24px] h-[24px]" src={ok} alt="ok" />
                   Agendamento</Button>
               </div>
