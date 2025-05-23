@@ -13,6 +13,7 @@ module.exports = {
     	extend: {
 					fontFamily: {
 			sf: ['SF Pro Display', 'sans-serif'],
+			source: ['Source Code Pro', 'monospace'],
 			},
     		backgroundImage: {
     			'citi-logo': 'url("/src/assets/Logo.png")'
