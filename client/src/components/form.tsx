@@ -23,6 +23,11 @@ export default function Register() {
 function Form() {
 
   // Função para lidar com a seleção da espécie
+  // O estado especieSelecionada é usado para armazenar a espécie selecionada
+  // A função handleSelecionarEspecie é chamada quando uma espécie é selecionada
+  // Se a espécie já estiver selecionada, ela é desmarcada
+  // Caso contrário, a nova espécie é marcada
+  // O estado inicial é null, indicando que nenhuma espécie foi selecionada
   const [especieSelecionada, setEspecieSelecionada] = useState<string | null>(null)
     const handleSelecionarEspecie = (especie: string) => {
       if (especieSelecionada === especie) {
@@ -32,8 +37,13 @@ function Form() {
         setEspecieSelecionada(especie);
       }
   };
+
+  // Estilos padrões para os campos - gerando economia de tempo e reutilização
+  const labelStyles = "block mb-2 font-sf font-bold";
+  const placeHolderStyles = "w-full p-3 border rounded-lg border-black";
  
   return (
+    // Define as dimensões do formulário e o espaçamento entre os elementos
     <form className="w-[1532px] h-[644px] mx-auto space-y-4 mt-12">
 
       {/* Botão de voltar para a página de cadastro*/}
@@ -45,33 +55,40 @@ function Form() {
       </button>
 
       {/* Campos do formulário */}
+
+      {/* O campo abaixo é dividido em duas partes: nome do paciente e nome do tutor */}
       <div className="flex gap-6">
         <div className="flex-1">
-          <label className="block mb-2 font-sf font-bold">Nome do Paciente</label>
-          <input type="text" placeholder="Digite aqui..." className="w-full p-3 border rounded-lg border-black"/>
+          <label className={labelStyles}>Nome do Paciente</label>
+          <input type="text" placeholder="Digite aqui..." className={placeHolderStyles}/>
         </div>
 
-
+        {/* Insere o campo do nome do tutor */}
         <div className="flex-1 mb-2">
-          <label className="block mb-2 font-sf font-bold">Nome do Tutor</label>
-          <input type="text" placeholder="Digite aqui..." className="w-full p-3 border rounded-lg border-black"/>
+          <label className={labelStyles}>Nome do Tutor</label>
+          <input type="text" placeholder="Digite aqui..." className={placeHolderStyles}/>
         </div>
       </div>
       
 
-      <label className="block font-sf font-bold">Qual é a espécia do paciente?</label>
+      {/* Insere o campo da espécie do paciente */}
+      {/* O componente AnimalSelector é responsável por renderizar as opções de espécies */}
+      <label className={labelStyles}>Qual é a espécia do paciente?</label>
       <AnimalSelector selected={especieSelecionada} onSelect={handleSelecionarEspecie}/>
 
 
+      {/* O campo abaixo é dividido em duas partes: idade do paciente e tipo de consulta */}
       <div className="flex gap-6">
         <div className="flex-1">
-          <label className="block mb-2 font-sf font-bold">Idade do Paciente</label>
-          <input type="number" placeholder="Digite aqui..." className="w-full p-3 border rounded-lg border-black"/>
+          <label className={labelStyles}>Idade do Paciente</label>
+          <input type="number" placeholder="Digite aqui..." className={placeHolderStyles}/>
         </div>
 
-
+        {/* Insere o campo do tipo de consulta */}
+        {/* O campo é um select com opções pré-definidas */}
+        {/* A imagem arrowDown é usada como um ícone para indicar que é um campo de seleção */}
         <div className="flex-1">
-          <label className="block mb-2 font-sf font-bold">Tipo de consulta</label>
+          <label className={labelStyles}>Tipo de consulta</label>
           <div className="border rounded-lg border-black relative">
             <select className="w-full p-3 appearance-none bg-transparent">
               <option disabled selected>Selecione aqui</option>
@@ -89,28 +106,27 @@ function Form() {
         </div>
       </div>
 
-
+      {/* O campo abaixo é dividido em três partes: médico responsável, data do atendimento e horário do atendimento */}
       <div className="flex gap-6">
         <div className="flex-1">
-          <label className="block mb-2 font-sf font-bold">Médico Responsável</label>
-          <input type="text" placeholder="Digite aqui..." className="w-full p-3 border rounded-lg border-black"/>
+          <label className={labelStyles}>Médico Responsável</label>
+          <input type="text" placeholder="Digite aqui..." className={placeHolderStyles}/>
         </div>
 
-
         <div className="flex-1">
-          <label className="block mb-2 font-sf font-bold">Data do atendimento</label>
-          <input type="date" className="w-full p-3 border rounded-lg border-black"/>
+          <label className={labelStyles}>Data do atendimento</label>
+          <input type="date" className={placeHolderStyles}/>
         </div>
 
-
         <div className="flex-1">
-          <label className="block mb-2 font-sf font-bold">Horário do atendimento</label>
-          <input type="time" defaultValue="00:00" className="w-full p-3 border rounded-lg border-black"/>
+          <label className={labelStyles}>Horário do atendimento</label>
+          <input type="time" defaultValue="00:00" className={placeHolderStyles}/>
         </div>
       </div>
       
-      
-      <label className="block font-sf font-bold">Descrição do Problema</label>
+      {/* Insere o campo da descrição do problema */}
+      {/* O campo é um textarea com um tamanho mínimo definido */}
+      <label className={labelStyles}>Descrição do Problema</label>
       <textarea placeholder="Digite aqui..." className="w-full p-3 border rounded-lg border-black min-h-[104px]"/>
 
 
