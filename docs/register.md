@@ -23,7 +23,7 @@ O formulário permite a inserção de dados do paciente animal, como `nome`, `tu
 
 ![Tela de cadastro](../assets/register-screen.png)
 ---
-![Modal da tela de cadastro](../assets/modal-screen.png)
+![Modal da tela de cadastro](../assets/register-modal-screen.png)
 
 ---
 
