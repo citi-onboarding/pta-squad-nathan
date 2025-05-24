@@ -87,21 +87,21 @@ Alterna a seleção da espécie do paciente.
 
 
 1. **Informações do Paciente e Tutor:**
-   • Nome do Paciente;
-   • Nome do Tutor.
+  - Nome do Paciente;
+  - Nome do Tutor.
 
 2. **Espécie do Paciente:**
-   • Usa o componente `AnimalSelector`.
+  - Usa o componente `AnimalSelector`.
 
 3. **Informações Complementares:**
-   • Idade do Paciente;
-   • Tipo de Consulta;
-   • Médico Responsável;
-   • Data do Atendimento;
-   • Horário do Atendimento.
+  - Idade do Paciente;
+  - Tipo de Consulta;
+  - Médico Responsável;
+  - Data do Atendimento;
+  - Horário do Atendimento.
 
-5. **Descrição do Problema:**
-   • Campo de texto livre.
+4. **Descrição do Problema:**
+  - Campo de texto livre.
 
 ---
 
