@@ -74,7 +74,15 @@ function Form() {
           <label className="block mb-2 font-sf font-bold">Tipo de consulta</label>
           <div className="border rounded-lg border-black relative">
             <select className="w-full p-3 appearance-none bg-transparent">
-              <option value="" disabled selected>Selecione aqui</option>
+              <option disabled selected>Selecione aqui</option>
+              <option>Atendimento a Filhotes e Gestantes</option>
+              <option>Cirurgias</option>
+              <option>Consulta de Rotina</option>
+              <option>Exame Diagnóstico</option>
+              <option>Fisioterapia e Reabilitação</option>
+              <option>Odontologia Veterinária</option>
+              <option>Vacinação</option>
+              
             </select>
             <Image src={arrowDown} className="absolute right-5 top-1/2 -translate-y-1/2" width={12} height={7.4} alt="arrowDown"/>
           </div>
@@ -97,7 +105,7 @@ function Form() {
 
         <div className="flex-1">
           <label className="block mb-2 font-sf font-bold">Horário do atendimento</label>
-          <input type="time" value="00:00" className="w-full p-3 border rounded-lg border-black"/>
+          <input type="time" defaultValue="00:00" className="w-full p-3 border rounded-lg border-black"/>
         </div>
       </div>
       
