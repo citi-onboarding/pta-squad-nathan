@@ -75,8 +75,8 @@ function Form() {
           <div className="border rounded-lg border-black relative">
             <select className="w-full p-3 appearance-none bg-transparent">
               <option disabled selected>Selecione aqui</option>
-              <option>Atendimento a Filhotes e Gestantes</option>
-              <option>Cirurgias</option>
+              <option>Atendimento a Filhote e Gestante</option>
+              <option>Cirurgia</option>
               <option>Consulta de Rotina</option>
               <option>Exame Diagnóstico</option>
               <option>Fisioterapia e Reabilitação</option>
