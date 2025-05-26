@@ -9,7 +9,7 @@ import ConsultCard from "@/components/ConsultCard"
 import ConsultaModal from "@/components/Consultamodal"
 import { useState } from "react"
 
-export default function details() {
+export default function Details() {
   const[openmodal, setOpenModal] = useState(false)
   
   return (
