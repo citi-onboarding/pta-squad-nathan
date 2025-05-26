@@ -1,4 +1,3 @@
-'use client'
 // app/register/page.tsx
 import Register from "../../components/form";
 import Header from "@/components/Header";
