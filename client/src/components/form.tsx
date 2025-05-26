@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // Importando as dependências necessárias
 import { useState } from "react"
