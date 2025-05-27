@@ -1,0 +1,149 @@
+# Índice: #
+
+(!) Importante: Salve o arquivo como .md para a formatação ser aplicada, exemplo: "meuArquivo.md".
+
+  
+# Use os seguintes comandos para formatar o documento: #
+
+# Títulos:
+• # Título 1 → Título grande;
+• ## Título 2 → Título médio;
+• ### Título 3 → Título pequeno.
+
+# Estilos de Texto:
+• **texto** → Negrito;
+• _texto_ → Itálico;
+• --- → Linha divisória;
+• `texto` → Formatação de código inline;
+• ```linguagem → Bloco de código, se você especificar a linguagem, ele adiciona a formatação automaticamente (ex: tsx, js, html), exemplo:
+
+```tsx  
+// seu código aqui  
+```
+
+(!) Obs.: se você não especificar a linguagem, ele também funciona, porém não aplicará formatação.
+
+
+# Como inserir imagens: #
+
+Salve a imagem na pasta assets e use:
+![Nome da imagem](../assets/nome-do-arquivo-da-imagem.png)
+Para adicionar borda nas imagens, tem esse site: "https://imgonline.tools/pt/add-border".
+
+(!) Lista de emojis que você pode utilizar: "https://gist.github.com/rxaviers/7360908".
+
+# Fim do Índice. #
+
+
+
+
+# Boilerplate: #
+- Copie o código abaixo para um arquivo .md e faça os seus próprios testes:
+
+# Documentação do Componente [...]
+
+Este documento descreve o funcionamento do componente de [...]. Ele é construído com **React** (Next.js) e **Tailwind CSS**, utilizando componentes personalizados e gerenciamento de estado via `useState`.
+
+---
+
+## 📁 Estrutura dos Arquivos:
+
+```bash
+/[...]/
+  /[...].tsx
+  /[...].tsx
+  /[...].tsx
+```
+
+---
+
+## 📌 Descrição Geral:
+
+O componente principal é `[...]`, que inclui um [...] (`[...]`) e um [...] (`[...]`).
+O [...] permite a inserção de dados [...], como `[...]`, `[...]`, `[...]`, `[...]`, entre outros.
+
+![Tela](../assets/nome-do-arquivo-da-imagem)
+
+---
+
+## 🧩 Componentes Utilizados:
+
+- `[...]`: Componente customizado para [...].
+- `[...]`: [...].
+
+---
+
+## 🪪 Register:
+
+```tsx
+[...] {
+  [...] (
+    <div>
+      <[...] />
+      <[...] />
+    </div>
+  );
+}
+```
+
+Faz [...].
+
+---
+
+## 📝 [...]:
+
+```tsx
+[...] {
+  ...
+}
+```
+
+Este componente contém o [...], incluindo os seguintes campos:
+
+### [...]
+```tsx
+[...];
+```
+
+Armazena [...] no `[...]`.
+
+### [...]
+```tsx
+[...] => {
+  if [...] {
+    [...];
+  } else {
+    [...];
+  }
+};
+```
+
+Alterna a seleção da espécie do paciente.
+
+---
+
+## 📋 [...]
+
+
+1. **[...]:**
+  - [...];
+  - [...].
+
+2. **[...]:**
+  - Usa o componente `[...]`.
+
+3. **[...]:**
+  - [...];
+  - [...];
+  - [...];
+  - [...];
+  - [...].
+
+4. **[...]:**
+  - [...].
+
+---
+
+## 🎨 Estilização
+
+Estilos são definidos utilizando o `Tailwind CSS`.
