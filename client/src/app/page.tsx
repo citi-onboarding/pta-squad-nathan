@@ -11,31 +11,31 @@ import Calendar from "@/components/ui/calendarBox";
 
 export default function Home() {
   return (
-    <div className="w-[1920px] h-[1080px]">
+    <div className="w-full h-full">
       <Header />
 
-      <div className="flex items-center gap-4 ml-[194px] mt-[48px]">
-        <h2 className="text-[48px] ml-[10.5px]">Atendimento</h2>
+      <div className="flex items-center gap-4 ml-48 mt-12">
+        <h2 className="text-5xl ml-3">Atendimento</h2>
       </div>
 
-      <div className="ml-[194px] mt-[32px]">
-        <p className="text-[24px]">Qual é o médico?</p>
+      <div className="ml-48 mt-8">
+        <p className="text-2x1">Qual é o médico?</p>
 
-        <div className="flex items-center gap-6 mt-[26px]">
+        <div className="flex items-center gap-6 mt-6">
           <input
             placeholder="Pesquise aqui..."
             type="text"
-            className="border-black w-[520px] h-[50px] border rounded-[8px] placeholder-[#D9D9D9] text-[16px] font-normal leading-[110%] tracking-[0%] pl-4"
+            className="border-black w-[31%] h-12 border rounded-lg placeholder-[#D9D9D9] text-base font-normal leading-[110%] tracking-[0%] pl-4"
           />
           <CustomButton
             text="Buscar"
-            className="text-white bg-[#7D1AD7] hover:bg-[#690EB8] w-[116px] h-[42px] rounded-[24px] font-bold shadow-md"
+            className="text-white bg-[#7D1AD7] hover:bg-[#690EB8] w-28 h-10 rounded-3x1 font-bold shadow-md"
           />
         </div>
       </div>
 
-      <div className="mt-[40px] flex">
-        <span className="ml-[194px] inline-block">
+      <div className="mt-10 flex">
+        <span className="ml-48 inline-block">
           <Switch primeiro="Histórico" segundo="Agendamento" />
         </span>
         <Calendar
@@ -45,12 +45,12 @@ export default function Home() {
         />
         <Calendar
           text="dd/mm/aa"
-          className="ml-[16px]"
+          className="ml-4"
           popUpPosition="absolute bottom-[70px] right-[5px]"
         />
       </div>
 
-      <div className="flex flex-wrap gap-6 ml-[194px] mt-[32px]">
+      <div className="flex flex-wrap gap-6 ml-48 mt-8">
         <Textblock
           nomeMedico="Dr. José Carlos"
           nomePet="Luna"
@@ -104,7 +104,7 @@ export default function Home() {
       <CustomButton
         text="Nova Consulta"
         icon={Cross}
-        className="text-white bg-[#50E678] hover:bg-[#3CBF62] w-[205px] h-[48px] rounded-[24px] font-bold shadow-md mt-[185px] ml-[1521px]"
+        className="text-white bg-[#50E678] hover:bg-[#3CBF62] w-52 h-12 rounded-3x1 font-bold shadow-md mt-12 ml-[1521px]"
       />
     </div>
   );

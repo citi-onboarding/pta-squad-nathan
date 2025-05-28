@@ -22,9 +22,9 @@ const TextBlock: React.FC<TextBlockProps> = ({
   fotoAnimal,
 }) => {
   return (
-    <div className="w-[495px] h-[135px] flex justify-between items-center pt-4 pr-6 pb-4 pl-6 rounded-[16px] bg-[#F0F0F0]">
-      <div className="flex flex-col items-center gap-[8px]">
-        <div className="w-[51px] h-[90px] flex flex-col items-center gap-[8px] rounded-[4px] pt-[12px] pr-[6px] pb-[12px] pl-[6px] bg-[#FFFFFF]">
+    <div className="w-[29%] h-36 flex justify-between items-center pt-4 pr-6 pb-4 pl-6 rounded-2xl bg-[#F0F0F0]">
+      <div className="flex flex-col items-center gap-2">
+        <div className="w-12 h-24 flex flex-col items-center gap-2 rounded-sm pt-3 pr-1 pb-3 pl-1 bg-[#FFFFFF]">
           <Image src={Alarm} alt="FotoRelogio" />
           <p className="text-sm font-bold">{data}</p>
           <p className="text-sm font-bold">{horario}</p>
@@ -43,7 +43,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
 
       <div className="flex flex-col items-center">
         <Image src={ Cat || fotoAnimal} alt="Foto Gato" className="mb-2" />
-        <div className="w-[101px] h-[25px] flex items-center justify-center gap-[8px] rounded-[4px] p-[6px] bg-[#FFFFFF]">
+        <div className="w-24 h-6 flex items-center justify-center gap-2 rounded-sm p-1 bg-[#FFFFFF]">
           <p className="text-xs whitespace-nowrap">{categoriaConsulta}</p>
         </div>
       </div>
