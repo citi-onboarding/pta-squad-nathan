@@ -47,30 +47,3 @@ class ConsultationController implements Crud {
 }
 }
 export default new ConsultationController();
-
-
-
-
-
-
-
-
-// export const ConsultationController = {
-//     create: async (request: Request, response: Response) => {
-//         try {
-//             const {date, patientName, doctorName, consultationType} = request.body;
-//             console.log ('Dados da consulta:',{date, patientName, doctorName, consultationType});
-
-//             return response.status(201).json({ message: 'Consulta criada com sucesso' });
-//         }
-        
-        
-//         catch (error) {
-//             return response.status(500).json({ message: 'Erro ao criar consulta' }); 
-            
-//         }
-
-
-
-// },
-// }
