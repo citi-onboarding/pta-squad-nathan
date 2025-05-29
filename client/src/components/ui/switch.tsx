@@ -9,7 +9,7 @@ const Switch: React.FC<SwitchProps> = ({ primeiro, segundo }) => {
   const [active, setActive] = useState<"primeiro" | "segundo">("primeiro");
 
   return (
-    <div className="w-60 h-14 bg-[#F0F0F0] rounded-xl flex justify-center items-center gap-1">
+    <div className="w-[105%] h-14 bg-[#F0F0F0] rounded-xl flex justify-center items-center gap-1">
 
       <div onClick={() => setActive("primeiro")} className="cursor-pointer">
         <div

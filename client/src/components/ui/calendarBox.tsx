@@ -27,7 +27,7 @@ const CalendarBox: React.FC<CalendarBoxProps> = ({
     <div className="relative">
       <div 
         onClick={toggleCalendar} 
-        className={`w-32 h-14 flex items-center justify-between border border-[#D9D9D9] rounded-lg bg-[#FFFFFF] pr-2 cursor-pointer ${className}`}
+        className={`w-[105%] h-14 flex items-center justify-between border border-[#D9D9D9] rounded-lg bg-[#FFFFFF] pr-2 cursor-pointer ${className}`}
       >
         <span className="pl-2">{text}</span>
         <Image 

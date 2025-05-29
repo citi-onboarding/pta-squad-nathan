@@ -14,14 +14,14 @@ export default function Home() {
     <div className="w-full min-h-screen pb-[4%]">
       <Header />
 
-      <div className="flex items-center gap-4 ml-48 mt-12">
+      <div className="flex items-center gap-4 ml-[9%] mt-[3%]">
         <h2 className="text-5xl ml-3">Atendimento</h2>
       </div>
 
-      <div className="ml-48 mt-8">
+      <div className="ml-[10%] mt-[2%]">
         <p className="text-2xl">Qual é o médico?</p>
 
-        <div className="flex items-center gap-6 mt-6">
+        <div className="flex items-center gap-[1%] mt-[2%]">
           <input
             placeholder="Pesquise aqui..."
             type="text"
@@ -34,23 +34,26 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mt-10 flex">
-        <span className="ml-48 inline-block">
+      <div className="mt-[2%] flex items-center justify-between">
+
+        <span className="ml-[10%] inline-block">
           <Switch primeiro="Histórico" segundo="Agendamento" />
         </span>
-        <Calendar
-          text="dd/mm/aa"
-          className="ml-[1021px]"
-          popUpPosition="absolute bottom-[70px] right-[120px]"
-        />
-        <Calendar
-          text="dd/mm/aa"
-          className="ml-4"
-          popUpPosition="absolute bottom-[70px] right-[5px]"
-        />
+
+        <div className="flex gap-4 mr-[10%]">
+          <Calendar
+            text="dd/mm/aa"
+            popUpPosition="absolute bottom-[100%] right-[6.25%]"
+          />
+          <Calendar
+            text="dd/mm/aa"
+            popUpPosition="absolute bottom-[100%] right-[5%]"
+          />
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-6 ml-48 mt-8">
+
+      <div className="flex flex-wrap gap-6 ml-[10%] mt-[2%]">
         <Textblock
           nomeMedico="Dr. José Carlos"
           nomePet="Luna"
@@ -104,7 +107,7 @@ export default function Home() {
       <CustomButton
         text="Nova Consulta"
         icon={Cross}
-        className="text-white bg-[#50E678] hover:bg-[#3CBF62] w-52 h-12 rounded-3x1 font-bold shadow-md mt-12 ml-[1521px]"
+        className="text-white bg-[#50E678] hover:bg-[#3CBF62] w-52 h-12 rounded-3x1 font-bold shadow-md mt-12 ml-[80%]"
       />
     </div>
   );
