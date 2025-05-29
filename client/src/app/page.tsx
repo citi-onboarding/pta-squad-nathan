@@ -11,7 +11,7 @@ import Calendar from "@/components/ui/calendarBox";
 
 export default function Home() {
   return (
-    <div className="w-full h-full">
+    <div className="w-full min-h-screen pb-[4%]">
       <Header />
 
       <div className="flex items-center gap-4 ml-48 mt-12">
