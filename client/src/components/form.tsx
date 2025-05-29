@@ -39,17 +39,18 @@ function Form() {
   };
 
   // Estilos padrões para os campos - gerando economia de tempo e reutilização
-  const labelStyles = "block mb-2 font-sf font-bold";
-  const placeHolderStyles = "w-full p-3 border rounded-lg border-black";
+  const labelStyles = "block mb-1 font-sf font-bold";
+  const placeHolderStyles = "w-full p-2 border rounded-lg border-black";
+  const blocksStyles = "flex flex-col sm:flex-row gap-6";
  
   return (
     // Define as dimensões do formulário e o espaçamento entre os elementos
-    <form className="w-[1532px] h-[644px] mx-auto space-y-4 mt-12">
+    <form className="max-w-screen-2xl mx-auto space-y-3 mt-6">
 
       {/* Botão de voltar para a página de cadastro*/}
       <button>
-        <div className="flex items-center mb-10">
-          <Image className="w-[15.7px] h-[26.67px]" src={arrowBack} alt="arrowBack"/>
+        <div className="flex items-center mb-5">
+          <Image className="w-4 h-7" src={arrowBack} alt="arrowBack"/>
           <label className="font-source text-5xl font-bold ml-6 cursor-pointer">Cadastro</label>
         </div>
       </button>
@@ -57,7 +58,7 @@ function Form() {
       {/* Campos do formulário */}
 
       {/* O campo abaixo é dividido em duas partes: nome do paciente e nome do tutor */}
-      <div className="flex gap-6">
+      <div className={blocksStyles}>
         <div className="flex-1">
           <label className={labelStyles}>Nome do Paciente</label>
           <input type="text" placeholder="Digite aqui..." className={placeHolderStyles}/>
@@ -73,12 +74,12 @@ function Form() {
 
       {/* Insere o campo da espécie do paciente */}
       {/* O componente AnimalSelector é responsável por renderizar as opções de espécies */}
-      <label className={labelStyles}>Qual é a espécia do paciente?</label>
+      <label className={labelStyles}>Qual é a espécie do paciente?</label>
       <AnimalSelector selected={especieSelecionada} onSelect={handleSelecionarEspecie}/>
 
 
       {/* O campo abaixo é dividido em duas partes: idade do paciente e tipo de consulta */}
-      <div className="flex gap-6">
+      <div className={blocksStyles}>
         <div className="flex-1">
           <label className={labelStyles}>Idade do Paciente</label>
           <input type="number" placeholder="Digite aqui..." className={placeHolderStyles}/>
@@ -90,24 +91,22 @@ function Form() {
         <div className="flex-1">
           <label className={labelStyles}>Tipo de consulta</label>
           <div className="border rounded-lg border-black relative">
-            <select className="w-full p-3 appearance-none bg-transparent">
+            <select className="w-full p-2 appearance-none bg-transparent">
               <option disabled selected>Selecione aqui</option>
-              <option>Atendimento a Filhote e Gestante</option>
-              <option>Cirurgia</option>
-              <option>Consulta de Rotina</option>
-              <option>Exame Diagnóstico</option>
-              <option>Fisioterapia e Reabilitação</option>
-              <option>Odontologia Veterinária</option>
-              <option>Vacinação</option>
+              <option>Opção 01</option>
+              <option>Opção 02</option>
+              <option>Opção 03</option>
+              <option>Opção 04</option>
+              <option>Opção 05</option>
               
             </select>
-            <Image src={arrowDown} className="absolute right-5 top-1/2 -translate-y-1/2" width={12} height={7.4} alt="arrowDown"/>
+            <Image src={arrowDown} className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-2" alt="arrowDown"/>
           </div>
         </div>
       </div>
 
       {/* O campo abaixo é dividido em três partes: médico responsável, data do atendimento e horário do atendimento */}
-      <div className="flex gap-6">
+      <div className={blocksStyles}>
         <div className="flex-1">
           <label className={labelStyles}>Médico Responsável</label>
           <input type="text" placeholder="Digite aqui..." className={placeHolderStyles}/>
@@ -127,7 +126,7 @@ function Form() {
       {/* Insere o campo da descrição do problema */}
       {/* O campo é um textarea com um tamanho mínimo definido */}
       <label className={labelStyles}>Descrição do Problema</label>
-      <textarea placeholder="Digite aqui..." className="w-full p-3 border rounded-lg border-black min-h-[104px]"/>
+      <textarea placeholder="Digite aqui..." className="w-full p-3 border rounded-lg border-black min-h-24"/>
 
 
   </form>
