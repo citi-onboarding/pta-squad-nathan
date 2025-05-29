@@ -7,24 +7,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Patient {
-  idPaciente   Int    @id @default(autoincrement())
-  name         String
-  tutorName    String
-  age          Int
-  species      String
-  gender       String
+enum PatientSpecie {
+  SHEEP
+  CAT
+  PIG
+  COW
+  HORSE
+  DOG
+}
 
-  consultations Consultation[]  // one-to-many relationship
+enum ConsType {
+  FIRST
+  VACINATION
+  RETURN
+  CHECKUP
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Patient {
+  idPaciente Int    @id @default(autoincrement())
+  name       String
+  tutorName  String
+  age        Int
+  species    PatientSpecie 
+  gender     Gender
+
+  consultations Consultation[] // one-to-many relationship
 }
 
 model Consultation {
-  idConsulta   Int    @id @default(autoincrement())
-  doctorName   String
-  datetime     DateTime
-  type         String
-  description  String
+  idConsulta  Int      @id @default(autoincrement())
+  doctorName  String
+  datetime    DateTime
+  type        ConsType
+  description String
 
-  patientId    Int
-  patient      Patient @relation(fields: [patientId], references: [idPaciente])
+  patientId Int?
+  patient   Patient? @relation(fields: [patientId], references: [idPaciente])
 }
