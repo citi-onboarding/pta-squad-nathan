@@ -1,4 +1,5 @@
 'use client'
+
 import { Button } from "@/components/ui/button"
 import Header from "@/components/Header"
 import Image from "next/image"
@@ -9,7 +10,7 @@ import ConsultCard from "@/components/ConsultCard"
 import ConsultaModal from "@/components/Consultamodal"
 import { useState } from "react"
 
-export default function details() {
+export default function Details() {
   const[openmodal, setOpenModal] = useState(false)
   
   return (
