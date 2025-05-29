@@ -1,15 +1,17 @@
 'use client';
 
-import { useState } from "react";
 import CustomButton from "@/components/ui/customButton";
 import Header from "@/components/ui/Header";
 import Textblock from "@/components/ui/textBlock";
 
 import { Cross } from "@/assets";
-import Switch from "@/components/ui/switch";
 import Calendar from "@/components/ui/calendarBox";
+import Switch from "@/components/ui/switch";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter()
+  
   return (
     <div className="w-full min-h-screen pb-[4%]">
       <Header />
@@ -108,6 +110,7 @@ export default function Home() {
         text="Nova Consulta"
         icon={Cross}
         className="text-white bg-[#50E678] hover:bg-[#3CBF62] w-52 h-12 rounded-3x1 font-bold shadow-md mt-12 ml-[80%]"
+        onClick={() => router.push('/registro')}
       />
     </div>
   );
