@@ -19,7 +19,7 @@ export default function Home() {
       </div>
 
       <div className="ml-48 mt-8">
-        <p className="text-2x1">Qual é o médico?</p>
+        <p className="text-2xl">Qual é o médico?</p>
 
         <div className="flex items-center gap-6 mt-6">
           <input
