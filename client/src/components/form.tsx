@@ -3,13 +3,12 @@
 // Importando as dependências necessárias
 import { useState } from "react"
 import Image from "next/image"
-// Faltando a parte da header
 import { AnimalSelector } from "./animalSelector"
 import { RegisterModal } from "./registerModal"
 import { arrowBack } from "@/assets"
 import { arrowDown } from "@/assets"
 
-// Nossa função principal, que importa os componentes necessários - faltando a parte da header
+// Nossa função principal, que importa os componentes necessários
 export default function Register() {
   return (
   <div>
@@ -45,15 +44,16 @@ function Form() {
  
   return (
     // Define as dimensões do formulário e o espaçamento entre os elementos
-    <form className="max-w-screen-2xl mx-auto space-y-3 mt-6">
+    <form className="max-w-screen-2xl mx-auto space-y-3 mt-6 p-4 sm:p-0">
 
       {/* Botão de voltar para a página de cadastro*/}
       <button>
         <div className="flex items-center mb-5">
-          <Image className="w-4 h-7" src={arrowBack} alt="arrowBack"/>
-          <label className="font-source text-5xl font-bold ml-6 cursor-pointer">Cadastro</label>
+          <Image className="sm:w-4 sm:h-7" src={arrowBack} alt="arrowBack"/>
+          <label className="font-source text-4xl sm:text-5xl font-bold ml-6 cursor-pointer">Cadastro</label>
         </div>
       </button>
+
 
       {/* Campos do formulário */}
 
@@ -74,23 +74,24 @@ function Form() {
 
       {/* Insere o campo da espécie do paciente */}
       {/* O componente AnimalSelector é responsável por renderizar as opções de espécies */}
-      <label className={labelStyles}>Qual é a espécie do paciente?</label>
+      <label className={labelStyles}>Qual é a Espécie do Paciente?</label>
       <AnimalSelector selected={especieSelecionada} onSelect={handleSelecionarEspecie}/>
 
 
       {/* O campo abaixo é dividido em duas partes: idade do paciente e tipo de consulta */}
       <div className={blocksStyles}>
         <div className="flex-1">
-          <label className={labelStyles}>Idade do Paciente</label>
-          <input type="number" placeholder="Digite aqui..." className={placeHolderStyles}/>
+          <label className={labelStyles}>Data de Nascimento do Paciente</label>
+          <input type="date" className={placeHolderStyles}/>
         </div>
 
         {/* Insere o campo do tipo de consulta */}
         {/* O campo é um select com opções pré-definidas */}
         {/* A imagem arrowDown é usada como um ícone para indicar que é um campo de seleção */}
         <div className="flex-1">
-          <label className={labelStyles}>Tipo de consulta</label>
+          <label className={labelStyles}>Tipo de Consulta</label>
           <div className="border rounded-lg border-black relative">
+
             <select className="w-full p-2 appearance-none bg-transparent">
               <option disabled selected>Selecione aqui</option>
               <option>Opção 01</option>
@@ -98,12 +99,13 @@ function Form() {
               <option>Opção 03</option>
               <option>Opção 04</option>
               <option>Opção 05</option>
-              
             </select>
+
             <Image src={arrowDown} className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-2" alt="arrowDown"/>
           </div>
         </div>
       </div>
+
 
       {/* O campo abaixo é dividido em três partes: médico responsável, data do atendimento e horário do atendimento */}
       <div className={blocksStyles}>
@@ -113,16 +115,17 @@ function Form() {
         </div>
 
         <div className="flex-1">
-          <label className={labelStyles}>Data do atendimento</label>
+          <label className={labelStyles}>Data do Atendimento</label>
           <input type="date" className={placeHolderStyles}/>
         </div>
 
         <div className="flex-1">
-          <label className={labelStyles}>Horário do atendimento</label>
+          <label className={labelStyles}>Horário do Atendimento</label>
           <input type="time" defaultValue="00:00" className={placeHolderStyles}/>
         </div>
       </div>
       
+
       {/* Insere o campo da descrição do problema */}
       {/* O campo é um textarea com um tamanho mínimo definido */}
       <label className={labelStyles}>Descrição do Problema</label>
@@ -130,6 +133,7 @@ function Form() {
 
 
   </form>
+  
   );
 
 }

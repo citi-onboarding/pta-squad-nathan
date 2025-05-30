@@ -14,14 +14,14 @@ export function RegisterModal() {
       <Dialog>
 
         <Trigger asChild>
-          <Button className="w-auto h-auto font-sf font-bold sm:w-52 sm:h-12 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition mt-12">
+          <Button className="w-auto h-auto font-sf font-bold sm:w-52 sm:h-12 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition sm:mt-12 mb-4 sm:mb-0">
           Finalizar Cadastro
           </Button>
         </Trigger>
         
         {/* Conteúdo do modal */}
         {/* O modal é exibido em uma tela cheia com um fundo escuro devido ao "bg-opacity-60" */}
-        <Content className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+        <Content className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-2">
           <div className="w-full max-w-96 bg-white rounded-3xl shadow-lg p-6 sm:p-8 relative flex flex-col items-center justify-center">
 
             {/* Botão de fechar o modal */}
