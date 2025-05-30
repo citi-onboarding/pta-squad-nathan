@@ -78,8 +78,22 @@ function Form() {
       <AnimalSelector selected={especieSelecionada} onSelect={handleSelecionarEspecie}/>
 
 
-      {/* O campo abaixo é dividido em duas partes: idade do paciente e tipo de consulta */}
+      {/* O campo abaixo é dividido em três partes: gênero do paciente, idade e tipo de consulta */}
       <div className={blocksStyles}>
+        <div className="flex-1">
+          <label className={labelStyles}>Gênero do Paciente</label>
+          <div className="border rounded-lg border-black relative">
+
+            <select className="w-full p-2 appearance-none bg-transparent">
+              <option disabled selected>Selecione aqui</option>
+              <option>Fêmea</option>
+              <option>Macho</option>
+            </select>
+
+            <Image src={arrowDown} className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-2" alt="arrowDown"/>
+          </div>
+        </div>
+
         <div className="flex-1">
           <label className={labelStyles}>Data de Nascimento do Paciente</label>
           <input type="date" className={placeHolderStyles}/>
