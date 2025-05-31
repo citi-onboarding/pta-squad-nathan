@@ -4,6 +4,15 @@ import { Citi, Crud } from "../global";
 // Classe RegisterController implementa a interface CRUD para gerenciar animais
 class RegisterController implements Crud {
   constructor(private readonly citi = new Citi("Patient", "idPaciente")) {}
+
+  // Função para calcular a idade do animal com base na data de nascimento
+  // Recebe uma string no formato 'YYYY-MM-DD' e retorna a idade em anos
+  private calculateAge(birthDate: string): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    return today.getFullYear() - birth.getFullYear();
+  }
+
   // Método para criar um novo animal no banco de dados
   create = async (request: Request, response: Response) => {
 
@@ -14,6 +23,11 @@ class RegisterController implements Crud {
       species,
       gender
     } = request.body;
+
+    // Validação básica 
+    if (!age || typeof age !== "string") {
+      return response.status(400).send({ message: 'O campo "age" deve ser uma data no formato YYYY-MM-DD' });
+    }
 
     // Verifica se algum dos campos obrigatórios não foi preenchido
     const isAnyUndefined = this.citi.areValuesUndefined(
@@ -29,7 +43,8 @@ class RegisterController implements Crud {
     const newPatient = {
       name,
       tutorName,
-      age,
+      // Converte a idade de string para número
+      age: this.calculateAge(age),
       species,
       gender
     };
@@ -70,10 +85,15 @@ class RegisterController implements Crud {
       gender
     } = request.body;
 
+  // Validação básica
+  if (!age || typeof age !== 'string') {
+    return response.status(400).send({ message: "O campo 'age' deve ser uma data no formato YYYY-MM-DD" });
+  }
+
     const updatedValues = {
       name,
       tutorName,
-      age,
+      age: this.calculateAge(age),
       species,
       gender
     };
