@@ -19,92 +19,101 @@ export default function Details() {
       <ConsultaModal isOpen={openmodal} setModalOpen={() => setOpenModal (!openmodal)}/>
       <div className="flex flex-row h-full w-full justify-around  bg-[#FFFFFF] text-black mt-14">
 
-        {/* COMEÇO LADO ESQUERDO */}
-        <div className="flex-1 flex flex-col ml-[200px]"> 
+       
 
-          {/* detalhes da consulta */}
-          <div className="flex flex-row items-baseline w-[576px] h-[53px] mr-[50px]">
-            <Image className="w-[32px] h-[32px] mr-4" src={arrow} alt="arrow" />
+      {/* COMEÇO LADO ESQUERDO */}
+    
+      <div className="flex-1 flex flex-col px-4 md:px-0 md:ml-20 lg:ml-32"> 
 
-            <h1 className=" -mt-4  text-4xl font-bold text-[48px] ">Detalhes da consulta</h1>
+        {/* detalhes da consulta */}
+        
+        <div className="flex flex-row items-baseline mb-8"> 
+          <Image className="w-8 h-8 mr-4" src={arrow} alt="arrow" />
+          <h1 className="text-5xl font-bold leading-none -mt-4">Detalhes da consulta</h1> 
+        </div>
+
+        {/* paciente */}
+        
+        <div className="flex mt-3">
+          <h2 className="font-bold text-2xl">Paciente</h2>
+        </div>
+
+        {/* foto do gato + componentes */}
+       
+        <div className="flex flex-col sm:flex-row mt-8 items-start"> 
+          <Image className="w-[18.4375rem] h-[18.6875rem] max-w-full" src={cat6} alt="gato" />
+
+          
+          <div className="flex flex-col ml-6 sm:ml-6 mt-4 sm:mt-0 space-y-2"> 
+            <h2 className="font-bold text-lg">Luna</h2> 
+            <h2 className="text-base">5 anos</h2> 
           </div>
 
-          {/* paciente */}
-          <div className="flex mt-[20px]">
-            <h2 className="font-bold text-[24px]">Paciente</h2>
+        
+          <div className="flex flex-col -ml-11  mt-[15rem] space-y-2"> 
+            <h2 className="text-base">Lucas Gomes</h2> 
+            <h2 className="text-base">Dr. José Carlos</h2>
           </div>
+        </div>
 
-          {/* foto do gato + componentes */}
-          <div className="flex flex-row mt-[30px] items-center ">
-            <Image className="w-[295px] h-[299px]" src={cat6} alt="gato" />
-            <div className="flex ml-10 flex-col -mt-[145px] ">
-              <h2 className="font-bold">Luna</h2>
-              <h2>5 anos</h2>
-            </div>
-            <div className="flex flex-col -ml-11 mt-[250px]">
-              <h2> Lucas Gomes</h2>
-              <h2>Dr. José Carlos</h2>
-            </div>
+        {/* descrição */}
+     
+        <div className="flex mt-16 flex-col w-full md:max-w-xl h-auto"> 
+          <h2 className="font-bold text-base">Descrição do problema:</h2>
+          <p className="mt-2 text-sm "> 
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque dolore sunt accusamus, similique beatae inventore distinctio fuga ipsum cum eos, laboriosam consequatur recusandae consequuntur obcaecati asperiores illum dicta quibusdam velit!
+          </p>
+        </div>
 
+        {/* Tipo de consulta */}
+        
+        <div className="flex flex-row w-full sm:w-fit h-fit mt-12 items-center"> 
+          <h2 className="font-bold text-base">Tipo de consulta:</h2>
+          
+          <div className="w-[6.3125rem] h-[1.875rem] bg-[#AAE1FF] ml-8 rounded flex items-center justify-center"> 
+            <p className="text-sm">Vacinação</p> 
           </div>
-          {/* descrição */}
-          <div className="flex mt-[70px] flex-col w-[510px] h-[102px]">
-            <h2 className="font-bold text-[16px]">Descrição do problema:</h2>
-
-            <p className="mt-2 ">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque dolore sunt accusamus, similique beatae inventore distinctio fuga ipsum cum eos, laboriosam consequatur recusandae consequuntur obcaecati asperiores illum dicta quibusdam velit!</p>
-
-          </div>
-
-          {/* Tipo de consulta */}
-          <div className=" flex flex-row w-[349px] h-[30px] mt-[50px]">
-            <h2 className="font-bold text-[16px] ">Tipo de consulta:</h2>
-            <div className="w-[101px] h-[30px] bg-[#AAE1FF] ml-[30px] rounded">
-              <p className="text-center items-center mt-0.5">Vacinação</p>
-            </div>
-          </div>
-
-          {/* Deseja realaizar consulta */}
-          <div className="w-[624px] h-[138px] border-[1px] border-grey-200 rounded-[24px] mt-[43px] p-[24px] ">
-
-            <div className="flex flex-col items-center justify-center gap-y-[20px]">
-              <h2 className="font-bold ">Deseja realizar outra consulta?</h2>
-              <div className="flex flex-row gap-x-[1px]">
-
-                <Button onClick={() => setOpenModal(true)} className="w-[576px] h-[48px]  pt-[12px] pb-[12px] bg-[#50E678] border-[1px] rounded-[50px]">
-                  <Image className="w-[24px] h-[24px]" src={ok} alt="ok" />
-                  Agendamento</Button>
-              </div>
-            </div>
-          </div>
-
 
         </div>
 
-        {/* Fim lado esquerdo */}
+      
+        <div className="w-full md:max-w-2xl border border-[#D9D9D9] rounded-3xl mt-10 p-6"> 
+         
+          <div className="flex flex-col items-center justify-center gap-y-5">
+            <h2 className="font-bold text-base">Deseja realizar outra consulta?</h2> 
+            <div className="flex justify-center w-full"> 
 
-        {/* COMEÇO LADO DIREITO */}
+              
+              <Button
+                onClick={() => setOpenModal(true)}
+                className="w-[38rem] h-12 bg-[#50E678] border rounded-full flex items-center justify-center gap-x-2 text-base font-bold" > 
+                <Image className="w-6 h-6" src={ok} alt="ok" />
+                Agendamento
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Fim lado esquerdo */}
 
-        <div className="flex flex-col mr-[250px] mt-[78px] w-[558px] h-[700px] ">
-          {/* Histórico de consultas */}
+       {/* COMEÇO LADO DIREITO */}
+      
+      <div className="flex h-full flex-col mr-[8%] mt-[5%] w-full px-4 md:px-0 md:max-w-md lg:max-w-lg"> 
 
-          <h2 className="font-bold text-[24px] mg-[300px]">Histórico de consultas</h2>
-          {/* div de consultas */}
+        {/* Histórico de consultas */}
+        <h2 className="font-bold text-2xl mb-4">Histórico de consultas</h2>
 
-          <div className="w-[558px] h-[448px] border-[1px] border-grey-200 rounded-[24px] mt-[30px] p-[24px]  justify-center flex flex-col items-center gap-y-[22px]">
+        {/* div de consultas */}
+      
+        <div className="w-full h-[45%] border border-[#D9D9D9] rounded-3xl mt-6 p-6 flex flex-col items-center gap-y-4"> 
 
-            {/* Carde de consulta */}
-
-            <ConsultCard date="18/02" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
-            <ConsultCard date="20/03" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
-            <ConsultCard date="15/04" time="14:00" title="Primeira consulta" doctor="Dr. José Carlos" />
-            <ConsultCard date="20/03" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
-
-
-
+          <ConsultCard date="18/02" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
+          <ConsultCard date="20/03" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
+          <ConsultCard date="15/04" time="14:00" title="Primeira consulta" doctor="Dr. José Carlos" />
+          <ConsultCard date="20/03" time="13:00" title="Primeira consulta" doctor="Dr. José Carlos" />
+            
 
           </div>
-
-
 
         </div>
 
