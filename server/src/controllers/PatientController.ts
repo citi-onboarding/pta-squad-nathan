@@ -3,49 +3,37 @@ import { Citi, Crud } from "../global";
 
 // Classe RegisterController implementa a interface CRUD para gerenciar animais
 class RegisterController implements Crud {
-  constructor(private readonly citi = new Citi("Animal")) {}
+  constructor(private readonly citi = new Citi("Patient")) {}
   // Método para criar um novo animal no banco de dados
   create = async (request: Request, response: Response) => {
 
     const {
-      patientName,
+      name,
       tutorName,
-      patientSpecies,
-      patientAge,
-      typeConsultation,
-      responsibleDoctor,
-      dateService,
-      timeService,
-      problemDescription
+      age,
+      species,
+      gender
     } = request.body;
 
     // Verifica se algum dos campos obrigatórios não foi preenchido
     const isAnyUndefined = this.citi.areValuesUndefined(
-      patientName,
+      name,
       tutorName,
-      patientSpecies,
-      patientAge,
-      typeConsultation,
-      responsibleDoctor,
-      dateService,
-      timeService,
-      problemDescription
+      age,
+      species,
+      gender
     );
     if (isAnyUndefined) return response.status(400).send();
 
     // Cria um novo objeto de animal com os dados fornecidos e insere no banco de dados
-    const newAnimal = {
-      patientName,
+    const newPatient = {
+      name,
       tutorName,
-      patientSpecies,
-      patientAge,
-      typeConsultation,
-      responsibleDoctor,
-      dateService,
-      timeService,
-      problemDescription
+      age,
+      species,
+      gender
     };
-    const { httpStatus, message } = await this.citi.insertIntoDatabase(newAnimal);
+    const { httpStatus, message } = await this.citi.insertIntoDatabase(newPatient);
     // Retorna a resposta com o status HTTP e a mensagem de sucesso ou erro
     return response.status(httpStatus).send({ message });
 
@@ -54,7 +42,7 @@ class RegisterController implements Crud {
   // Método para obter todos os animais do banco de dados
   get = async (request: Request, response: Response) => {
     const {httpStatus, values} = await this.citi.getAll();
-    
+
     return response.status(httpStatus).send(values);
   };
 
@@ -73,27 +61,19 @@ class RegisterController implements Crud {
     const { id } = request.params
 
     const {
-      patientName,
+      name,
       tutorName,
-      patientSpecies,
-      patientAge,
-      typeConsultation,
-      responsibleDoctor,
-      dateService,
-      timeService,
-      problemDescription
+      age,
+      species,
+      gender
     } = request.body;
 
     const updatedValues = {
-      patientName,
+      name,
       tutorName,
-      patientSpecies,
-      patientAge,
-      typeConsultation,
-      responsibleDoctor,
-      dateService,
-      timeService,
-      problemDescription
+      age,
+      species,
+      gender
     };
 
     const  { httpStatus, messageFromUpdate } = await this.citi.updateValue(
