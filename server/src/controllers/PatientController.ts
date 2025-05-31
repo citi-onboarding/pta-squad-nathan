@@ -3,7 +3,7 @@ import { Citi, Crud } from "../global";
 
 // Classe RegisterController implementa a interface CRUD para gerenciar animais
 class RegisterController implements Crud {
-  constructor(private readonly citi = new Citi("Patient")) {}
+  constructor(private readonly citi = new Citi("Patient", "idPaciente")) {}
   // Método para criar um novo animal no banco de dados
   create = async (request: Request, response: Response) => {
 
@@ -48,7 +48,8 @@ class RegisterController implements Crud {
 
   // Método para deletar um animal do banco de dados
   delete = async (request: Request, response: Response) => {
-    const { id } = request.params;
+    const { idPaciente } = request.params;
+    const id = parseInt(idPaciente);
 
     const { httpStatus, messageFromDelete } = await this.citi.deleteValue(id);
 
@@ -58,7 +59,8 @@ class RegisterController implements Crud {
 
   // Método para atualizar os dados de um animal no banco de dados
   update = async (request: Request, response: Response) => {
-    const { id } = request.params
+    const { idPaciente } = request.params
+    const id = parseInt(idPaciente);
 
     const {
       name,
