@@ -97,7 +97,9 @@ export default class Citi<Entity extends ModelNames> {
       const values = await prisma[
         this.entity.toLowerCase() as Uncapitalize<Prisma.ModelName>
         //@ts-expect-error
-      ].findMany<Models[Entity]>();
+      ].findMany({
+        include: this.entity === 'Patient' ? { consultations: true } : undefined
+      });
       Terminal.show(Message.GET_ALL_VALUES_FROM_DATABASE);
       return {
         httpStatus: 200,

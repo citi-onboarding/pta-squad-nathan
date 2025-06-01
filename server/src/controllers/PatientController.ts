@@ -21,7 +21,11 @@ class RegisterController implements Crud {
       tutorName,
       age,
       species,
-      gender
+      gender,
+      doctorName,
+      datetime,
+      type,
+      description
     } = request.body;
 
     // Validação básica 
@@ -35,7 +39,11 @@ class RegisterController implements Crud {
       tutorName,
       age,
       species,
-      gender
+      gender,
+      doctorName,
+      datetime,
+      type,
+      description
     );
     if (isAnyUndefined) return response.status(400).send();
 
@@ -46,7 +54,15 @@ class RegisterController implements Crud {
       // Converte a idade de string para número
       age: this.calculateAge(age),
       species,
-      gender
+      gender,
+      consultations: {
+        create: {
+          doctorName,
+          datetime: new Date(datetime), // Converte a string de data para um objeto Date
+          type,
+          description
+        },
+      },
     };
     const { httpStatus, message } = await this.citi.insertIntoDatabase(newPatient);
     // Retorna a resposta com o status HTTP e a mensagem de sucesso ou erro
@@ -82,20 +98,42 @@ class RegisterController implements Crud {
       tutorName,
       age,
       species,
-      gender
+      gender,
+      doctorName,
+      datetime,
+      type,
+      description
     } = request.body;
 
   // Validação básica
   if (!age || typeof age !== 'string') {
     return response.status(400).send({ message: "O campo 'age' deve ser uma data no formato YYYY-MM-DD" });
   }
+  
+  const { idConsulta } = request.body;
+  
+  if (!idConsulta || typeof idConsulta !== "number") {
+    return response.status(400).send({ message: 'O campo "idConsulta" é obrigatório e deve ser um número.' });
+}
 
     const updatedValues = {
       name,
       tutorName,
       age: this.calculateAge(age),
       species,
-      gender
+      gender,
+      consultations: {
+        update: {
+          where: { idConsulta: idConsulta },
+          data: {
+            doctorName,
+            datetime: new Date(datetime),
+            type,
+            description
+          },
+        },
+      },
+
     };
 
     const  { httpStatus, messageFromUpdate } = await this.citi.updateValue(

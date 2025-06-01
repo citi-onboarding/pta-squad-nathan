@@ -26,6 +26,9 @@ constructor(private readonly citi = new Citi("Patient", "idPaciente")) {}
   - Tabela: `Patient` (pacientes animais);
   - Campo ID: `idPaciente`.
 
+**Consultas Relacionadas:**  
+Ao criar ou atualizar um paciente, também é possível registrar ou modificar uma **consulta** vinculada a ele.
+
 ---
 
 ## Método para Calcular a Idade do Paciente
