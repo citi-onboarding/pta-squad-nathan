@@ -4,12 +4,12 @@ import { cat, cow, dog, horse, pig, sheep } from "@/assets"
 
 // Importando as imagens dos animais
 const animals = [
-  { name: "sheep", image: sheep },
-  { name: "cat", image: cat },
-  { name: "pig", image: pig },
-  { name: "cow", image: cow },
-  { name: "horse", image: horse },
-  { name: "dog", image: dog },
+  { name: "SHEEP", image: sheep },
+  { name: "CAT", image: cat },
+  { name: "PIG", image: pig },
+  { name: "COW", image: cow },
+  { name: "HORSE", image: horse },
+  { name: "DOG", image: dog },
 ];
 
 // Definindo a interface para as propriedades do componente AnimalSelector
@@ -32,7 +32,7 @@ export function AnimalSelector({ selected, onSelect }: AnimalSelectorProps) {
             src={image}
             alt={name}
             className={`
-                ${name === 'dog' ? 'w-20 h-20' : 'w-24 h-24'}
+                ${name === 'DOG' ? 'w-20 h-20' : 'w-24 h-24'}
                 object-contain
             `}
           />
