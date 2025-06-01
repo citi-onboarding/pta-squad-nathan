@@ -7,6 +7,7 @@ import { AnimalSelector } from "./animalSelector"
 import { RegisterModal } from "./registerModal"
 import { arrowBack } from "@/assets"
 import { arrowDown } from "@/assets"
+import Link from "next/link"
 
 // Nossa função principal, que importa os componentes necessários
 export default function Register() {
@@ -47,12 +48,14 @@ function Form() {
     <form className="max-w-screen-2xl mx-auto space-y-3 mt-6 p-4 sm:p-0">
 
       {/* Botão de voltar para a página de cadastro*/}
-      <button>
-        <div className="flex items-center mb-5">
-          <Image className="sm:w-4 sm:h-7" src={arrowBack} alt="arrowBack"/>
-          <label className="font-source text-4xl sm:text-5xl font-bold ml-6 cursor-pointer">Cadastro</label>
-        </div>
-      </button>
+      <Link href={"/"}>
+        <button>
+          <div className="flex items-center mb-5">
+            <Image className="sm:w-4 sm:h-7" src={arrowBack} alt="arrowBack"/>
+            <label className="font-source text-4xl sm:text-5xl font-bold ml-6 cursor-pointer">Cadastro</label>
+          </div>
+        </button>
+      </Link>
 
 
       {/* Campos do formulário */}
