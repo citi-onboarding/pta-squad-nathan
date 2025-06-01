@@ -10,6 +10,58 @@ import Switch from "@/components/ui/switch";
 import Link from "next/link";
 
 export default function Home() {
+
+  const consultas = [
+    {
+      nomeMedico: "Dr. José Carlos",
+      nomePet: "Luna",
+      nomeDono: "João Alves",
+      data: "18/02",
+      horario: "13:00",
+      categoriaConsulta: "Primeira Consulta",
+    },
+    {
+      nomeMedico: "Dr. José Carlos",
+      nomePet: "Luna",
+      nomeDono: "João Alves",
+      data: "18/02",
+      horario: "13:00",
+      categoriaConsulta: "Primeira Consulta",
+    },
+    {
+      nomeMedico: "Dr. José Carlos",
+      nomePet: "Luna",
+      nomeDono: "João Alves",
+      data: "18/02",
+      horario: "13:00",
+      categoriaConsulta: "Primeira Consulta",
+    },
+    {
+      nomeMedico: "Dr. José Carlos",
+      nomePet: "Luna",
+      nomeDono: "João Alves",
+      data: "18/02",
+      horario: "13:00",
+      categoriaConsulta: "Primeira Consulta",
+    },
+    {
+      nomeMedico: "Dr. José Carlos",
+      nomePet: "Luna",
+      nomeDono: "João Alves",
+      data: "18/02",
+      horario: "13:00",
+      categoriaConsulta: "Primeira Consulta",
+    },
+    {
+      nomeMedico: "Dr. José Carlos",
+      nomePet: "Luna",
+      nomeDono: "João Alves",
+      data: "18/02",
+      horario: "13:00",
+      categoriaConsulta: "Primeira Consulta",
+    }
+  ];
+
   return (
     <div className="w-full h-screen pb-[4%]">
       <Header />
@@ -52,54 +104,18 @@ export default function Home() {
       </div>
 
       <div className="flex flex-wrap gap-6 ml-[10%] mt-[2%]">
-        <Textblock
-          nomeMedico="Dr. José Carlos"
-          nomePet="Luna"
-          nomeDono="João Alves"
-          data="18/02"
-          horario="13:00"
-          categoriaConsulta="Primeira Consulta"
-        />
-        <Textblock
-          nomeMedico="Dr. José Carlos"
-          nomePet="Luna"
-          nomeDono="João Alves"
-          data="18/02"
-          horario="13:00"
-          categoriaConsulta="Primeira Consulta"
-        />
-        <Textblock
-          nomeMedico="Dr. José Carlos"
-          nomePet="Luna"
-          nomeDono="João Alves"
-          data="18/02"
-          horario="13:00"
-          categoriaConsulta="Primeira Consulta"
-        />
-        <Textblock
-          nomeMedico="Dr. José Carlos"
-          nomePet="Luna"
-          nomeDono="João Alves"
-          data="18/02"
-          horario="13:00"
-          categoriaConsulta="Primeira Consulta"
-        />
-        <Textblock
-          nomeMedico="Dr. José Carlos"
-          nomePet="Luna"
-          nomeDono="João Alves"
-          data="18/02"
-          horario="13:00"
-          categoriaConsulta="Primeira Consulta"
-        />
-        <Textblock
-          nomeMedico="Dr. José Carlos"
-          nomePet="Luna"
-          nomeDono="João Alves"
-          data="18/02"
-          horario="13:00"
-          categoriaConsulta="Primeira Consulta"
-        />
+        {
+          consultas.map((consulta, index) => (
+            <Textblock
+            key={index}
+            nomeMedico={consulta.nomeMedico}
+            nomePet={consulta.nomePet}
+            nomeDono={consulta.nomeDono}
+            data={consulta.data}
+            horario={consulta.horario}
+            categoriaConsulta={consulta.categoriaConsulta}
+          />
+          ))}
       </div>
 
       <Link href={"/registro"}>
