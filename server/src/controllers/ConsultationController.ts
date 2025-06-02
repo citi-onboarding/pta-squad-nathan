@@ -5,7 +5,7 @@ class ConsultationController implements Crud {
     constructor(private readonly citi = new Citi('Consultation')) {}
 
     create = async (request: Request, response: Response) => {
-        const { date, time, doctorName, consultationType, patientId } = request.body;
+        const { date, time, doctorName, consultationType } = request.body;
 
         console.log('Dados recebidos:', request.body);
 
@@ -15,11 +15,10 @@ class ConsultationController implements Crud {
             time,
             doctorName,
             consultationType,
-            patientId
         );
 
         if (isAnyUndefined) {
-            console.error('Campos undefined:', { date, time, doctorName, consultationType, patientId });
+            console.error('Campos undefined:', { date, time, doctorName, consultationType });
             return response.status(400).json({ 
                 message: 'Todos os campos são obrigatórios' 
             });
@@ -33,7 +32,6 @@ class ConsultationController implements Crud {
                 type: consultationType,
                 doctorName,
                 description: "Consulta agendada via sistema", // Valor padrão
-                patientId: patientId 
             };
 
             const { httpStatus, message } = await this.citi.insertIntoDatabase(prismaData);
