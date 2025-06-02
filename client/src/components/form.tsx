@@ -197,14 +197,18 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
         
         <div className="flex-1">
           <label className={labelStyles}>Data de nascimento do paciente</label>
-          <div className={placeHolderStyles}>
+          <div className={`${placeHolderStyles} ${errors?.dataNascimento ? "input-error border-red-500" : ""}`}>
             
             <Controller
             control={control}
             name="dataNascimento"
             defaultValue={null}
+            rules={{
+              required: "A data de nascimento é obrigatória.",
+              validate: value => value instanceof Date && !isNaN(value.getTime()) || "Data de nascimento inválida."
+            }}
             render={({ field }) => (
-            
+
             <Calendar
             text={
               field.value
@@ -215,12 +219,16 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
             onChange={field.onChange}
             popUpPosition="absolute bottom-[100%] right-[6.25%]"
             />
-          
-            )}
-            />
             
-          </div>
-        
+            )}
+
+            />
+            </div>
+            {errors.dataNascimento && (
+              <p className="text-red-500 text-xs">
+                {errors.dataNascimento.message?.toString()}
+              </p>
+            )}
         </div>
 
         {/* Insere o campo do tipo de consulta */}
