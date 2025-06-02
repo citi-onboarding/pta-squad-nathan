@@ -7,7 +7,7 @@ import Textblock from "@/components/ui/textBlock";
 
 import { Cross } from "@/assets";
 import Switch from "@/components/ui/switch";
-import Calendar from "@/components/ui/calendarBox";
+import Calendar from "@/components/calendarBox_ptbr";
 
 export default function Home() {
 
