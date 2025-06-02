@@ -1,4 +1,3 @@
-
 # Documentação do Componente de Cadastro
 
 Este documento descreve o funcionamento do componente de cadastro. Ele é construído com **React** (Next.js) e **Tailwind CSS**, utilizando componentes personalizados e gerenciamento de estado via `useState`.

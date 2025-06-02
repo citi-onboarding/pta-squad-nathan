@@ -35,7 +35,10 @@ type ModelUpdateInput = {
  * Classe que representa um conjunto de operações de banco de dados que podem ser realizadas em uma entidade.
  */
 export default class Citi<Entity extends ModelNames> {
-  constructor(readonly entity: Entity) {}
+  constructor(
+    readonly entity: Entity,
+    private readonly primaryKey: string
+  ) {}
   /**
    * Verifica se algum dos elementos fornecidos está indefinido.
    *
@@ -94,7 +97,9 @@ export default class Citi<Entity extends ModelNames> {
       const values = await prisma[
         this.entity.toLowerCase() as Uncapitalize<Prisma.ModelName>
         //@ts-expect-error
-      ].findMany<Models[Entity]>();
+      ].findMany({
+        include: this.entity === 'Patient' ? { consultations: true } : undefined
+      });
       Terminal.show(Message.GET_ALL_VALUES_FROM_DATABASE);
       return {
         httpStatus: 200,
@@ -124,7 +129,7 @@ export default class Citi<Entity extends ModelNames> {
         //@ts-expect-error
       ].findFirst({
         where: {
-          id: Number(id),
+          [this.primaryKey]: Number(id),
         },
       });
       Terminal.show(Message.VALUE_WAS_FOUND);
@@ -165,7 +170,7 @@ export default class Citi<Entity extends ModelNames> {
         //@ts-expect-error
       ].update({
         where: {
-          id: Number(id),
+          [this.primaryKey]: Number(id),
         },
         data: object,
       });
@@ -197,7 +202,7 @@ export default class Citi<Entity extends ModelNames> {
         //@ts-expect-error
       ].delete({
         where: {
-          id: Number(id),
+          [this.primaryKey]: Number(id),
         },
       });
       Terminal.show(Message.VALUE_DELETED_FROM_DATABASE);
