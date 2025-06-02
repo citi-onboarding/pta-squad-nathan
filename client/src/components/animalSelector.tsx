@@ -32,7 +32,7 @@ export function AnimalSelector({ selected, onSelect }: AnimalSelectorProps) {
             src={image}
             alt={name}
             className={`
-                ${name === 'PIG' ? 'mt-0.5 w-24 h-24' : 'w-24 h-24'}
+                ${name === 'PIG' ? 'mt-1 w-24 h-24' : name === 'DOG' ? 'w-24 h-24' : 'w-24 h-24'}
                 object-contain
             `}
           />
