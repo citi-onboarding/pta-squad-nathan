@@ -7,8 +7,9 @@ import { AnimalSelector } from "./animalSelector"
 import { RegisterModal } from "./registerModal"
 import { arrowBack, arrowDown } from "@/assets"
 import api from "@/services/api"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { Button } from "./ui/button"
+import Calendar from "@/components/ui/calendarBoxCopy";
 
 // Nossa função principal, que importa os componentes necessários
 export default function Register() {
@@ -41,7 +42,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       }
   };
   
-  const { register, handleSubmit, formState: { errors },reset } = useForm();
+  const { register, control, handleSubmit, formState: { errors }, reset } = useForm();
 
   // Estilos padrões para os campos - gerando economia de tempo e reutilização
   const labelStyles = "block mb-1 font-sf font-bold";
@@ -54,32 +55,60 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
     if (!especieSelecionada) {
       alert("Selecione uma espécie.");
       return;
+    }
+  
+    // Converrte a data de nascimento do paciente para o formato ISO 8601
+    const dataNascimento = dataForm.dataNascimento as Date;
+    if (!dataNascimento || isNaN(dataNascimento.getTime())) {
+      alert("Data de nascimento inválida.");
+      return;
   }
-  
-  const datetime = new Date(`${dataForm.dataAtendimento}T${dataForm.horaAtendimento}:00Z`).toISOString();
-  
-  const data = {
-    name: dataForm.nomePaciente,
-    tutorName: dataForm.nomeTutor,
-    age: dataForm.dataNascimento,
-    species: especieSelecionada,
-    gender: dataForm.genero,
-    doctorName: dataForm.medicoResponsavel,
-    datetime,
-    type: dataForm.tipoConsulta,
-    description: dataForm.descricao,
-  };
 
-  try {
-    const response = await api.post("/consultations", data);
-    console.log("Enviado com sucesso:", response.data);
-    setModalAberto(true);
-    reset();
-  } catch (error) {
-    console.error("Erro ao enviar:", error);
-    alert("Erro ao cadastrar.");
+    const anoNasc = dataNascimento.getFullYear();
+    const mesNasc = (dataNascimento.getMonth() + 1).toString().padStart(2, "0");
+    const diaNasc = dataNascimento.getDate().toString().padStart(2, "0");
+    const dataNascimentoFormatada = `${anoNasc}-${mesNasc}-${diaNasc}`;
+    
+    // Converte a data e hora do atendimento para o formato ISO 8601
+    // O formato é necessário para o envio correto dos dados para a API
+    const dataAtendimento = dataForm.dataAtendimento as Date;
+    
+    if (!dataAtendimento || isNaN(dataAtendimento.getTime())) {
+      alert("Data do atendimento inválida.");
+      return;
   }
-};
+
+    const ano = dataAtendimento.getFullYear();
+    const mes = (dataAtendimento.getMonth() + 1).toString().padStart(2, "0");
+    const dia = dataAtendimento.getDate().toString().padStart(2, "0");
+
+    const dataFormatada = `${ano}-${mes}-${dia}`;
+    const horaAtendimento = dataForm.horaAtendimento || "00:00";
+
+    const datetime = new Date(`${dataFormatada}T${horaAtendimento}:00Z`).toISOString();
+
+    const data = {
+      name: dataForm.nomePaciente,
+      tutorName: dataForm.nomeTutor,
+      age: dataNascimentoFormatada,
+      species: especieSelecionada,
+      gender: dataForm.genero,
+      doctorName: dataForm.medicoResponsavel,
+      datetime,
+      type: dataForm.tipoConsulta,
+      description: dataForm.descricao,
+    };
+
+    try {
+      const response = await api.post("/registro", data);
+      console.log("Enviado com sucesso:", response.data);
+      setModalAberto(true);
+      reset();
+    } catch (error) {
+      console.error("Erro ao enviar:", error);
+      alert("Erro ao cadastrar.");
+  }
+  };
  
   return (
     // Define as dimensões do formulário
@@ -115,7 +144,6 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
           {errors?.nomePaciente?.type === "required" && <p className="error-message text-red-500 text-xs mt-0.5">É obrigatório informar o nome do paciente.</p>}
         </div>
 
-        {/* Insere o campo do nome do tutor */}
         <div className="flex-1 mb-2">
           <label className={labelStyles}>Nome do tutor</label>
           <input
@@ -145,7 +173,8 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
               validate: (value) => value !== "" || "É obrigatório informar o gênero do paciente.",
             })}
             defaultValue=""
-              >
+            >
+
                 <option value="" disabled>Selecione aqui</option>
                 <option value="FEMALE">Fêmea</option>
                 <option value="MALE">Macho</option>
@@ -159,20 +188,39 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
 
           </div>
 
-          {errors.genero && (
+          {errors.genero &&(
             <p className="text-red-500 text-xs mt-0.5">
               {errors.genero.message?.toString()}
               </p>
-            )}
-
+          )}
         </div>
-
+        
         <div className="flex-1">
           <label className={labelStyles}>Data de nascimento do paciente</label>
-          <input
-          type="date" className={placeHolderStyles}
-          {...register("dataNascimento")}
-          />
+          <div className={placeHolderStyles}>
+            
+            <Controller
+            control={control}
+            name="dataNascimento"
+            defaultValue={null}
+            render={({ field }) => (
+            
+            <Calendar
+            text={
+              field.value
+              ? field.value.toLocaleDateString("pt-BR")
+              : "dd/mm/aa"
+            }
+            value={field.value}
+            onChange={field.onChange}
+            popUpPosition="absolute bottom-[100%] right-[6.25%]"
+            />
+          
+            )}
+            />
+            
+          </div>
+        
         </div>
 
         {/* Insere o campo do tipo de consulta */}
@@ -186,6 +234,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
             {...register("tipoConsulta")}
             defaultValue=""
             >
+
               <option value="" disabled>Selecione aqui</option>
               <option value="FIRST">Primeira consulta</option>
               <option value="VACINATION">Vacinação</option>
@@ -194,10 +243,12 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
             </select>
 
             <Image src={arrowDown} className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-2" alt="arrowDown"/>
+          
           </div>
         </div>
-      </div>
 
+      </div>
+      
 
       {/* O campo abaixo é dividido em três partes: médico responsável, data do atendimento e horário do atendimento */}
       <div className={blocksStyles}>
@@ -211,11 +262,30 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
 
         <div className="flex-1">
           <label className={labelStyles}>Data do atendimento</label>
-          <input
-          type="date" className={placeHolderStyles}
-          {...register("dataAtendimento")}
+          <div className={placeHolderStyles}>
+            
+            <Controller
+            control={control}
+            name="dataAtendimento"
+            defaultValue={null}
+            render={({ field }) => (
+            
+            <Calendar
+            text={
+              field.value
+              ? field.value.toLocaleDateString("pt-BR")
+              : "dd/mm/aa"
+            }
+            value={field.value}
+            onChange={field.onChange}
+            popUpPosition="absolute bottom-[100%] right-[6.25%]"
+            />
+
+          )}
           />
-        </div>
+          
+          </div>
+          </div>
 
         <div className="flex-1">
           <label className={labelStyles}>Horário do atendimento</label>
@@ -236,6 +306,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       {...register("descricao")}
       />
       
+
       <div className="flex justify-center sm:justify-end max-w-screen-2xl mx-auto">
         <Button
         type="submit"
@@ -246,7 +317,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       </div>
 
   </form>
-  
+
   );
 
 }
