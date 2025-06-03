@@ -6,14 +6,15 @@ interface SwitchDayTimeProps {
   primeiro_icon: React.FC<SvgProps>;
   segundo_icon: React.FC<SvgProps>;
   terceiro_icon: React.FC<SvgProps>;
+  setActive: (value: "primeiro" | "segundo" | "terceiro") => void;
 }
 
 export default function SwitchDayTime({
   primeiro_icon: PrimeiroIcon,
   segundo_icon: SegundoIcon,
   terceiro_icon: TerceiroIcon,
+  setActive,
 }: SwitchDayTimeProps) {
-  const [active, setActive] = useState<"primeiro" | "segundo" | "terceiro">("primeiro");
 
   return (
     <View
