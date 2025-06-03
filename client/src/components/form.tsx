@@ -48,7 +48,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
   const labelStyles = "block mb-1 font-sf font-bold";
   const placeHolderStyles = "w-full p-2 border rounded-lg border-black";
   const blocksStyles = "flex flex-col sm:flex-row gap-6";
-  const errorStyles = "error-message text-red-500 text-xl mt-0.5";
+  const errorStyles = "error-message text-red-500 text-xs mt-0.5";
   
   // Função para lidar com o envio do formulário
   // A função é assíncrona e usa o método POST da API para enviar os dados do formulário
@@ -101,8 +101,8 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
     };
 
     try {
-      //const response = await api.post("/registro", data);
-      //console.log("Enviado com sucesso:", response.data);
+      const response = await api.post("/registro", data);
+      console.log("Enviado com sucesso:", response.data);
       setModalAberto(true);
       reset();
     } catch (error) {
@@ -115,7 +115,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
     // Define as dimensões do formulário
     <form
     id="form-cadastro"
-    className="max-w-screen-2xl mx-auto -mt-8 space-y-3 p-16 2xl:p-0 2xl:mt-14"
+    className="max-w-screen-2xl mx-auto -mt-6 space-y-2.5 p-8 2xl:p-0 2xl:mt-8"
     onSubmit={handleSubmit(onSubmit)}
     >
 
@@ -136,7 +136,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       {/* O campo abaixo é dividido em duas partes: nome do paciente e nome do tutor */}
       <div className={blocksStyles}>
         <div className="flex-1">
-          <label className={labelStyles}>Nome do paciente</label>
+          <label className={labelStyles}>Nome do Paciente</label>
           <input
           className={`${placeHolderStyles} ${errors?.nomePaciente ? "input-error border-red-500" : ""}`}
           type="text" placeholder="Digite aqui..."
@@ -146,7 +146,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
         </div>
 
         <div className="flex-1 mb-2">
-          <label className={labelStyles}>Nome do tutor</label>
+          <label className={labelStyles}>Nome do Tutor</label>
           <input
           className={`${placeHolderStyles} ${errors?.nomeTutor ? "input-error border-red-500" : ""}`}
           type="text" placeholder="Digite aqui..."
@@ -159,14 +159,14 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
 
       {/* Insere o campo da espécie do paciente */}
       {/* O componente AnimalSelector é responsável por renderizar as opções de espécies */}
-      <label className={labelStyles}>Qual é a espécie do paciente?</label>
+      <label className={labelStyles}>Qual é a Espécie do Paciente?</label>
       <AnimalSelector selected={especieSelecionada} onSelect={handleSelecionarEspecie}/>
 
 
       {/* O campo abaixo é dividido em três partes: gênero do paciente, idade e tipo de consulta */}
       <div className={blocksStyles}>
         <div className="flex-1">
-          <label className={labelStyles}>Gênero do paciente</label>
+          <label className={labelStyles}>Gênero do Paciente</label>
           <div className={`border rounded-lg relative ${errors?.genero ? "border-red-500" : "border-black"}`}>
 
             <select className="w-full p-2 appearance-none bg-transparent"
@@ -190,14 +190,14 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
           </div>
 
           {errors.genero &&(
-            <p className="text-red-500 text-xs mt-0.5">
+            <p className={errorStyles}>
               {errors.genero.message?.toString()}
-              </p>
+            </p>
           )}
         </div>
         
         <div className="flex-1">
-          <label className={labelStyles}>Data de nascimento do paciente</label>
+          <label className={labelStyles}>Data de Nascimento do Paciente</label>
           <div className={`${placeHolderStyles} ${errors?.dataNascimento ? "input-error border-red-500" : ""}`}>
             
             <Controller
@@ -236,8 +236,8 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
         {/* O campo é um select com opções pré-definidas */}
         {/* A imagem arrowDown é usada como um ícone para indicar que é um campo de seleção */}
         <div className="flex-1">
-          <label className={labelStyles}>Tipo de consulta</label>
-          <div className={`border rounded-lg relative ${errors?.tipoConsulta ? "border-red-500" : ""}`}>
+          <label className={labelStyles}>Tipo de Consulta</label>
+          <div className={`border rounded-lg relative ${errors?.tipoConsulta ? "border-red-500" : "border-black"}`}>
 
             <select className="w-full p-2 appearance-none bg-transparent"
             {...register("tipoConsulta", {
@@ -263,7 +263,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
           {errors.tipoConsulta &&(
             <p className={errorStyles}>
               {errors.tipoConsulta.message?.toString()}
-              </p>
+            </p>
           )}
 
         </div>
@@ -274,15 +274,38 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       {/* O campo abaixo é dividido em três partes: médico responsável, data do atendimento e horário do atendimento */}
       <div className={blocksStyles}>
         <div className="flex-1">
-          <label className={labelStyles}>Médico responsável</label>
-          <input
-          type="text" placeholder="Digite aqui..." className={placeHolderStyles}
-          {...register("medicoResponsavel")}
-          />
+          <label className={labelStyles}>Médico Responsável</label>
+          <div className={`border rounded-lg relative ${errors?.doctorName ? "border-red-500" : "border-black"}`}>
+            
+            <select className="w-full p-2 appearance-none bg-transparent"
+            {...register("doctorName", {
+              validate: (value) => value !== "" || "É obrigatório informar o médico responsável pelo paciente.",
+            })}
+            defaultValue=""
+            >
+              
+              <option value="" disabled>Selecione aqui</option>
+              <option value="DOCTOR_01">Opção 01</option>
+              <option value="DOCTOR_02">Opção 02</option>
+            </select>
+            
+            <Image
+            src={arrowDown}
+            className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-2"
+            alt="arrowDown"
+            />
+
+          </div>
+          
+          {errors.doctorName &&(
+            <p className={errorStyles}>
+              {errors.doctorName.message?.toString()}
+            </p>
+          )}
         </div>
 
         <div className="flex-1">
-          <label className={labelStyles}>Data do atendimento</label>
+          <label className={labelStyles}>Data do Atendimento</label>
           <div className={`${placeHolderStyles} ${errors?.dataAtendimento ? "input-error border-red-500" : ""}`}>
             
             <Controller
@@ -311,19 +334,27 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
           
           </div>  
           {errors.dataAtendimento && (
-              <p className="text-red-500 text-xs">
+              <p className={errorStyles}>
                 {errors.dataAtendimento.message?.toString()}
               </p>
             )}
           </div>
 
         <div className="flex-1">
-          <label className={labelStyles}>Horário do atendimento</label>
+          <label className={labelStyles}>Horário do Atendimento</label>
           <input
-          type="time" className={placeHolderStyles}
-          {...register("horaAtendimento")}
-          defaultValue="00:00"
+          type="time"
+          className={placeHolderStyles}
+          //defaultValue="00:00"
+          {...register("horaAtendimento", {
+            required:"É obrigatório informar o horario do atendimento."
+          })}
           />
+          {errors.horaAtendimento && (
+            <p className={errorStyles}>
+              {errors.horaAtendimento.message?.toString()}
+            </p>
+          )}
         </div>
       </div>
       
@@ -331,7 +362,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       {/* Insere o campo da descrição do problema */}
       {/* O campo é um textarea com um tamanho mínimo definido */}
       <div className="mb-2">
-        <label className={labelStyles}>Descrição do problema</label>
+        <label className={labelStyles}>Descrição do Problema</label>
         <textarea
         placeholder="Digite aqui..."
         className="w-full p-3 border rounded-lg border-black min-h-24"
@@ -347,7 +378,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       <div className="flex justify-center sm:justify-end max-w-screen-2xl mx-auto">
         <Button
         type="submit"
-        className="w-auto h-auto font-sf font-bold sm:w-52 sm:h-12 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition mt-4 sm:mt-4"
+        className="w-auto h-auto font-sf font-bold sm:w-52 sm:h-12 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition mt-4 sm:mt-2"
         >
           Finalizar Cadastro
         </Button>
