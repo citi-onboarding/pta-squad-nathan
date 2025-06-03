@@ -1,7 +1,35 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { LogoCiti, SunFog, CloudSun, MoonStarts } from "@assets";
-import { SwitchDayTime } from "@components";
+import { SwitchDayTime, TextBlock } from "@components";
+
+const consultas = [
+  {
+    nomeMedico: "Dr. José Carlos",
+    nomePet: "Luna",
+    nomeDono: "João Alves",
+    data: "18/02",
+    horario: "13:00",
+    categoriaConsulta: "Primeira Consulta",
+  },
+  {
+    nomeMedico: "Dr. José Carlos",
+    nomePet: "Luna",
+    nomeDono: "João Alves",
+    data: "18/02",
+    horario: "13:00",
+    categoriaConsulta: "Primeira Consulta",
+  },
+  {
+    nomeMedico: "Dr. José Carlos",
+    nomePet: "Luna",
+    nomeDono: "João Alves",
+    data: "18/02",
+    horario: "13:00",
+    categoriaConsulta: "Primeira Consulta",
+  },
+];
+
 
 const App: React.FC = () => (
   <View className="flex-1 justify-start items-center bg-white px-4 pt-9">
@@ -22,6 +50,21 @@ const App: React.FC = () => (
         segundo_icon={CloudSun}
         terceiro_icon={MoonStarts}/>
     </View>
+
+    <View className="flex flex-col items-center gap-4 mt-8">
+      {consultas.map((consulta, index) => (
+        <TextBlock
+          key={index}
+          nomeMedico={consulta.nomeMedico}
+          nomePet={consulta.nomePet}
+          nomeDono={consulta.nomeDono}
+          data={consulta.data}
+          horario={consulta.horario}
+          categoriaConsulta={consulta.categoriaConsulta}
+        />
+      ))}
+    </View>
+
 
   </View>
 );
