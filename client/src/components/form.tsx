@@ -48,6 +48,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
   const labelStyles = "block mb-1 font-sf font-bold";
   const placeHolderStyles = "w-full p-2 border rounded-lg border-black";
   const blocksStyles = "flex flex-col sm:flex-row gap-6";
+  const errorStyles = "error-message text-red-500 text-xl mt-0.5";
   
   // Função para lidar com o envio do formulário
   // A função é assíncrona e usa o método POST da API para enviar os dados do formulário
@@ -100,8 +101,8 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
     };
 
     try {
-      const response = await api.post("/registro", data);
-      console.log("Enviado com sucesso:", response.data);
+      //const response = await api.post("/registro", data);
+      //console.log("Enviado com sucesso:", response.data);
       setModalAberto(true);
       reset();
     } catch (error) {
@@ -141,7 +142,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
           type="text" placeholder="Digite aqui..."
           {...register("nomePaciente", { required: true })}
           />
-          {errors?.nomePaciente?.type === "required" && <p className="error-message text-red-500 text-xs mt-0.5">É obrigatório informar o nome do paciente.</p>}
+          {errors?.nomePaciente?.type === "required" && <p className={errorStyles}>É obrigatório informar o nome do paciente.</p>}
         </div>
 
         <div className="flex-1 mb-2">
@@ -151,7 +152,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
           type="text" placeholder="Digite aqui..."
           {...register("nomeTutor", { required: true })}
           />
-          {errors?.nomeTutor?.type === "required" && <p className="error-message text-red-500 text-xs mt-0.5">É obrigatório informar o nome do tutor do paciente.</p>}
+          {errors?.nomeTutor?.type === "required" && <p className={errorStyles}>É obrigatório informar o nome do tutor do paciente.</p>}
         </div>
       </div>
       
@@ -225,7 +226,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
             />
             </div>
             {errors.dataNascimento && (
-              <p className="text-red-500 text-xs">
+              <p className={errorStyles}>
                 {errors.dataNascimento.message?.toString()}
               </p>
             )}
@@ -236,7 +237,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
         {/* A imagem arrowDown é usada como um ícone para indicar que é um campo de seleção */}
         <div className="flex-1">
           <label className={labelStyles}>Tipo de consulta</label>
-          <div className={`border rounded-lg relative ${errors?.tipoConsulta ? "border-red-500" : "border-black"}`}>
+          <div className={`border rounded-lg relative ${errors?.tipoConsulta ? "border-red-500" : ""}`}>
 
             <select className="w-full p-2 appearance-none bg-transparent"
             {...register("tipoConsulta", {
@@ -252,13 +253,16 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
               <option value="CHECKUP">Check-up geral</option>
             </select>
             
-            <Image src={arrowDown} className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-2" alt="arrowDown"/>
+            <Image src={arrowDown} 
+            className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-2"
+            alt="arrowDown"
+            />
             
           </div>
           
           {errors.tipoConsulta &&(
-            <p className="text-red-500 text-xs mt-0.5">
-              {errors.tipoConsulta?.toString()}
+            <p className={errorStyles}>
+              {errors.tipoConsulta.message?.toString()}
               </p>
           )}
 
@@ -279,12 +283,16 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
 
         <div className="flex-1">
           <label className={labelStyles}>Data do atendimento</label>
-          <div className={placeHolderStyles}>
+          <div className={`${placeHolderStyles} ${errors?.dataAtendimento ? "input-error border-red-500" : ""}`}>
             
             <Controller
             control={control}
             name="dataAtendimento"
             defaultValue={null}
+            rules={{
+              required: "Informe minimamente a data estimada de nascimento do animal.",
+              validate: value => value instanceof Date && !isNaN(value.getTime()) || "Data de atendimento inválida."
+            }}
             render={({ field }) => (
             
             <Calendar
@@ -301,7 +309,12 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
           )}
           />
           
-          </div>
+          </div>  
+          {errors.dataAtendimento && (
+              <p className="text-red-500 text-xs">
+                {errors.dataAtendimento.message?.toString()}
+              </p>
+            )}
           </div>
 
         <div className="flex-1">
@@ -317,13 +330,20 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
 
       {/* Insere o campo da descrição do problema */}
       {/* O campo é um textarea com um tamanho mínimo definido */}
-      <label className={labelStyles}>Descrição do problema</label>
-      <textarea
-      placeholder="Digite aqui..." className="w-full p-3 border rounded-lg border-black min-h-24"
-      {...register("descricao")}
-      />
-      
+      <div className="mb-2">
+        <label className={labelStyles}>Descrição do problema</label>
+        <textarea
+        placeholder="Digite aqui..."
+        className="w-full p-3 border rounded-lg border-black min-h-24"
+        {...register("descricao", {
+          required: "A descrição do problema é obrigatória.",
+        })}
+        />
 
+        {errors?.descricao && (
+          <p className={errorStyles}>{errors.descricao.message?.toString()}</p>
+        )}
+      </div>
       <div className="flex justify-center sm:justify-end max-w-screen-2xl mx-auto">
         <Button
         type="submit"
