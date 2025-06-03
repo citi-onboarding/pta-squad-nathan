@@ -21,7 +21,7 @@ export default function Home() {
       categoriaConsulta: "Primeira Consulta",
     },
     {
-      nomeMedico: "Dr. José Carlos",
+      nomeMedico: "Dr. 2",
       nomePet: "Luna",
       nomeDono: "João Alves",
       data: "18/02",
@@ -29,7 +29,7 @@ export default function Home() {
       categoriaConsulta: "Primeira Consulta",
     },
     {
-      nomeMedico: "Dr. José Carlos",
+      nomeMedico: "Dr. 2",
       nomePet: "Luna",
       nomeDono: "João Alves",
       data: "18/02",
@@ -37,7 +37,7 @@ export default function Home() {
       categoriaConsulta: "Primeira Consulta",
     },
     {
-      nomeMedico: "Dr. José Carlos",
+      nomeMedico: "Dr. 2",
       nomePet: "Luna",
       nomeDono: "João Alves",
       data: "18/02",
@@ -45,7 +45,7 @@ export default function Home() {
       categoriaConsulta: "Primeira Consulta",
     },
     {
-      nomeMedico: "Dr. José Carlos",
+      nomeMedico: "Dr. 4",
       nomePet: "Luna",
       nomeDono: "João Alves",
       data: "18/02",
@@ -53,7 +53,7 @@ export default function Home() {
       categoriaConsulta: "Primeira Consulta",
     },
     {
-      nomeMedico: "Dr. José Carlos",
+      nomeMedico: "Dr. 6",
       nomePet: "Luna",
       nomeDono: "João Alves",
       data: "18/02",
@@ -61,6 +61,8 @@ export default function Home() {
       categoriaConsulta: "Primeira Consulta",
     }
   ];
+
+  const [medico, setMedico] = useState("")
 
   return (
 
@@ -75,15 +77,20 @@ export default function Home() {
         <p className="text-2xl">Qual é o médico?</p>
 
         <div className="flex items-center gap-[1%] mt-[2%]">
-          <input
-            placeholder="Pesquise aqui..."
-            type="text"
-            className="border-black w-[31%] h-12 border rounded-lg placeholder-[#D9D9D9] text-base font-normal leading-[110%] tracking-[0%] pl-4"
-          />
-          <CustomButton
-            text="Buscar"
-            className="text-white bg-[#7D1AD7] hover:bg-[#690EB8] w-28 h-10 rounded-3x1 font-bold shadow-md"
-          />
+          
+          {/*Select de médicos por nome. Usa */}
+          <select onChange={(event) => setMedico(event.target.value)}
+            className="border-black w-[31%] h-12 border rounded-lg placeholder-[#D9D9D9] text-base font-normal leading-[110%] tracking-[0%] pl-4">
+            <option value="" disabled selected className="">Selecione um Médico...</option>
+            <option value="">Todos os Médicos</option>
+            <option value="Dr. José Carlos">Dr. José Carlos</option>
+            <option value="Dr. 2">Dr. 2</option>
+            <option value="Dr. 3">Dr. 3</option>
+            <option value="Dr. 4">Dr. 4</option>
+            <option value="Dr. 5">Dr. 5</option>
+            <option value="Dr. 6">Dr. 6</option>
+          </select>
+
         </div>
       </div>
 
@@ -107,8 +114,13 @@ export default function Home() {
 
 
       <div className="flex flex-wrap gap-6 ml-[10%] mt-[2%]">
-        {
-          consultas.map((consulta, index) => (
+        {/*Filtra os médicos por nome. Caso nenhum esteja selecionado, todos os cards são mostrados*/}
+        { consultas
+            .filter(consulta => {if (medico === "") return true;
+                                 return consulta.nomeMedico === medico;
+            })
+
+            .map((consulta, index) => (
             <Textblock
             key={index}
             nomeMedico={consulta.nomeMedico}
