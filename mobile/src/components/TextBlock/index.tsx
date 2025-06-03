@@ -41,8 +41,8 @@ export default function TextBlock ({
       {/* Coluna 3: Imagem do animal e categoria da consulta */}
       <View className="flex flex-col items-center gap-2">
         <Cat />
-        <View className="w-28 h-6 flex items-center justify-center gap-2 rounded-md p-1 bg-[#FFFFFF]">
-          <Text className="text-xs">{categoriaConsulta}</Text>
+        <View className="min-w-28 h-6 flex items-center justify-center gap-2 rounded-md p-1 bg-[#FFFFFF]">
+          <Text className="text-xs text-center">{categoriaConsulta}</Text>
         </View>
       </View>
     </View>

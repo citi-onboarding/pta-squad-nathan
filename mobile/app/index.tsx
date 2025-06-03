@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { LogoCiti, SunFog, CloudSun, MoonStarts } from "@assets";
 import { SwitchDayTime, TextBlock } from "@components";
 
@@ -30,15 +30,12 @@ const consultas = [
   },
 ];
 
-
 const App: React.FC = () => (
   <View className="flex-1 justify-start items-center bg-white px-4 pt-9">
     <LogoCiti className="mt-24" />
 
     <View className="w-full gap-3 mt-10">
-      <Text className="text-2xl font-bold text-left pl-6">
-        Sua agenda
-      </Text>
+      <Text className="text-2xl font-bold text-left pl-6">Sua agenda</Text>
       <Text className="text-sm text-left pl-5">
         Veja aqui todos os seus pacientes agendados para hoje.
       </Text>
@@ -48,24 +45,28 @@ const App: React.FC = () => (
       <SwitchDayTime
         primeiro_icon={SunFog}
         segundo_icon={CloudSun}
-        terceiro_icon={MoonStarts}/>
+        terceiro_icon={MoonStarts}
+      />
     </View>
 
-    <View className="flex flex-col items-center gap-4 mt-8">
-      {consultas.map((consulta, index) => (
-        <TextBlock
-          key={index}
-          nomeMedico={consulta.nomeMedico}
-          nomePet={consulta.nomePet}
-          nomeDono={consulta.nomeDono}
-          data={consulta.data}
-          horario={consulta.horario}
-          categoriaConsulta={consulta.categoriaConsulta}
-        />
-      ))}
-    </View>
+    {/* Todo o bloco de consultas é envolvido por um ScrollView */}
+    <ScrollView className="flex-1 mt-8" contentContainerStyle={{ alignItems: "center", paddingBottom: 16 }}>
+      <View className="flex flex-col items-center gap-4">
+        {consultas.map((consulta, index) => (
+          <TextBlock
+            key={index}
+            nomeMedico={consulta.nomeMedico}
+            nomePet={consulta.nomePet}
+            nomeDono={consulta.nomeDono}
+            data={consulta.data}
+            horario={consulta.horario}
+            categoriaConsulta={consulta.categoriaConsulta}
+          />
+        ))}
+      </View>
+    </ScrollView>
 
-
+    <View className="bg-[#50E678] rounded-t-3xl w-[108%] h-28 mt-[2%] absolute top-[95%]" />
   </View>
 );
 
