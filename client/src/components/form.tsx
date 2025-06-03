@@ -116,7 +116,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
     // Define as dimensões do formulário
     <form
     id="form-cadastro"
-    className="max-w-screen-2xl mx-auto -mt-6 space-y-2.5 p-8 2xl:p-0 2xl:mt-8"
+    className="max-w-screen-2xl mx-auto -mt-5 space-y-2.5 p-8 2xl:p-0 2xl:mt-8"
     onSubmit={handleSubmit(onSubmit)}
     >
 
