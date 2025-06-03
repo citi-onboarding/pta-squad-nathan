@@ -101,8 +101,9 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
     };
 
     try {
-      const response = await api.post("/registro", data);
-      console.log("Enviado com sucesso:", response.data);
+      //const response = await api.post("/registro", data);
+      //console.log("Enviado com sucesso:", response.data);
+      console.log(".json enviado: ", data)
       setModalAberto(true);
       reset();
     } catch (error) {
@@ -275,10 +276,10 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       <div className={blocksStyles}>
         <div className="flex-1">
           <label className={labelStyles}>Médico Responsável</label>
-          <div className={`border rounded-lg relative ${errors?.doctorName ? "border-red-500" : "border-black"}`}>
+          <div className={`border rounded-lg relative ${errors?.medicoResponsavel ? "border-red-500" : "border-black"}`}>
             
             <select className="w-full p-2 appearance-none bg-transparent"
-            {...register("doctorName", {
+            {...register("medicoResponsavel", {
               validate: (value) => value !== "" || "É obrigatório informar o médico responsável pelo paciente.",
             })}
             defaultValue=""
@@ -297,9 +298,9 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
 
           </div>
           
-          {errors.doctorName &&(
+          {errors.medicoResponsavel &&(
             <p className={errorStyles}>
-              {errors.doctorName.message?.toString()}
+              {errors.medicoResponsavel.message?.toString()}
             </p>
           )}
         </div>
