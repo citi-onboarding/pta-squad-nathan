@@ -236,10 +236,12 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
         {/* A imagem arrowDown é usada como um ícone para indicar que é um campo de seleção */}
         <div className="flex-1">
           <label className={labelStyles}>Tipo de consulta</label>
-          <div className="border rounded-lg border-black relative">
+          <div className={`border rounded-lg relative ${errors?.tipoConsulta ? "border-red-500" : "border-black"}`}>
 
             <select className="w-full p-2 appearance-none bg-transparent"
-            {...register("tipoConsulta")}
+            {...register("tipoConsulta", {
+              validate: (value) => value !== "" || "É obrigatório informar o tipo de consulta.",
+            })}
             defaultValue=""
             >
 
@@ -249,10 +251,17 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
               <option value="RETURN">Retorno de consulta</option>
               <option value="CHECKUP">Check-up geral</option>
             </select>
-
+            
             <Image src={arrowDown} className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-2" alt="arrowDown"/>
-          
+            
           </div>
+          
+          {errors.tipoConsulta &&(
+            <p className="text-red-500 text-xs mt-0.5">
+              {errors.tipoConsulta?.toString()}
+              </p>
+          )}
+
         </div>
 
       </div>
