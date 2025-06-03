@@ -4,48 +4,56 @@ import { Citi, Crud } from '../global';
 class ConsultationController implements Crud {
     constructor(private readonly citi = new Citi('Consultation')) {}
 
-    create = async (request: Request, response: Response) => {
-        const { date, time, doctorName, consultationType } = request.body;
+   create = async (request: Request, response: Response) => {
+  const { date, time, doctorName, consultationType, patientId, description } = request.body;
 
-        console.log('Dados recebidos:', request.body);
+  console.log("Dados recebidos:", request.body);
 
-        // Verifica campos obrigatórios
-        const isAnyUndefined = this.citi.areValuesUndefined(
-            date,
-            time,
-            doctorName,
-            consultationType,
-        );
+  // Verifica campos obrigatórios (patientId é opcional)
+  const isAnyUndefined = this.citi.areValuesUndefined(
+    date,
+    time,
+    doctorName,
+    consultationType,
+    description
+  );
 
-        if (isAnyUndefined) {
-            console.error('Campos undefined:', { date, time, doctorName, consultationType });
-            return response.status(400).json({ 
-                message: 'Todos os campos são obrigatórios' 
-            });
-        }
+  if (isAnyUndefined) {
+    console.error("Campos undefined:", { date, time, doctorName, consultationType, description });
+    return response.status(400).json({ 
+      message: "Todos os campos obrigatórios devem ser preenchidos (date, time, doctorName, consultationType, description)" 
+    });
+  }
 
-        try {
-            // Formata os dados para o modelo do Prisma
-            const datetime = new Date(`${date}T${time}:00`);
-            const prismaData = {
-                datetime,
-                type: consultationType,
-                doctorName,
-                description: "Consulta agendada via sistema", // Valor padrão
-            };
+  // Valida o consultationType contra 
+  const validTypes = ["FIRST", "VACINATION", "RETURN", "CHECKUP"];
+  if (!validTypes.includes(consultationType)) {
+    return response.status(400).json({
+      message: "Tipo de consulta inválido. Use: FIRST, VACINATION, RETURN ou CHECKUP",
+    });
+  }
 
-            const { httpStatus, message } = await this.citi.insertIntoDatabase(prismaData);
-            return response.status(httpStatus).json({ message });
-            
-        } catch (error) {
-            console.error('Erro no banco de dados:', error);
-            return response.status(500).json({ 
-                message: 'Erro interno ao processar a consulta',
-                error: error instanceof Error ? error.message : String(error)
-            });
-        }
-    }
+  try {
+    // Formata os dados para o modelo do Prisma
+    const datetime = new Date(`${date}T${time}:00`);
+    const prismaData = {
+      datetime,
+      type: consultationType,
+      doctorName,
+      description,
+      patientId: patientId || null, 
+    };
 
+    const { httpStatus, message } = await this.citi.insertIntoDatabase(prismaData);
+    return response.status(httpStatus).json({ message });
+  } catch (error) {
+    console.error("Erro no banco de dados:", error);
+    return response.status(500).json({ 
+      message: "Erro interno ao processar a consulta",
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+};
     get = async (request: Request, response: Response) => {
         try {
             const { httpStatus, values } = await this.citi.getAll();
