@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { LogoCiti } from "@assets";
+import { LogoCiti, SunFog, CloudSun, MoonStarts } from "@assets";
+import { SwitchDayTime } from "@components";
 
 const App: React.FC = () => (
-  <View className="flex-1 justify-start items-center bg-gray-100 px-4 pt-9">
+  <View className="flex-1 justify-start items-center bg-white px-4 pt-9">
     <LogoCiti className="mt-24" />
 
     <View className="w-full gap-3 mt-10">
@@ -14,6 +15,14 @@ const App: React.FC = () => (
         Veja aqui todos os seus pacientes agendados para hoje.
       </Text>
     </View>
+
+    <View className="mt-8">
+      <SwitchDayTime
+        primeiro_icon={SunFog}
+        segundo_icon={CloudSun}
+        terceiro_icon={MoonStarts}/>
+    </View>
+
   </View>
 );
 
