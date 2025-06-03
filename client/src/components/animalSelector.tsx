@@ -23,7 +23,7 @@ interface AnimalSelectorProps {
 // O componente renderiza uma lista de imagens de animais
 export function AnimalSelector({ selected, onSelect }: AnimalSelectorProps) {
   return (
-    <div className="flex flex-col items-center justify-center sm:items-start sm:justify-start sm:flex-row gap-4 sm:gap-9">
+    <div className="flex flex-col items-center justify-center md:items-start md:justify-start md:flex-row gap-4 md:gap-9">
       {animals.map(({ name, image }) => (
         <div key={name} className={`mt-1 ml-5 p-3 mb-1 rounded-lg cursor-pointer ${selected === name ? "bg-[#D9D9D9]" : ""}`} onClick={() => onSelect(name)}>
           
