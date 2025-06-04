@@ -111,7 +111,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
     // Define as dimensões do formulário e configura a responsividade
     <form
     id="form-cadastro"
-    className="max-w-screen-2xl mx-auto md:-mt-2 -mt-4 space-y-3 p-4 2xl:p-0 2xl:mt-6"
+    className="max-w-screen-xl mx-auto md:-mt-2 -mt-4 space-y-3 p-4 2xl:p-0 2xl:mt-6"
     onSubmit={handleSubmit(onSubmit)}
     >
 
@@ -396,7 +396,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       <div className="flex justify-center sm:justify-end max-w-screen-2xl mx-auto">
         <Button
         type="submit"
-        className="w-auto h-auto font-sf font-bold sm:w-52 sm:h-12 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition mt-4 md:-mt-4 sm:mt-4"
+        className="w-auto h-auto font-sf font-bold md:mb-2 sm:w-52 sm:h-12 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition mt-4 md:-mt-4 sm:mt-4"
         >
           Finalizar Cadastro
         </Button>
