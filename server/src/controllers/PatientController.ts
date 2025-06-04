@@ -22,7 +22,7 @@ class RegisterController implements Crud {
       age,
       species,
       gender,
-      doctorName,
+      doctorName, 
       datetime,
       type,
       description

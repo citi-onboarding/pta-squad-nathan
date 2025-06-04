@@ -20,4 +20,5 @@ routes.post("/consultas", ConsultationController.create);
 routes.get("/consultas", ConsultationController.get);
 routes.delete("/consultas/:id", ConsultationController.delete);
 routes.patch("/consultas/:id", ConsultationController.update);
+
 export default routes;
