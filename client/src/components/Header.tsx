@@ -25,6 +25,7 @@ export default function Header() {
 
         {/* Menu Central - Apenas em telas médias/grandes */}
         <div className="hidden md:flex mt-6 absolute left-1/2 transform -translate-x-1/2 h-11 gap-x-8 lg:gap-x-12">
+          <Link href={"/"}>
           <div
             className="flex flex-col items-center cursor-pointer"
             onClick={() => setActive("atendimento")}
@@ -34,7 +35,9 @@ export default function Header() {
               <div className="w-full h-1 bg-green-500 rounded" />
             )}
           </div>
+          </Link>
 
+          <Link href={"/registro"}>
           <div
             className="flex flex-col mt-0.5 items-center cursor-pointer"
             onClick={() => setActive("cadastro")}
@@ -44,6 +47,7 @@ export default function Header() {
               <div className="w-full h-1 bg-green-500 rounded" />
             )}
           </div>
+          </Link>
         </div>
 
         {/* Botões - Lado Direito */}
