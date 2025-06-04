@@ -22,6 +22,6 @@ routes.get("/consultas", ConsultationController.get);
 routes.delete("/consultas/:id", ConsultationController.delete);
 routes.patch("/consultas/:id", ConsultationController.update);
 
-routes.post("/send-email", sendMail);
+routes.post("/email", sendMail);
 
 export default routes;
