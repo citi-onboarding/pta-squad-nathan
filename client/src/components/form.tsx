@@ -386,7 +386,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
         />
 
         {errors?.descricao && (
-          <p className={errorStyles}>{errors.descricao.message?.toString()}</p>
+          <p className="error-message text-red-500 text-xs -mt-10">{errors.descricao.message?.toString()}</p>
         )}
       </div>
 
