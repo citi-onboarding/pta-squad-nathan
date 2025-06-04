@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { LogoCiti, ByCiti } from "@assets";
+import DoctorsScreen from "./doctor_screen/index"
 
-const App: React.FC = () => {
+// Página simulada: Login
+const LoginScreen = ({ onLogin }: { onLogin: () => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Lógica de Login
-    console.log("Email:", email);
-    console.log("Senha:", password);
-  };
-
   return (
-    <View className="flex-1 justify-start items-center bg-white px-4 pt-9">
+    <View className="w-screen h-screen flex-1 justify-start items-center bg-white px-4 pt-9">
       <View className="mt-40 items-center gap-4">
         <LogoCiti />
         <ByCiti />
@@ -46,12 +42,22 @@ const App: React.FC = () => {
         />
       </View>
 
-      <TouchableOpacity style={button_styles.container} onPress={handleLogin}>
+      <TouchableOpacity style={button_styles.container} onPress={onLogin}>
         <Text style={button_styles.text}>Entrar</Text>
       </TouchableOpacity>
 
-      <View className="bg-[#50E678] rounded-t-3xl w-[108%] h-28 mt-[2%] absolute top-[95%]" />
+      <View className="bg-[#50E678] rounded-t-3xl w-[108%] h-28 mt-[2%] absolute top-[97%]" />
     </View>
+  );
+};
+
+const App: React.FC = () => {
+  const [currentScreen, setCurrentScreen] = useState<"login" | "doctors">("login");
+
+  return currentScreen === "login" ? (
+    <LoginScreen onLogin={() => setCurrentScreen("doctors")} />
+  ) : (
+    <DoctorsScreen />
   );
 };
 

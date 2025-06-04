@@ -53,6 +53,45 @@ const consultas = [
     horario: "19:00",
     categoriaConsulta: "Primeira Consulta",
   },
+  {
+    nomeMedico: "Dr. José Carlos",
+    nomePet: "Luna",
+    nomeDono: "João Alves",
+    data: "18/02",
+    horario: "10:00",
+    categoriaConsulta: "Primeira Consulta",
+  },
+  {
+    nomeMedico: "Dr. José Carlos",
+    nomePet: "Luna",
+    nomeDono: "João Alves",
+    data: "18/02",
+    horario: "10:00",
+    categoriaConsulta: "Primeira Consulta",
+  },
+  {
+    nomeMedico: "Dr. José Carlos",
+    nomePet: "Luna",
+    nomeDono: "João Alves",
+    data: "18/02",
+    horario: "10:00",
+    categoriaConsulta: "Primeira Consulta",
+  },{
+    nomeMedico: "Dr. José Carlos",
+    nomePet: "Luna",
+    nomeDono: "João Alves",
+    data: "18/02",
+    horario: "10:00",
+    categoriaConsulta: "Primeira Consulta",
+  },
+  {
+    nomeMedico: "Dr. José Carlos",
+    nomePet: "Luna",
+    nomeDono: "João Alves",
+    data: "18/02",
+    horario: "10:00",
+    categoriaConsulta: "Primeira Consulta",
+  },
 ];
 
 const App: React.FC = () => {
@@ -68,7 +107,7 @@ const App: React.FC = () => {
   });
 
   return (
-    <View className="flex-1 justify-start items-center bg-white px-4 pt-9">
+    <View className="w-screen h-screen flex-1 justify-start items-center bg-white px-4 pt-9">
       <LogoCiti className="mt-24" />
 
       <View className="w-full gap-3 mt-10">
@@ -104,7 +143,7 @@ const App: React.FC = () => {
         </View>
       </ScrollView>
 
-      <View className="bg-[#50E678] rounded-t-3xl w-[108%] h-28 mt-[2%] absolute top-[95%]" />
+      <View className="bg-[#50E678] rounded-t-3xl w-[108%] h-28 mt-[2%] absolute top-[97%]" />
     </View>
   );
 };
