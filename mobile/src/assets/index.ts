@@ -5,6 +5,7 @@ import CloudSun from "./CloudSun.svg";
 import MoonStarts from "./MoonStars.svg";
 import Cat from "./Cat.svg";
 import Alarm from "./Alarm.svg";
+import ByCiti from "./ByCiti.svg";
 
 export {
   citi,
@@ -14,4 +15,5 @@ export {
   MoonStarts,
   Cat,
   Alarm,
+  ByCiti,
 };
