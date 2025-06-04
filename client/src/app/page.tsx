@@ -7,7 +7,7 @@ import Textblock from "@/components/ui/textBlock";
 
 import { Cross } from "@/assets";
 import Switch from "@/components/SwitchViewMode";
-import Calendar from "@/components/calendarBox_ptbr";
+import Calendar from "@/components/calendarBoxFilter_ptbr";
 
 export default function Home() {
 
@@ -113,10 +113,6 @@ export default function Home() {
         </span>
 
         <div className="flex gap-4 mr-[10%]">
-          <Calendar
-            text="dd/mm/aa"
-            popUpPosition="absolute bottom-[100%] right-[6.25%]"
-          />
           <Calendar
             text="dd/mm/aa"
             popUpPosition="absolute bottom-[100%] right-[5%]"
