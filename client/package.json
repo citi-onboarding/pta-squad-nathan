@@ -30,7 +30,7 @@
     "sharp": "^0.33.2",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "link:@hookform/resolvers/zod"
+    "zod": "^3.25.20"
   },
   "devDependencies": {
     "@types/node": "^20.5.9",
