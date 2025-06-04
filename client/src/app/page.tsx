@@ -8,61 +8,74 @@ import { Cross } from "@/assets";
 import Calendar from "@/components/calendarBox_ptbr";
 import Switch from "@/components/ui/switch";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import api from "@/services/api";
+
+// Interface para tipar os dados da consulta
+interface ConsultaProps {
+  idConsulta: number | null;
+  nomeMedico: string;
+  nomePet: string;
+  nomeDono: string;
+  data: string;
+  horario: string;
+  categoriaConsulta: string;
+}
 
 export default function Home() {
-  const consultas = [
-    {
-      nomeMedico: "Dr. José Carlos",
-      nomePet: "Luna",
-      nomeDono: "João Alves",
-      data: "18/02",
-      horario: "13:00",
-      categoriaConsulta: "Primeira Consulta",
-    },
-    {
-      nomeMedico: "Dr. 2",
-      nomePet: "Luna",
-      nomeDono: "João Alves",
-      data: "18/02",
-      horario: "13:00",
-      categoriaConsulta: "Primeira Consulta",
-    },
-    {
-      nomeMedico: "Dr. 2",
-      nomePet: "Luna",
-      nomeDono: "João Alves",
-      data: "18/02",
-      horario: "13:00",
-      categoriaConsulta: "Primeira Consulta",
-    },
-    {
-      nomeMedico: "Dr. 2",
-      nomePet: "Luna",
-      nomeDono: "João Alves",
-      data: "18/02",
-      horario: "13:00",
-      categoriaConsulta: "Primeira Consulta",
-    },
-    {
-      nomeMedico: "Dr. 4",
-      nomePet: "Luna",
-      nomeDono: "João Alves",
-      data: "18/02",
-      horario: "13:00",
-      categoriaConsulta: "Primeira Consulta",
-    },
-    {
-      nomeMedico: "Dr. 6",
-      nomePet: "Luna",
-      nomeDono: "João Alves",
-      data: "18/02",
-      horario: "13:00",
-      categoriaConsulta: "Primeira Consulta",
-    },
-  ];
 
   const [medico, setMedico] = useState("");
+
+  const [consultas, setConsultas] = useState<ConsultaProps[]>([]);
+
+  useEffect(() => {
+  const fetchConsultas = async () => {
+    try {
+      const response = await api.get("/registro");
+      const data = response.data;
+
+      const transformed = data.map((item: any) => {
+        // Extraindo dados do registro e da consulta associada
+        const doctor = item.consultations?.[0] || {};
+        const nomeMedico = doctor.doctorName || "Médico não informado";
+        const idConsulta = doctor.idConsulta || null;
+        const nomePet = item.name || "Nome não informado";
+        const nomeDono = item.tutorName || "Tutor não informado";
+        let dataFormatada = "";
+        let horarioFormatado = "";
+
+        if (doctor.datetime) {
+          const consultaDate = new Date(doctor.datetime);
+          dataFormatada = consultaDate.toLocaleDateString("pt-BR");
+          horarioFormatado = consultaDate.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+        }
+
+        return {
+          idConsulta,
+          nomeMedico,
+          nomePet,
+          nomeDono,
+          data: dataFormatada,
+          horario: horarioFormatado,
+          categoriaConsulta: doctor.type || "",
+        };
+      });
+
+      setConsultas(transformed);
+    } catch (err: any) {
+      console.log(err.response?.data);
+      console.log(err.response?.status);
+      console.log(err.response?.headers);
+    }
+  };
+
+  fetchConsultas();
+}, []);
+
 
   return (
     <div className="w-full h-screen pb-[4%]">
@@ -112,7 +125,7 @@ export default function Home() {
         </div>
       </div>
 
-      <Link href={"detalhes"}>
+      <Link href={"detalhes"}> {/*/${consulta.idConsulta} para acessar alguma consulta específica*/}
         <div className="flex flex-wrap gap-6 ml-[10%] mt-[2%]">
           {/*Filtra os médicos por nome. Caso nenhum esteja selecionado, todos os cards são mostrados*/}
           {consultas
