@@ -6,7 +6,7 @@ import Header from "@/components/ui/Header";
 import Textblock from "@/components/ui/textBlock";
 
 import { Cross } from "@/assets";
-import Switch from "@/components/ui/switch";
+import Switch from "@/components/SwitchViewMode";
 import Calendar from "@/components/calendarBox_ptbr";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       nomeMedico: "Dr. José Carlos",
       nomePet: "Luna",
       nomeDono: "João Alves",
-      data: "18/02",
+      data: "18/07",
       horario: "13:00",
       categoriaConsulta: "Primeira Consulta",
     },
@@ -24,7 +24,7 @@ export default function Home() {
       nomeMedico: "Dr. 2",
       nomePet: "Luna",
       nomeDono: "João Alves",
-      data: "18/02",
+      data: "18/09",
       horario: "13:00",
       categoriaConsulta: "Primeira Consulta",
     },
@@ -32,7 +32,7 @@ export default function Home() {
       nomeMedico: "Dr. 2",
       nomePet: "Luna",
       nomeDono: "João Alves",
-      data: "18/02",
+      data: "18/12",
       horario: "13:00",
       categoriaConsulta: "Primeira Consulta",
     },
@@ -48,7 +48,7 @@ export default function Home() {
       nomeMedico: "Dr. 4",
       nomePet: "Luna",
       nomeDono: "João Alves",
-      data: "18/02",
+      data: "03/03",
       horario: "13:00",
       categoriaConsulta: "Primeira Consulta",
     },
@@ -56,13 +56,22 @@ export default function Home() {
       nomeMedico: "Dr. 6",
       nomePet: "Luna",
       nomeDono: "João Alves",
-      data: "18/02",
+      data: "18/01",
       horario: "13:00",
       categoriaConsulta: "Primeira Consulta",
     }
   ];
 
   const [medico, setMedico] = useState("")
+  const [viewMode, setViewMode] = useState("historico");
+
+  const parseConsultaDate = (consulta: { data: string; horario: string }) => {
+    const [day, month] = consulta.data.split("/");
+    const currentYear = new Date().getFullYear();
+    // Formata para YYYY-MM-DDTHH:mm:ss
+    const dateString = `${currentYear}-${month}-${day}T${consulta.horario}:00`;
+    return new Date(dateString);
+  };
 
   return (
 
@@ -78,7 +87,7 @@ export default function Home() {
 
         <div className="flex items-center gap-[1%] mt-[2%]">
           
-          {/*Select de médicos por nome. Usa */}
+          {/*Select de médicos por nome. */}
           <select onChange={(event) => setMedico(event.target.value)}
             className="border-black w-[31%] h-12 border rounded-lg placeholder-[#D9D9D9] text-base font-normal leading-[110%] tracking-[0%] pl-4">
             <option value="" disabled selected className="">Selecione um Médico...</option>
@@ -97,7 +106,10 @@ export default function Home() {
       <div className="mt-[2%] flex items-center justify-between">
 
         <span className="ml-[10%] inline-block">
-          <Switch primeiro="Histórico" segundo="Agendamento" />
+          <Switch primeiro="Histórico" 
+                  segundo="Agendamento"
+                  viewMode={(mode) => setViewMode(mode)}
+          />
         </span>
 
         <div className="flex gap-4 mr-[10%]">
@@ -115,10 +127,21 @@ export default function Home() {
 
       <div className="flex flex-wrap gap-6 ml-[10%] mt-[2%]">
         {/*Filtra os médicos por nome. Caso nenhum esteja selecionado, todos os cards são mostrados*/}
-        { consultas
-            .filter(consulta => {if (medico === "") return true;
-                                 return consulta.nomeMedico === medico;
-            })
+        {/*Filtra os cards por tempo. Caso a consulta já tenha acontecido ou não.*/}
+        { consultas.filter((consulta) => {
+
+            if (medico !== "" && consulta.nomeMedico !== medico) return false;
+
+            const consultaDate = parseConsultaDate(consulta);
+            const now = new Date();
+
+            if (viewMode === "historico") {
+            return consultaDate < now;
+            } else if (viewMode === "agendamento") {
+            return consultaDate >= now;
+            }
+            return true; // Retorno padrão
+          })
 
             .map((consulta, index) => (
             <Textblock
