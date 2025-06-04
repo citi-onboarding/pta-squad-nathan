@@ -8,6 +8,8 @@ import { Cross } from "@/assets";
 import Calendar from "@/components/calendarBox_ptbr";
 import Switch from "@/components/ui/switch";
 import Link from "next/link";
+import { useState } from "react";
+
 
 export default function Home() {
   const consultas = [

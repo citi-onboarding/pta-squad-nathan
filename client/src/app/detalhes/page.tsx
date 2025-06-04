@@ -8,12 +8,92 @@ import { cat6 } from "@/assets";
 import { ok } from "@/assets";
 import ConsultCard from "@/components/ConsultCard";
 import ConsultaModal from "@/components/Consultamodal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+
+type ConsultaData = {
+  paciente: {
+    nome: string
+    idade: string
+    dono: string
+  }
+  medico: string
+  descricao: string
+  tipoConsulta: string
+  historico: Array<{
+    data: string
+    hora: string
+    titulo: string
+    medico: string
+  }>
+}
 
 export default function Details() {
   const [openmodal, setOpenModal] = useState(false);
+  const [consulta, setConsulta] = useState<ConsultaData | null>(null)
+  const [loading, setLoading] = useState(true)
   const pacientId = 1;
+   const fetchConsultaData = async () => {
+    try {
+      setLoading(true)
+      // Substitua pela sua chamada real à API
+      const response = await fetch('/api/consulta/123') // ID da consulta
+      
+      if (!response.ok) {
+        throw new Error('Falha ao carregar os dados')
+      }
+      
+      const data = await response.json()
+      setConsulta(data)
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Função para atualizar os dados
+  const updateConsultaData = async (updatedData: Partial<ConsultaData>) => {
+    try {
+      const response = await fetch('/api/consulta/123', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData)
+      })
+      
+      if (!response.ok) {
+        throw new Error('Falha ao atualizar')
+      }
+      
+      // Atualiza o estado local com os novos dados
+      setConsulta(prev => prev ? { ...prev, ...updatedData } : null)
+    } catch (error) {
+      console.error("Erro ao atualizar dados:", error)
+    }
+  }
+
+  // Busca os dados quando o componente monta
+  useEffect(() => {
+  setConsulta({
+    paciente: { nome: "Luna", idade: "5", dono: "Lucas Gomes" },
+    medico: "Dr. José Carlos",
+    descricao: "Problema de pele",
+    tipoConsulta: "Vacinação",
+    historico: [
+      {
+        data: "06-01",
+        hora: "10:00",
+        titulo: "Consulta de rotina",
+        medico: "Dr. José Carlos"
+      }
+    ]
+  });
+  setLoading(false);
+}, []);
+
+  
 
   return (
     <div className="h-max">
@@ -55,13 +135,13 @@ export default function Details() {
 
             <div className="flex flex-col sm:ml-4 mt-4 sm:mt-0">
               <div className="mb-2">
-                <h2 className="font-bold text-lg">Luna</h2>
-                <h2 className="text-base">5 anos</h2>
+                <h2 className="font-bold text-lg">{consulta?.paciente?.nome}</h2>
+                <h2 className="text-base">{consulta?.paciente?.idade}</h2>
               </div>
 
               <div className="mt-36 sm:mt-25">
-                <h2 className="text-base">Lucas Gomes</h2>
-                <h2 className="text-base">Dr. José Carlos</h2>
+                <h2 className="text-base">{consulta?.paciente?.dono}</h2>
+                <h2 className="text-base">{consulta?.medico}</h2>
               </div>
             </div>
           </div>
@@ -70,10 +150,7 @@ export default function Details() {
           <div className="flex mt-6 md:mt-8 flex-col w-full">
             <h2 className="font-bold text-base">Descrição do problema:</h2>
             <p className="mt-1 text-sm">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-              dolore sunt accusamus, similique beatae inventore distinctio fuga
-              ipsum cum eos, laboriosam consequatur recusandae consequuntur
-              obcaecati asperiores illum dicta quibusdam velit!
+              {consulta?.descricao || "Nenhuma descrição fornecida."}
             </p>
           </div>
 
@@ -82,7 +159,7 @@ export default function Details() {
             <h2 className="font-bold text-base">Tipo de consulta:</h2>
 
             <div className="w-[6rem] h-[1.75rem] bg-[#AAE1FF] ml-3 md:ml-4 rounded flex items-center justify-center">
-              <p className="text-sm">Vacinação</p>
+              <p className="text-sm">{consulta?.tipoConsulta}</p>
             </div>
           </div>
 
@@ -114,31 +191,16 @@ export default function Details() {
 
           {/* div de consultas */}
           <div className="w-full border border-[#D9D9D9] rounded-3xl mt-3 md:mt-4 p-3 md:p-4 flex flex-col items-center gap-y-3 mb-6">
-            <ConsultCard
-              date="18/02"
-              time="13:00"
-              title="Primeira consulta"
-              doctor="Dr. José Carlos"
-            />
-            <ConsultCard
-              date="20/03"
-              time="13:00"
-              title="Primeira consulta"
-              doctor="Dr. José Carlos"
-            />
-            <ConsultCard
-              date="15/04"
-              time="14:00"
-              title="Primeira consulta"
-              doctor="Dr. José Carlos"
-            />
-            <ConsultCard
-              date="20/03"
-              time="13:00"
-              title="Primeira consulta"
-              doctor="Dr. José Carlos"
-            />
-          </div>
+  {(consulta?.historico ?? []).map((item, index) => (
+    <ConsultCard
+      key={index}
+      date={item.data}
+      time={item.hora}
+      title={item.titulo}
+      doctor={item.medico}
+    />
+  ))}
+</div>
         </div>
       </div>
     </div>
