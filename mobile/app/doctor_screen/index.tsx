@@ -117,6 +117,7 @@ const App: React.FC = () => {
               data={consulta.data}
               horario={consulta.horario}
               categoriaConsulta={consulta.categoriaConsulta}
+              especieAnimal={consulta.especiePet}
             />
           ))}
         </View>

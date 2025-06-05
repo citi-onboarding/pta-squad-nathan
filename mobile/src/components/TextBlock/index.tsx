@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Cat, Alarm } from "@assets";
+import { Alarm, Cat, Cow, Dog, Horse, Pig, Sheep } from "@assets";
 
 export interface TextBlockProps {
   categoriaConsulta: string;
@@ -9,6 +9,7 @@ export interface TextBlockProps {
   nomeMedico: string;
   data: string;
   horario: string;
+  especieAnimal?: string;
 }
 
 export default function TextBlock({
@@ -18,7 +19,26 @@ export default function TextBlock({
   nomeMedico,
   data,
   horario,
+  especieAnimal,
 }: TextBlockProps) {
+  // Determina o ícone a ser exibido com base na espécie
+  let AnimalIcon;
+  if (especieAnimal === "SHEEP") {
+    AnimalIcon = Sheep;
+  } else if (especieAnimal === "DOG") {
+    AnimalIcon = Dog;
+  } else if (especieAnimal === "CAT") {
+    AnimalIcon = Cat;
+  } else if (especieAnimal === "PIG") {
+    AnimalIcon = Pig;
+  } else if (especieAnimal === "COW") {
+    AnimalIcon = Cow;
+  } else if (especieAnimal === "HORSE") {
+    AnimalIcon = Horse;
+  } else {
+    AnimalIcon = Cat; // valor padrão
+  }
+
   return (
     <View className="w-[90%] h-32 flex-row justify-between items-center rounded-2xl bg-[#BFB5FF] p-4">
       {/* Coluna 1: Informações do alarme */}
@@ -52,7 +72,7 @@ export default function TextBlock({
 
       {/* Coluna 3: Imagem do animal e categoria da consulta */}
       <View className="flex flex-col items-center">
-        <Cat />
+        {AnimalIcon && <AnimalIcon className="w-12 h-12"/>}
         <View className="min-w-28 h-6 flex items-center justify-center gap-2 rounded-md p-1 bg-[#FFFFFF]">
           <Text className="text-xs text-center">{categoriaConsulta}</Text>
         </View>
