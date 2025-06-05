@@ -24,6 +24,11 @@ import setinha from "./setinha_back.png";
 import close from "./close.png";
 import setinhaa from "./setinhaa.png";
 import calendar from "./calendar.png";
+import Cow from "./cow.svg";
+import Dog from "./dog.svg";
+import Horse from "./horse.svg";
+import Pig from "./pig.svg";
+import Sheep from "./sheep.svg";
 
 export {
   LogoCITi,
@@ -52,4 +57,9 @@ export {
   close,
   setinhaa,
   calendar,
+  Cow,
+  Dog,
+  Horse,
+  Pig,
+  Sheep,
 };

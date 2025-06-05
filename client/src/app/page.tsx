@@ -2,7 +2,7 @@
 
 import CustomButton from "@/components/ui/customButton";
 import Header from "@/components/ui/Header";
-import Textblock from "@/components/ui/textBlock";
+import Textblock from "@/components/TextBlockSpecies";
 
 import { Cross } from "@/assets";
 import Calendar from "@/components/calendarBox_ptbr";
@@ -21,6 +21,7 @@ interface ConsultaProps {
   data: string;
   horario: string;
   categoriaConsulta: string;
+  especiePet: string;
 }
 
 export default function Home() {
@@ -42,6 +43,7 @@ export default function Home() {
         const idConsulta = doctor.idConsulta || null;
         const nomePet = item.name || "Nome não informado";
         const nomeDono = item.tutorName || "Tutor não informado";
+        const especiePet = item.species || "Espécie não informada";
         let dataFormatada = "";
         let horarioFormatado = "";
 
@@ -65,6 +67,7 @@ export default function Home() {
           data: dataFormatada,
           horario: horarioFormatado,
           categoriaConsulta: doctor.type || "",
+          especiePet,
         };
       });
 
@@ -146,6 +149,7 @@ export default function Home() {
                 data={consulta.data}
                 horario={consulta.horario}
                 categoriaConsulta={consulta.categoriaConsulta}
+                especieAnimal={consulta.especiePet}
               />
             ))}
         </div>
