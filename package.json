@@ -12,12 +12,14 @@
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
     "@types/express": "^5.0.2",
+    "@types/nodemailer": "^6.4.17",
     "cssnano": "^7.0.7"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
     "axios": "^1.9.0",
     "express": "^5.1.0",
+    "nodemailer": "^7.0.3",
     "react-hook-form": "^7.56.4",
     "zod": "^3.25.42"
   }

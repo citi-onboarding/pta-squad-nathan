@@ -15,17 +15,21 @@ import Link from "next/link"
 // Nossa função principal, que importa os componentes necessários e lida com o estado do modal
 export default function Register() {
   const [modalAberto, setModalAberto] = useState(false);
+  const [dadosFormulario, setDadosFormulario] = useState<any>(null)
 
   return (
   <div>
-    <Form setModalAberto={setModalAberto} />
-    <RegisterModal open={modalAberto} onOpenChange={setModalAberto} />
+    <Form setModalAberto={setModalAberto} setDadosFormulario={setDadosFormulario} />
+    <RegisterModal open={modalAberto} onOpenChange={setModalAberto} dadosFormulario={dadosFormulario} />
   </div>
   );
 }
 
 // Função Form que renderiza o formulário de cadastro
-function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
+function Form({ setModalAberto, setDadosFormulario }: {
+  setModalAberto: (open: boolean) => void;
+  setDadosFormulario: (data: any) => void;
+}) {
 
   // Função para lidar com a seleção da espécie
   // O estado especieSelecionada é usado para armazenar a espécie selecionada
@@ -101,6 +105,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       console.log(".json enviado:", data);
       const response = await api.post("/registro", data);
       console.log("Enviado com sucesso:", response.data);
+      setDadosFormulario(data);
       setModalAberto(true);
       reset();
     } catch (error) {
@@ -112,20 +117,20 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
     // Define as dimensões do formulário e configura a responsividade
     <form
     id="form-cadastro"
-    className="max-w-screen-xl mx-auto md:-mt-2 -mt-4 space-y-3 p-4 2xl:p-0 2xl:mt-6"
+    className="w-[95%] sm:w-[95%] md:w-[95%] lg:w-[90%] xl:w-[90%] 2xl:w-[80%] mx-auto md:-mt-2 -mt-4 space-y-3 p-4 2xl:p-0 2xl:mt-6"
     onSubmit={handleSubmit(onSubmit)}
     >
 
 
 
 
-      {/* Botão de voltar para a página de cadastro*/}
+      {/* Botão de voltar para a página de consultas*/}
       <Link href={"/"}>
         <button>
           <div className="flex items-center mb-4">
-            <Image className="sm:w-4 sm:h-7" src={arrowBack} alt="arrowBack"/>
+            <Image className="mt-4 sm:w-4 sm:h-7" src={arrowBack} alt="arrowBack"/>
             <label
-          className="font-source text-4xl sm:text-5xl font-bold ml-6 cursor-pointer">
+          className="mt-4 font-source text-4xl sm:text-5xl font-bold ml-6 cursor-pointer">
             Cadastro
             </label>
           </div>
@@ -389,7 +394,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
         />
 
         {errors?.descricao && (
-          <p className="error-message text-red-500 text-xs -mt-10">{errors.descricao.message?.toString()}</p>
+          <p className="error-message text-red-500 text-xs -mt-10 ml-0.5">{errors.descricao.message?.toString()}</p>
         )}
       </div>
 
@@ -399,7 +404,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       <div className="flex justify-center sm:justify-end max-w-screen-2xl mx-auto">
         <Button
         type="submit"
-        className="w-auto h-auto font-sf font-bold md:mb-2 sm:w-52 sm:h-12 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition mt-4 md:-mt-4 sm:mt-4"
+        className="w-auto h-auto font-sf font-bold mb-2 sm:w-52 sm:h-12 bg-[#50E678] hover:bg-[#40C768] text-white rounded-full transition mt-0 md:-mt-4 sm:mt-4"
         >
           Finalizar Cadastro
         </Button>

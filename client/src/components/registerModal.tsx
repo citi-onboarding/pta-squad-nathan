@@ -3,16 +3,43 @@ import { Dialog, Content, Close } from "@radix-ui/react-dialog"
 import { Button } from "./ui/button"
 import Image from "next/image"
 import { logoPet, closeButton } from "@/assets"
+import React, { useState } from "react";
 
 // Função RegisterModal que renderiza o modal de cadastro
 export function RegisterModal({
   open,
   onOpenChange,
+  dadosFormulario
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  dadosFormulario: any
 }) {
 
+  const [email, setEmail] = useState("");
+  
+  const handleSendEmail = async () => {
+    try {
+      await fetch("http://localhost:3001/api/e-mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName: dadosFormulario.tutorName,
+          patientName: dadosFormulario.name,
+          userEmail: email,
+          subjectText: "Confirmação de agendamento de consulta veterinária.",
+        }),
+      });
+  
+      // Fecha o modal após envio
+      onOpenChange(false);
+      setEmail("");
+    } catch (error) {
+    }
+  };
+  
   return (
     // O modal é exibido quando o botão é clicado
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -43,11 +70,19 @@ export function RegisterModal({
               <label className="block sm:text-left font-bold mb-1">
                 E-mail
               </label>
-              <input type="email" placeholder="Digite aqui..." className="w-full p-3 border border-black rounded-lg"/>
+              <input
+                type="email"
+                placeholder="Digite aqui..."
+                className="w-full p-3 border border-black rounded-lg"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                />
             </div>
             
             {/* Botão de enviar */}
-            <Button className="w-auto h-auto font-sf sm:w-80 sm:h-11 font-bold bg-[#50E678] hover:bg-[#40C768] text-white rounded-3xl ">
+            <Button
+              onClick={handleSendEmail}
+              className="w-auto h-auto font-sf sm:w-80 sm:h-11 font-bold bg-[#50E678] hover:bg-[#40C768] text-white rounded-3xl ">
               Enviar
             </Button>
           </div>
