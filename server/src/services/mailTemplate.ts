@@ -3,7 +3,7 @@ export function mailTemplate(userName: string, nomePaciente: string) {
     <div style="max-width: 600px; margin: 0 auto; padding: 24px; background-color: #f9fafb; font-family: Arial, sans-serif; color: #333; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); text-align: center;">
       
       <img 
-        src="https://imgur.com/pypINKD" 
+        src="https://i.imgur.com/pypINKD.png" 
         alt="Logo da Clínica" 
         style="width: 120px; margin-bottom: 20px;" 
       />
