@@ -11,7 +11,7 @@ export interface TextBlockProps {
   horario: string;
 }
 
-export default function TextBlock ({
+export default function TextBlock({
   categoriaConsulta,
   nomePet,
   nomeDono,
@@ -30,16 +30,28 @@ export default function TextBlock ({
         </View>
       </View>
 
-      {/* Coluna 2: Informações do pet e dono */}
+      {/* Coluna 2: Informações do pet e tutor */}
       <View className="flex flex-col items-start">
         <Text className="text-sm text-left">
-          <Text className="font-bold">{nomePet}</Text> / {nomeDono}
+          {nomePet.length > 11 ? (
+            <>
+              <Text className="font-bold">{nomePet}</Text>
+              {"\n/ "}
+              {nomeDono}
+            </>
+          ) : (
+            <>
+              <Text className="font-bold">{nomePet}</Text>
+              {" / "}
+              {nomeDono}
+            </>
+          )}
         </Text>
         <Text className="text-sm text-left">{nomeMedico}</Text>
       </View>
 
       {/* Coluna 3: Imagem do animal e categoria da consulta */}
-      <View className="flex flex-col items-center gap-2">
+      <View className="flex flex-col items-center">
         <Cat />
         <View className="min-w-28 h-6 flex items-center justify-center gap-2 rounded-md p-1 bg-[#FFFFFF]">
           <Text className="text-xs text-center">{categoriaConsulta}</Text>
@@ -47,4 +59,4 @@ export default function TextBlock ({
       </View>
     </View>
   );
-};
+}
