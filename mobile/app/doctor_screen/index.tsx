@@ -76,8 +76,15 @@ const App: React.FC = () => {
   fetchConsultas();
 }, []);
 
+  const hoje = new Date().toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+  });
+
+  const consultasHoje = consultas.filter((consulta) => consulta.data === hoje);
+
   // Filtra as consultas com base no período selecionado
-  const consultasFiltradas = consultas.filter((consulta) => {
+  const consultasFiltradas = consultasHoje.filter((consulta) => {
     const hora = parseInt(consulta.horario.split(":")[0], 10);
     if (activePeriod === "primeiro") return hora < 12; // Manhã
     if (activePeriod === "segundo") return hora >= 12 && hora < 18; // Tarde
@@ -108,7 +115,10 @@ const App: React.FC = () => {
       {/* Todo o bloco de consultas é envolvido por um ScrollView */}
       <ScrollView className="flex-1 mt-8" contentContainerStyle={{ alignItems: "center", paddingBottom: 16 }}>
         <View className="flex flex-col items-center gap-4">
-          {consultasFiltradas.map((consulta, index) => (
+          {consultasFiltradas
+          
+          
+          .map((consulta, index) => (
             <TextBlock
               key={index}
               nomeMedico={consulta.nomeMedico}
