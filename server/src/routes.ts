@@ -13,11 +13,13 @@ routes.patch("/user/:id", userController.update);
 
 routes.post("/registro", PatientController.create);
 routes.get("/registro", PatientController.get);
+routes.get("/registro/:idPaciente", PatientController.getById);
 routes.delete("/registro/:idPaciente", PatientController.delete);
 routes.patch("/registro/:idPaciente", PatientController.update);
 
 routes.post("/consultas", ConsultationController.create);
 routes.get("/consultas", ConsultationController.get);
+routes.get("/consultas", ConsultationController.getById);
 routes.delete("/consultas/:id", ConsultationController.delete);
 routes.patch("/consultas/:id", ConsultationController.update);
 export default routes;

@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import { Citi, Crud } from "../global";
+import prisma from "@database";
 
 // Classe RegisterController implementa a interface CRUD para gerenciar animais
 class RegisterController implements Crud {
+  
   constructor(private readonly citi = new Citi("Patient", "idPaciente")) {}
+  
 
   // Função para calcular a idade do animal com base na data de nascimento
   // Recebe uma string no formato 'YYYY-MM-DD' e retorna a idade em anos
@@ -76,7 +79,54 @@ class RegisterController implements Crud {
 
     return response.status(httpStatus).send(values);
   };
+  getById = async (request: Request, response: Response) => {
+    try {
+        const { idPaciente } = request.params;
 
+        if (!idPaciente) {
+            return response.status(400).json({ message: "ID do paciente é obrigatório" });
+        }
+
+        // Busca o paciente E suas consultas (usando Prisma diretamente)
+        const pacienteComConsultas = await prisma.patient.findUnique({
+            where: { idPaciente: Number(idPaciente) },
+            include: {
+                consultations: true // Inclui todas as consultas relacionadas
+            }
+        });
+
+        if (!pacienteComConsultas) {
+            return response.status(404).json({ message: "Paciente não encontrado" });
+        }
+
+        // Formata a resposta para o frontend
+        const respostaFormatada = {
+            paciente: {
+                nome: pacienteComConsultas.name,
+                idade: pacienteComConsultas.age.toString(),
+                dono: pacienteComConsultas.tutorName,
+                especie: pacienteComConsultas.species,
+                genero: pacienteComConsultas.gender
+            },
+            consultas: pacienteComConsultas.consultations.map(consulta => ({
+                data: consulta.datetime.toISOString().split('T')[0],
+                hora: consulta.datetime.toTimeString().split(' ')[0],
+                tipo: consulta.type,
+                medico: consulta.doctorName,
+                descricao: consulta.description
+            }))
+        };
+
+        return response.status(200).json(respostaFormatada);
+
+    } catch (error) {
+        console.error('Erro ao buscar paciente:', error);
+        return response.status(500).json({ 
+            message: 'Erro interno no servidor',
+            error: error instanceof Error ? error.message : String(error)
+        });
+    }
+}
   // Método para deletar um animal do banco de dados
   delete = async (request: Request, response: Response) => {
     const { idPaciente } = request.params;

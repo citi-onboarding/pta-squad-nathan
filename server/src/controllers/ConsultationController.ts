@@ -68,45 +68,46 @@
       };
 
       getById = async (request: Request, response: Response) => {
-      try {
-          const { id } = request.params;
+    try {
+        const { idPaciente } = request.params;
 
-          if (!id) {
-              return response.status(400).json({
-                  message: "ID da consulta é obrigatório"
-              });
-          }
+        if (!idPaciente) {
+            return response.status(400).json({ message: "ID do paciente é obrigatório" });
+        }
 
-          // Corrigido: usando findById ao invés de getOneById
-          const { value: consultation } = await this.citi.findById(id);
+        // Se o ID no banco for numérico, converta (caso contrário, remova esta linha)
+        const id = parseInt(idPaciente);
 
-          if (!consultation) {
-              return response.status(404).json({
-                  message: "Consulta não encontrada"
-              });
-          }
+        // Busca o paciente usando o método findById do Citi
+        const { value: patient } = await this.citi.findById(id);
 
-          // Corrigido: estrutura de retorno alinhada com o frontend
-          return response.status(200).json({
-              paciente: {
-                  nome: consultation?.patient?.name || "Não informado",
-                  idade: consultation.patient?.age?.toString() || "N/A",
-                  dono: consultation.patient?.owner || "Não informado"
-              },
-              medico: consultation.doctorName,
-              descricao: consultation.description,
-              tipoConsulta: consultation.type,
-              historico: consultation.historico || []
-          });
+        if (!patient) {
+            return response.status(404).json({ message: "Paciente não encontrado" });
+        }
 
-      } catch (error) {
-          console.error('Erro ao buscar consulta por ID:', error);
-          return response.status(500).json({ 
-              message: 'Erro ao recuperar consulta',
-              error: error instanceof Error ? error.message : String(error)
-          });
-      }
-  };
+        // Retorna no formato esperado pelo frontend
+        return response.status(200).json({
+            paciente: {
+                nome: patient.doctorName, // Ajuste conforme o campo disponível
+                dono: patient.description, // Ajuste conforme o campo disponível
+                idade: patient.type, // Ajuste conforme o campo disponível
+
+            },
+            medico: patient.doctorName, // Ajuste conforme o campo disponível
+            descricao: patient.description, // Ajuste conforme o campo disponível
+            tipoConsulta: patient.type, // Ajuste conforme o campo disponível
+            historico: [] // Não há campo 'consultations'; retorne array vazio ou implemente busca de histórico se necessário
+            // Adicione outros campos se necessário
+        });
+
+    } catch (error) {
+        console.error("Erro ao buscar paciente:", error);
+        return response.status(500).json({
+            message: "Erro interno no servidor",
+            error: error instanceof Error ? error.message : String(error),
+        });
+    }
+};
 
       delete = async (request: Request, response: Response) => {
           try {

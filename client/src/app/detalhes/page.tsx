@@ -55,7 +55,7 @@ export default function Details() {
   // Função para atualizar os dados
   const updateConsultaData = async (updatedData: Partial<ConsultaData>) => {
     try {
-      const response = await fetch('/api/consulta/123', {
+      const response = await fetch('/api/registro/1', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -76,22 +76,21 @@ export default function Details() {
 
   // Busca os dados quando o componente monta
   useEffect(() => {
-  setConsulta({
-    paciente: { nome: "Luna", idade: "5", dono: "Lucas Gomes" },
-    medico: "Dr. José Carlos",
-    descricao: "Problema de pele",
-    tipoConsulta: "Vacinação",
-    historico: [
-      {
-        data: "06-01",
-        hora: "10:00",
-        titulo: "Consulta de rotina",
-        medico: "Dr. José Carlos"
-      }
-    ]
-  });
-  setLoading(false);
-}, []);
+    const fetchPaciente = async () => {
+        try {
+            const response = await fetch(`/api/registro/${pacientId}`);
+            if (!response.ok) throw new Error("Paciente não encontrado");
+            const data = await response.json();
+            setConsulta(data);
+        } catch (error) {
+            console.error("Erro ao buscar paciente:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchPaciente();
+}, [pacientId]);
 
   
 
