@@ -5,7 +5,7 @@ import Header from "@/components/ui/Header";
 import Textblock from "@/components/TextBlockSpecies";
 import { Cross } from "@/assets";
 import Calendar from "@/components/calendarBoxFilter_ptbr";
-import Switch from "@/components/ui/switch";
+import Switch from "@/components/SwitchViewMode";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import api from "@/services/api";
@@ -16,7 +16,7 @@ interface ConsultaProps {
   nomeMedico: string;
   nomePet: string;
   nomeDono: string;
-  data: string;  // Ex: "07/06"
+  data: string;
   horario: string;
   categoriaConsulta: string;
   especiePet: string;
@@ -24,8 +24,16 @@ interface ConsultaProps {
 
 export default function Home() {
   const [medico, setMedico] = useState("");
+  const [viewMode, setViewMode] = useState("historico");
   const [consultas, setConsultas] = useState<ConsultaProps[]>([]);
   const [dataSelecionada, setDataSelecionada] = useState<Date | null>(null);
+
+  const parseConsultaDate = (consulta: { data: string; horario: string }) => {
+    const [day, month] = consulta.data.split("/");
+    const currentYear = new Date().getFullYear();
+    const dateString = `${currentYear}-${month}-${day}T${consulta.horario}:00`;
+    return new Date(dateString);
+  };
 
   useEffect(() => {
     const fetchConsultas = async () => {
@@ -77,19 +85,30 @@ export default function Home() {
   }, []);
 
   // Filtra as consultas com base na dataSelecionada e no médico
-  const consultasFiltradas = consultas
-    .filter((consulta) => {
-      if (!dataSelecionada) return true;
+  const consultasFiltradas = consultas.filter((consulta) => {
+    // Filtro por médico
+    if (medico !== "" && consulta.nomeMedico !== medico) return false;
+
+    // Filtro por data do calendário: se uma data foi selecionada,
+    // formatamos a data selecionada (apenas dia e mês) e comparamos com a consulta.
+    if (dataSelecionada) {
       const dataSelecionadaFormatada = dataSelecionada.toLocaleDateString("pt-BR", {
         day: "2-digit",
         month: "2-digit",
       });
-      return consulta.data === dataSelecionadaFormatada;
-    })
-    .filter((consulta) => {
-      if (medico === "") return true;
-      return consulta.nomeMedico === medico;
-    });
+      if (consulta.data !== dataSelecionadaFormatada) return false;
+    }
+
+    // Filtro por viewMode
+    const consultaDate = parseConsultaDate(consulta);
+    const now = new Date();
+    if (viewMode === "historico") {
+      return consultaDate < now;
+    } else if (viewMode === "agendamento") {
+      return consultaDate >= now;
+    }
+    return true;
+  });
 
   return (
     <div className="w-full h-screen pb-[4%]">
@@ -123,7 +142,10 @@ export default function Home() {
 
       <div className="mt-[2%] flex items-center justify-between">
         <span className="ml-[10%] inline-block">
-          <Switch primeiro="Histórico" segundo="Agendamento" />
+          <Switch 
+          primeiro="Histórico" 
+          segundo="Agendamento"
+          viewMode={(mode) => setViewMode(mode)} />
         </span>
 
         <div className="flex gap-4 mr-[10%]">
