@@ -15,17 +15,21 @@ import Link from "next/link"
 // Nossa função principal, que importa os componentes necessários e lida com o estado do modal
 export default function Register() {
   const [modalAberto, setModalAberto] = useState(false);
+  const [dadosFormulario, setDadosFormulario] = useState<any>(null)
 
   return (
   <div>
-    <Form setModalAberto={setModalAberto} />
-    <RegisterModal open={modalAberto} onOpenChange={setModalAberto} />
+    <Form setModalAberto={setModalAberto} setDadosFormulario={setDadosFormulario} />
+    <RegisterModal open={modalAberto} onOpenChange={setModalAberto} dadosFormulario={dadosFormulario} />
   </div>
   );
 }
 
 // Função Form que renderiza o formulário de cadastro
-function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
+function Form({ setModalAberto, setDadosFormulario }: {
+  setModalAberto: (open: boolean) => void;
+  setDadosFormulario: (data: any) => void;
+}) {
 
   // Função para lidar com a seleção da espécie
   // O estado especieSelecionada é usado para armazenar a espécie selecionada
@@ -101,6 +105,7 @@ function Form({ setModalAberto }: { setModalAberto: (open: boolean) => void }) {
       console.log(".json enviado:", data);
       const response = await api.post("/registro", data);
       console.log("Enviado com sucesso:", response.data);
+      setDadosFormulario(data);
       setModalAberto(true);
       reset();
     } catch (error) {

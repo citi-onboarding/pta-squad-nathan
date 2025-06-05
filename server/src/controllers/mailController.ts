@@ -1,15 +1,16 @@
 import { MailHandler } from "../services";
 import { Request, Response } from "express";
+import { mailTemplate } from "src/services/mailTemplate";
 
 export async function sendMail(req: Request, res: Response) {
     try{
-        const { userName, userEmail, subjectText } = req.body;
+        const { userName, userEmail, subjectText, patientName } = req.body;
 
         const emailConfig = {
             userName,
             userEmail,
             subjectText,
-            html: `<h1>Olá, ${userName}</h1>`
+            html: mailTemplate(userName, patientName)
         }
 
         const mailResponse = await MailHandler(emailConfig);

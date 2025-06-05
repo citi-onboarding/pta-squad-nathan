@@ -9,9 +9,11 @@ import React, { useState } from "react";
 export function RegisterModal({
   open,
   onOpenChange,
+  dadosFormulario
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  dadosFormulario: any
 }) {
 
   const [email, setEmail] = useState("");
@@ -24,9 +26,10 @@ export function RegisterModal({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userName: "Tutor",
+          userName: dadosFormulario.tutorName,
+          patientName: dadosFormulario.name,
           userEmail: email,
-          subjectText: "Cadastro concluído com sucesso!",
+          subjectText: "Confirmação de agendamento de consulta veterinária.",
         }),
       });
   
