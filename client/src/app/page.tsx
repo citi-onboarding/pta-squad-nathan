@@ -47,7 +47,10 @@ export default function Home() {
 
         if (doctor.datetime) {
           const consultaDate = new Date(doctor.datetime);
-          dataFormatada = consultaDate.toLocaleDateString("pt-BR");
+          dataFormatada = consultaDate.toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+          });
           horarioFormatado = consultaDate.toLocaleTimeString("pt-BR", {
             hour: "2-digit",
             minute: "2-digit",
