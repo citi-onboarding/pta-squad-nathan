@@ -8,12 +8,88 @@ import { cat6 } from "@/assets";
 import { ok } from "@/assets";
 import ConsultCard from "@/components/ConsultCard";
 import ConsultaModal from "@/components/Consultamodal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+
+type ConsultaData = {
+  paciente: {
+    nome: string
+    idade: string
+    dono: string
+  }
+  medico: string
+  descricao: string
+  tipoConsulta: string
+  historico: Array<{
+    data: string
+    hora: string
+    titulo: string
+    medico: string
+  }>
+}
 
 export default function Details() {
+  const params = useParams();
+  const pacientId = params?.id; // ou params.pacientId, depende da sua rota
   const [openmodal, setOpenModal] = useState(false);
-  const pacientId = 1;
+  const [consulta, setConsulta] = useState<ConsultaData | null>(null)
+  const [loading, setLoading] = useState(true)
+  
+   
+
+  // Função para atualizar os dados
+  const updateConsultaData = async (updatedData: Partial<ConsultaData>) => {
+    try {
+      const response = await fetch('/api/registro/${pacienId}', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData)
+      })
+      
+      if (!response.ok) {
+        throw new Error('Falha ao atualizar')
+      }
+      
+      // Atualiza o estado local com os novos dados
+      setConsulta(prev => prev ? { ...prev, ...updatedData } : null)
+    } catch (error) {
+      console.error("Erro ao atualizar dados:", error)
+    }
+  }
+
+  
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      
+      // Busca TUDO (paciente + consultas) em uma única requisição
+      const response = await fetch(`/api/registro/${pacientId}`);
+      if (!response.ok) throw new Error("Paciente não encontrado");
+      
+      const data = await response.json();
+      setConsulta({
+        paciente: data.paciente,
+        medico: data.consultas[0]?.medico || "", // Pega o médico da primeira consulta
+        descricao: data.consultas[0]?.descricao || "",
+        tipoConsulta: data.consultas[0]?.tipo || "",
+        historico: data.consultas // Todas as consultas como histórico
+      });
+      
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, [pacientId]);
+
+  
 
   return (
     <div className="h-max">
@@ -21,6 +97,7 @@ export default function Details() {
       <ConsultaModal
         isOpen={openmodal}
         setModalOpen={() => setOpenModal(!openmodal)}
+        pacientId={Array.isArray(pacientId) ? pacientId[0] : pacientId}
       />
 
       <div className="flex flex-col lg:flex-row h-25 w-full justify-around bg-[#FFFFFF] text-black mt-8 px-4 sm:px-6">
@@ -55,13 +132,13 @@ export default function Details() {
 
             <div className="flex flex-col sm:ml-4 mt-4 sm:mt-0">
               <div className="mb-2">
-                <h2 className="font-bold text-lg">Luna</h2>
-                <h2 className="text-base">5 anos</h2>
+                <h2 className="font-bold text-lg">{consulta?.paciente?.nome}</h2>
+                <h2 className="text-base">{consulta?.paciente?.idade}</h2>
               </div>
 
               <div className="mt-36 sm:mt-25">
-                <h2 className="text-base">Lucas Gomes</h2>
-                <h2 className="text-base">Dr. José Carlos</h2>
+                <h2 className="text-base">{consulta?.paciente?.dono}</h2>
+                <h2 className="text-base">{consulta?.medico}</h2>
               </div>
             </div>
           </div>
@@ -70,10 +147,7 @@ export default function Details() {
           <div className="flex mt-6 md:mt-8 flex-col w-full">
             <h2 className="font-bold text-base">Descrição do problema:</h2>
             <p className="mt-1 text-sm">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-              dolore sunt accusamus, similique beatae inventore distinctio fuga
-              ipsum cum eos, laboriosam consequatur recusandae consequuntur
-              obcaecati asperiores illum dicta quibusdam velit!
+              {consulta?.descricao || "Nenhuma descrição fornecida."}
             </p>
           </div>
 
@@ -82,7 +156,7 @@ export default function Details() {
             <h2 className="font-bold text-base">Tipo de consulta:</h2>
 
             <div className="w-[6rem] h-[1.75rem] bg-[#AAE1FF] ml-3 md:ml-4 rounded flex items-center justify-center">
-              <p className="text-sm">Vacinação</p>
+              <p className="text-sm">{consulta?.tipoConsulta}</p>
             </div>
           </div>
 
@@ -114,31 +188,16 @@ export default function Details() {
 
           {/* div de consultas */}
           <div className="w-full border border-[#D9D9D9] rounded-3xl mt-3 md:mt-4 p-3 md:p-4 flex flex-col items-center gap-y-3 mb-6">
-            <ConsultCard
-              date="18/02"
-              time="13:00"
-              title="Primeira consulta"
-              doctor="Dr. José Carlos"
-            />
-            <ConsultCard
-              date="20/03"
-              time="13:00"
-              title="Primeira consulta"
-              doctor="Dr. José Carlos"
-            />
-            <ConsultCard
-              date="15/04"
-              time="14:00"
-              title="Primeira consulta"
-              doctor="Dr. José Carlos"
-            />
-            <ConsultCard
-              date="20/03"
-              time="13:00"
-              title="Primeira consulta"
-              doctor="Dr. José Carlos"
-            />
-          </div>
+  {(consulta?.historico ?? []).map((item, index) => (
+    <ConsultCard
+      key={index}
+      date={item.data}
+      time={item.hora}
+      title={item.titulo}
+      doctor={item.medico}
+    />
+  ))}
+</div>
         </div>
       </div>
     </div>

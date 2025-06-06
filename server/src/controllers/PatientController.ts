@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import { Citi, Crud } from "../global";
+import prisma from "@database";
 
 // Classe RegisterController implementa a interface CRUD para gerenciar animais
 class RegisterController implements Crud {
+  
   constructor(private readonly citi = new Citi("Patient", "idPaciente")) {}
+  
 
   // Função para calcular a idade do animal com base na data de nascimento
   // Recebe uma string no formato 'YYYY-MM-DD' e retorna a idade em anos
@@ -76,6 +79,54 @@ class RegisterController implements Crud {
 
     return response.status(httpStatus).send(values);
   };
+  getById = async (request: Request, response: Response) => {
+  try {
+    const { id } = request.params; // ID do paciente
+
+    if (!id) {
+      return response.status(400).json({ message: "ID do paciente é obrigatório." });
+    }
+
+    // Busca o paciente específico pelo ID e inclui as consultas relacionadas
+    const paciente = await prisma.patient.findUnique({
+      where: {
+        idPaciente: Number(id), // Busca pelo ID do paciente
+      },
+      include: {
+        consultations: true, // Inclui as consultas relacionadas
+      },
+    });
+
+    if (!paciente) {
+      return response.status(404).json({ message: "Paciente não encontrado." });
+    }
+
+    // Formata a resposta
+    return response.status(200).json({
+      idPaciente: paciente.idPaciente,
+      name: paciente.name,
+      tutorName: paciente.tutorName,
+      age: paciente.age,
+      species: paciente.species,
+      gender: paciente.gender,
+      consultations: paciente.consultations.map((consulta) => ({
+        idConsulta: consulta.idConsulta,
+        doctorName: consulta.doctorName,
+        datetime: consulta.datetime.toISOString(),
+        type: consulta.type,
+        description: consulta.description,
+        patientId: consulta.patientId,
+      })),
+    });
+  } catch (error) {
+    console.error("Erro ao buscar paciente:", error);
+    return response.status(500).json({
+      message: "Erro interno no servidor.",
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+};
+// Adicione no ConsultationController
 
   // Método para deletar um animal do banco de dados
   delete = async (request: Request, response: Response) => {
