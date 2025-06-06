@@ -4,9 +4,11 @@ import { useState } from "react";
 import { LeftContent } from "@/assets";
 import { Buttongroups } from "@/assets";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [active, setActive] = useState("atendimento");
+  const pathname = usePathname();
 
   return (
     <>
@@ -26,27 +28,20 @@ export default function Header() {
         {/* Menu Central - Apenas em telas médias/grandes */}
         <div className="hidden md:flex mt-6 absolute left-1/2 transform -translate-x-1/2 h-11 gap-x-8 lg:gap-x-12">
           <Link href={"/"}>
-          <div
-            className="flex flex-col items-center cursor-pointer"
-            onClick={() => setActive("atendimento")}
-          >
-            <h2 className="text-sm mt-0.5 md:text-base">Atendimento</h2>
-            {active === "atendimento" && (
-              <div className="w-full h-1 bg-green-500 rounded" />
-            )}
-          </div>
+            <div className="flex flex-col items-center cursor-pointer">
+              <h2 className="text-sm mt-0.5 md:text-base">Atendimento</h2>
+              {pathname === "/" && (
+                <div className="w-full h-1 bg-green-500 rounded" />
+              )}
+            </div>
           </Link>
-
           <Link href={"/registro"}>
-          <div
-            className="flex flex-col mt-0.5 items-center cursor-pointer"
-            onClick={() => setActive("cadastro")}
-          >
-            <h2 className="text-sm md:text-base">Cadastro</h2>
-            {active === "cadastro" && (
-              <div className="w-full h-1 bg-green-500 rounded" />
-            )}
-          </div>
+            <div className="flex flex-col mt-0.5 items-center cursor-pointer">
+              <h2 className="text-sm md:text-base">Cadastro</h2>
+              {pathname === "/registro" && (
+                <div className="w-full h-1 bg-green-500 rounded" />
+              )}
+            </div>
           </Link>
         </div>
 
