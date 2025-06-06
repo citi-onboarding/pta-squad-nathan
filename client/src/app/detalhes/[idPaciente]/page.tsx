@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Image from "next/image";
-import { arrow } from "@/assets";
+import { arrow, Cat, Cow, Dog, Horse, Pig, Sheep } from "@/assets";
 import { cat6 } from "@/assets";
 import { ok } from "@/assets";
 import ConsultCard from "@/components/ConsultCard";
@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import api from "@/services/api";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 type ConsultaData = {
   nome: string;
@@ -20,6 +21,7 @@ type ConsultaData = {
   medico: string;
   descricao: string;
   tipoConsulta?: string;
+  especie: string;
   historico?: Array<{
     data: string;
     hora: string;
@@ -62,7 +64,8 @@ export default function Details() {
           dono: data.tutorName,
           medico: data.consultations[0].doctorName,
           descricao: data.consultations[0].description,
-          tipoConsulta: data.consultations[0].type
+          tipoConsulta: data.consultations[0].type,
+          especie: data.species
         });
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
@@ -72,6 +75,22 @@ export default function Details() {
     fetchData();
   }, [idPaciente]);
 
+    // Determina a imagem a ser exibida com base na espécie
+  // Use a default image (e.g., Cat) if especie is not recognized
+  let fotoAnimal: string | StaticImport = Cat;
+  if (consulta?.especie === "SHEEP") {
+    fotoAnimal = Sheep;
+  } else if (consulta?.especie === "DOG") {
+    fotoAnimal = Dog;
+  } else if (consulta?.especie === "CAT") {
+    fotoAnimal = Cat;
+  } else if (consulta?.especie === "PIG") {
+    fotoAnimal = Pig;
+  } else if (consulta?.especie === "COW") {
+    fotoAnimal = Cow;
+  } else if (consulta?.especie === "HORSE") {
+    fotoAnimal = Horse;
+  }
   return (
     <div className="h-max">
       <Header />
@@ -107,8 +126,8 @@ export default function Details() {
           <div className="flex flex-col sm:flex-row mt-4 md:mt-6">
             <Image
               className="w-full max-w-xs h-auto sm:w-[16rem] sm:h-[16rem]"
-              src={cat6}
-              alt="gato"
+              src={fotoAnimal}
+              alt="animal"
             />
 
             <div className="flex flex-col sm:ml-4 mt-4 sm:mt-0">
