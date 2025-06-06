@@ -10,6 +10,7 @@ import ConsultCard from "@/components/ConsultCard";
 import ConsultaModal from "@/components/Consultamodal";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 type ConsultaData = {
   paciente: {
@@ -29,33 +30,18 @@ type ConsultaData = {
 }
 
 export default function Details() {
+  const params = useParams();
+  const pacientId = params?.id; // ou params.pacientId, depende da sua rota
   const [openmodal, setOpenModal] = useState(false);
   const [consulta, setConsulta] = useState<ConsultaData | null>(null)
   const [loading, setLoading] = useState(true)
-  const pacientId = 1;
-   const fetchConsultaData = async () => {
-    try {
-      setLoading(true)
-      // Substitua pela sua chamada real à API
-      const response = await fetch('/api/consulta/123') // ID da consulta
-      
-      if (!response.ok) {
-        throw new Error('Falha ao carregar os dados')
-      }
-      
-      const data = await response.json()
-      setConsulta(data)
-    } catch (error) {
-      console.error("Erro ao buscar dados:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  
+   
 
   // Função para atualizar os dados
   const updateConsultaData = async (updatedData: Partial<ConsultaData>) => {
     try {
-      const response = await fetch('/api/registro/1', {
+      const response = await fetch('/api/registro/${pacienId}', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -74,22 +60,33 @@ export default function Details() {
     }
   }
 
-  // Busca os dados quando o componente monta
-  useEffect(() => {
-    const fetchPaciente = async () => {
-        try {
-            const response = await fetch(`/api/registro/${pacientId}`);
-            if (!response.ok) throw new Error("Paciente não encontrado");
-            const data = await response.json();
-            setConsulta(data);
-        } catch (error) {
-            console.error("Erro ao buscar paciente:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+  
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      
+      // Busca TUDO (paciente + consultas) em uma única requisição
+      const response = await fetch(`/api/registro/${pacientId}`);
+      if (!response.ok) throw new Error("Paciente não encontrado");
+      
+      const data = await response.json();
+      setConsulta({
+        paciente: data.paciente,
+        medico: data.consultas[0]?.medico || "", // Pega o médico da primeira consulta
+        descricao: data.consultas[0]?.descricao || "",
+        tipoConsulta: data.consultas[0]?.tipo || "",
+        historico: data.consultas // Todas as consultas como histórico
+      });
+      
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchPaciente();
+  fetchData();
 }, [pacientId]);
 
   

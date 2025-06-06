@@ -80,53 +80,54 @@ class RegisterController implements Crud {
     return response.status(httpStatus).send(values);
   };
   getById = async (request: Request, response: Response) => {
-    try {
-        const { idPaciente } = request.params;
+  try {
+    const { id } = request.params; // ID do paciente
 
-        if (!idPaciente) {
-            return response.status(400).json({ message: "ID do paciente é obrigatório" });
-        }
-
-        // Busca o paciente E suas consultas (usando Prisma diretamente)
-        const pacienteComConsultas = await prisma.patient.findUnique({
-            where: { idPaciente: Number(idPaciente) },
-            include: {
-                consultations: true // Inclui todas as consultas relacionadas
-            }
-        });
-
-        if (!pacienteComConsultas) {
-            return response.status(404).json({ message: "Paciente não encontrado" });
-        }
-
-        // Formata a resposta para o frontend
-        const respostaFormatada = {
-            paciente: {
-                nome: pacienteComConsultas.name,
-                idade: pacienteComConsultas.age.toString(),
-                dono: pacienteComConsultas.tutorName,
-                especie: pacienteComConsultas.species,
-                genero: pacienteComConsultas.gender
-            },
-            consultas: pacienteComConsultas.consultations.map(consulta => ({
-                data: consulta.datetime.toISOString().split('T')[0],
-                hora: consulta.datetime.toTimeString().split(' ')[0],
-                tipo: consulta.type,
-                medico: consulta.doctorName,
-                descricao: consulta.description
-            }))
-        };
-
-        return response.status(200).json(respostaFormatada);
-
-    } catch (error) {
-        console.error('Erro ao buscar paciente:', error);
-        return response.status(500).json({ 
-            message: 'Erro interno no servidor',
-            error: error instanceof Error ? error.message : String(error)
-        });
+    if (!id) {
+      return response.status(400).json({ message: "ID do paciente é obrigatório." });
     }
-}
+
+    // Busca o paciente específico pelo ID e inclui as consultas relacionadas
+    const paciente = await prisma.patient.findUnique({
+      where: {
+        idPaciente: Number(id), // Busca pelo ID do paciente
+      },
+      include: {
+        consultations: true, // Inclui as consultas relacionadas
+      },
+    });
+
+    if (!paciente) {
+      return response.status(404).json({ message: "Paciente não encontrado." });
+    }
+
+    // Formata a resposta
+    return response.status(200).json({
+      idPaciente: paciente.idPaciente,
+      name: paciente.name,
+      tutorName: paciente.tutorName,
+      age: paciente.age,
+      species: paciente.species,
+      gender: paciente.gender,
+      consultations: paciente.consultations.map((consulta) => ({
+        idConsulta: consulta.idConsulta,
+        doctorName: consulta.doctorName,
+        datetime: consulta.datetime.toISOString(),
+        type: consulta.type,
+        description: consulta.description,
+        patientId: consulta.patientId,
+      })),
+    });
+  } catch (error) {
+    console.error("Erro ao buscar paciente:", error);
+    return response.status(500).json({
+      message: "Erro interno no servidor.",
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+};
+// Adicione no ConsultationController
+
   // Método para deletar um animal do banco de dados
   delete = async (request: Request, response: Response) => {
     const { idPaciente } = request.params;

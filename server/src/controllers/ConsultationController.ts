@@ -1,6 +1,6 @@
   import { Request, Response } from 'express';
   import { Citi, Crud } from '../global';
-  import prima from "@database"
+  import prisma from '@database';
 
   class ConsultationController implements Crud {
       constructor(private readonly citi = new Citi('Consultation', 'id')) {}
@@ -42,7 +42,7 @@
         type: consultationType,
         doctorName,
         description,
-        patientId: patientId || null, 
+        patientId: patientId ? Number(patientId) : null,
       };
 
       const { httpStatus, message } = await this.citi.insertIntoDatabase(prismaData);
@@ -67,48 +67,82 @@
           }
       };
 
-      getById = async (request: Request, response: Response) => {
-    try {
-        const { idPaciente } = request.params;
+//       getById = async (request: Request, response: Response) => {
+//   try {
+//     const { id } = request.params; // ID da CONSULTA (não do paciente)
 
-        if (!idPaciente) {
-            return response.status(400).json({ message: "ID do paciente é obrigatório" });
-        }
+//     if (!id) {
+//       return response.status(400).json({ message: "ID da consulta é obrigatório." });
+//     }
 
-        // Se o ID no banco for numérico, converta (caso contrário, remova esta linha)
-        const id = parseInt(idPaciente);
+//     // Busca a consulta específica pelo ID
+//     const consulta = await prisma.consultation.findUnique({
+//       where: {
+//         idConsulta: Number(id), // Busca pelo ID da consulta
+//       },
+//       include: {
+//         patient: true, // Inclui dados do paciente se necessário
+//       },
+//     });
 
-        // Busca o paciente usando o método findById do Citi
-        const { value: patient } = await this.citi.findById(id);
+//     if (!consulta) {
+//       return response.status(404).json({ message: "Consulta não encontrada." });
+//     }
 
-        if (!patient) {
-            return response.status(404).json({ message: "Paciente não encontrado" });
-        }
+//     // Formata a resposta
+//     return response.status(200).json({
+//       consulta: {
+//         id: consulta.idConsulta,
+//         data: consulta.datetime.toISOString().split('T')[0],
+//         hora: consulta.datetime.toTimeString().split(' ')[0],
+//         tipo: consulta.type,
+//         medico: consulta.doctorName,
+//         descricao: consulta.description,
+//         paciente: consulta.patient ? {
+//           nome: consulta.patient.name,
+//           id: consulta.patient.idPaciente
+//         } : null
+//       }
+//     });
+//   } catch (error) {
+//     console.error("Erro ao buscar consulta:", error);
+//     return response.status(500).json({
+//       message: "Erro interno no servidor.",
+//       error: error instanceof Error ? error.message : String(error),
+//     });
+//   }
+// };
+// // Adicione no ConsultationController
+// getByPatientId = async (request: Request, response: Response) => {
+//   try {
+//     const { patientId } = request.params;
 
-        // Retorna no formato esperado pelo frontend
-        return response.status(200).json({
-            paciente: {
-                nome: patient.doctorName, // Ajuste conforme o campo disponível
-                dono: patient.description, // Ajuste conforme o campo disponível
-                idade: patient.type, // Ajuste conforme o campo disponível
+//     const consultas = await prisma.consultation.findMany({
+//       where: { 
+//         patientId: Number(patientId) 
+//       },
+//       orderBy: {
+//         datetime: 'desc' // Ordena por data mais recente
+//       }
+//     });
 
-            },
-            medico: patient.doctorName, // Ajuste conforme o campo disponível
-            descricao: patient.description, // Ajuste conforme o campo disponível
-            tipoConsulta: patient.type, // Ajuste conforme o campo disponível
-            historico: [] // Não há campo 'consultations'; retorne array vazio ou implemente busca de histórico se necessário
-            // Adicione outros campos se necessário
-        });
-
-    } catch (error) {
-        console.error("Erro ao buscar paciente:", error);
-        return response.status(500).json({
-            message: "Erro interno no servidor",
-            error: error instanceof Error ? error.message : String(error),
-        });
-    }
-};
-
+//     return response.status(200).json({
+//       consultas: consultas.map(c => ({
+//         id: c.idConsulta,
+//         data: c.datetime.toISOString().split('T')[0],
+//         hora: c.datetime.toTimeString().split(' ')[0],
+//         tipo: c.type,
+//         medico: c.doctorName
+//       }))
+//     });
+//   } catch (error) {
+//     console.error("Erro ao buscar consultas:", error);
+//     return response.status(500).json({
+//       message: "Erro interno no servidor.",
+//       error: error instanceof Error ? error.message : String(error),
+//     });
+//   }
+// };
       delete = async (request: Request, response: Response) => {
           try {
               const { id } = request.params;
