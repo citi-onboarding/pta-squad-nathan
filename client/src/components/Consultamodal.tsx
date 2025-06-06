@@ -8,7 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { consultaFormSchema, ConsultaFormData } from "@/schemas/consultaSchama"
 import api from "@/services/api"
 
-export default function ConsultaModal({ isOpen, setModalOpen }: { isOpen: boolean; setModalOpen: (value: boolean) => void }) {
+export default function ConsultaModal({ isOpen, setModalOpen, pacientId }: { isOpen: boolean; setModalOpen: (value: boolean) => void; pacientId: string | undefined; }) {
+  // Assuming pacientId is available or needs to be passed as a prop or retrieved from somewhere
+ 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { register, handleSubmit, formState: { errors } } = useForm<ConsultaFormData>({
@@ -32,7 +34,7 @@ export default function ConsultaModal({ isOpen, setModalOpen }: { isOpen: boolea
         consultationType: data.consultationType,
         doctorName: data.doctorName,
         description: "Consulta agendada via sistema",
-        // 
+        patientId: pacientId
       };
 
       console.log('Dados enviados ao backend:', payload);
@@ -53,6 +55,7 @@ export default function ConsultaModal({ isOpen, setModalOpen }: { isOpen: boolea
   };
 
   if (!isOpen) return null;
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm p-4">

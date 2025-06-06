@@ -42,7 +42,7 @@
         type: consultationType,
         doctorName,
         description,
-        patientId: patientId ? Number(patientId) : null,
+        patientId: patientId || null, 
       };
 
       const { httpStatus, message } = await this.citi.insertIntoDatabase(prismaData);
@@ -67,82 +67,54 @@
           }
       };
 
-//       getById = async (request: Request, response: Response) => {
-//   try {
-//     const { id } = request.params; // ID da CONSULTA (não do paciente)
+      getById = async (request: Request, response: Response) => {
+  try {
+    const { idPaciente } = request.params;
 
-//     if (!id) {
-//       return response.status(400).json({ message: "ID da consulta é obrigatório." });
-//     }
+    if (!idPaciente) {
+      return response.status(400).json({ message: "ID do paciente é obrigatório." });
+    }
 
-//     // Busca a consulta específica pelo ID
-//     const consulta = await prisma.consultation.findUnique({
-//       where: {
-//         idConsulta: Number(id), // Busca pelo ID da consulta
-//       },
-//       include: {
-//         patient: true, // Inclui dados do paciente se necessário
-//       },
-//     });
+    const pacienteComConsultas = await prisma.patient.findUnique({
+      where: {
+        idPaciente: Number(idPaciente),
+      },
+      include: {
+        consultations: true, // pega todas as consultas do paciente
+      },
+    });
 
-//     if (!consulta) {
-//       return response.status(404).json({ message: "Consulta não encontrada." });
-//     }
+    if (!pacienteComConsultas) {
+      return response.status(404).json({ message: "Paciente não encontrado." });
+    }
 
-//     // Formata a resposta
-//     return response.status(200).json({
-//       consulta: {
-//         id: consulta.idConsulta,
-//         data: consulta.datetime.toISOString().split('T')[0],
-//         hora: consulta.datetime.toTimeString().split(' ')[0],
-//         tipo: consulta.type,
-//         medico: consulta.doctorName,
-//         descricao: consulta.description,
-//         paciente: consulta.patient ? {
-//           nome: consulta.patient.name,
-//           id: consulta.patient.idPaciente
-//         } : null
-//       }
-//     });
-//   } catch (error) {
-//     console.error("Erro ao buscar consulta:", error);
-//     return response.status(500).json({
-//       message: "Erro interno no servidor.",
-//       error: error instanceof Error ? error.message : String(error),
-//     });
-//   }
-// };
-// // Adicione no ConsultationController
-// getByPatientId = async (request: Request, response: Response) => {
-//   try {
-//     const { patientId } = request.params;
+    const respostaFormatada = {
+      paciente: {
+        nome: pacienteComConsultas.name,
+        idade: pacienteComConsultas.age.toString(),
+        dono: pacienteComConsultas.tutorName,
+        especie: pacienteComConsultas.species,
+        genero: pacienteComConsultas.gender,
+      },
+      consultas: pacienteComConsultas.consultations.map(consulta => ({
+        data: consulta.datetime.toISOString().split('T')[0],
+        hora: consulta.datetime.toTimeString().split(' ')[0],
+        tipo: consulta.type,
+        medico: consulta.doctorName,
+        descricao: consulta.description,
+      })),
+    };
 
-//     const consultas = await prisma.consultation.findMany({
-//       where: { 
-//         patientId: Number(patientId) 
-//       },
-//       orderBy: {
-//         datetime: 'desc' // Ordena por data mais recente
-//       }
-//     });
+    return response.status(200).json(respostaFormatada);
+  } catch (error) {
+    console.error("Erro ao buscar paciente:", error);
+    return response.status(500).json({
+      message: "Erro interno no servidor.",
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+};
 
-//     return response.status(200).json({
-//       consultas: consultas.map(c => ({
-//         id: c.idConsulta,
-//         data: c.datetime.toISOString().split('T')[0],
-//         hora: c.datetime.toTimeString().split(' ')[0],
-//         tipo: c.type,
-//         medico: c.doctorName
-//       }))
-//     });
-//   } catch (error) {
-//     console.error("Erro ao buscar consultas:", error);
-//     return response.status(500).json({
-//       message: "Erro interno no servidor.",
-//       error: error instanceof Error ? error.message : String(error),
-//     });
-//   }
-// };
       delete = async (request: Request, response: Response) => {
           try {
               const { id } = request.params;

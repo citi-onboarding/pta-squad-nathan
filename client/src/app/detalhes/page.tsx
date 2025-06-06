@@ -97,6 +97,7 @@ useEffect(() => {
       <ConsultaModal
         isOpen={openmodal}
         setModalOpen={() => setOpenModal(!openmodal)}
+        pacientId={Array.isArray(pacientId) ? pacientId[0] : pacientId}
       />
 
       <div className="flex flex-col lg:flex-row h-25 w-full justify-around bg-[#FFFFFF] text-black mt-8 px-4 sm:px-6">
