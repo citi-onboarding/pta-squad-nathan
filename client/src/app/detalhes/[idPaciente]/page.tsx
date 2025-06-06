@@ -11,85 +11,66 @@ import ConsultaModal from "@/components/Consultamodal";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import api from "@/services/api";
 
 type ConsultaData = {
-  paciente: {
-    nome: string
-    idade: string
-    dono: string
-  }
-  medico: string
-  descricao: string
-  tipoConsulta: string
-  historico: Array<{
-    data: string
-    hora: string
-    titulo: string
-    medico: string
-  }>
-}
+  nome: string;
+  idade: string;
+  dono: string;
+  medico: string;
+  descricao: string;
+  tipoConsulta?: string;
+  historico?: Array<{
+    data: string;
+    hora: string;
+    titulo: string;
+    medico: string;
+  }>;
+};
 
 export default function Details() {
   const params = useParams();
-  const pacientId = params?.id; // ou params.pacientId, depende da sua rota
+  const idPaciente = params.idPaciente; // ou params.pacientId, depende da sua rota
   const [openmodal, setOpenModal] = useState(false);
-  const [consulta, setConsulta] = useState<ConsultaData | null>(null)
-  const [loading, setLoading] = useState(true)
-  
-   
+  const [consulta, setConsulta] = useState<ConsultaData>();
+  // const [loading, setLoading] = useState(true);
+  const [consultationType, setConsultationType] = useState<
+    "Primeira Consulta" | "Vacinação" | "Retorno de consulta" | "Check-up geral"
+  >();
 
-  // Função para atualizar os dados
-  const updateConsultaData = async (updatedData: Partial<ConsultaData>) => {
-    try {
-      const response = await fetch('/api/registro/${pacienId}', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedData)
-      })
-      
-      if (!response.ok) {
-        throw new Error('Falha ao atualizar')
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // setLoading(true);
+
+        // Busca TUDO (paciente + consultas) em uma única requisição
+        // const response = await fetch(`/api/registro/${idPaciente}`);
+        const response = await api(`/registro/${Number(idPaciente)}`);
+
+        if (!response) {
+          console.error("Erro ao buscar do banco de dados");
+        }
+
+        // if (!response.ok) throw new Error("Paciente não encontrado");
+        // const data = await response.json();
+
+        const data = response.data;
+
+        setConsulta({
+          nome: data.name,
+          idade: data.age,
+          dono: data.tutorName,
+          medico: data.consultations[0].doctorName,
+          descricao: data.consultations[0].description,
+          tipoConsulta: data.consultations[0].type
+        });
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
       }
-      
-      // Atualiza o estado local com os novos dados
-      setConsulta(prev => prev ? { ...prev, ...updatedData } : null)
-    } catch (error) {
-      console.error("Erro ao atualizar dados:", error)
-    }
-  }
+    };
 
-  
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      
-      // Busca TUDO (paciente + consultas) em uma única requisição
-      const response = await fetch(`/api/registro/${pacientId}`);
-      if (!response.ok) throw new Error("Paciente não encontrado");
-      
-      const data = await response.json();
-      setConsulta({
-        paciente: data.paciente,
-        medico: data.consultas[0]?.medico || "", // Pega o médico da primeira consulta
-        descricao: data.consultas[0]?.descricao || "",
-        tipoConsulta: data.consultas[0]?.tipo || "",
-        historico: data.consultas // Todas as consultas como histórico
-      });
-      
-    } catch (error) {
-      console.error("Erro ao buscar dados:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchData();
-}, [pacientId]);
-
-  
+    fetchData();
+  }, [idPaciente]);
 
   return (
     <div className="h-max">
@@ -97,7 +78,7 @@ useEffect(() => {
       <ConsultaModal
         isOpen={openmodal}
         setModalOpen={() => setOpenModal(!openmodal)}
-        pacientId={Array.isArray(pacientId) ? pacientId[0] : pacientId}
+        pacientId={Array.isArray(idPaciente) ? idPaciente[0] : idPaciente}
       />
 
       <div className="flex flex-col lg:flex-row h-25 w-full justify-around bg-[#FFFFFF] text-black mt-8 px-4 sm:px-6">
@@ -132,12 +113,14 @@ useEffect(() => {
 
             <div className="flex flex-col sm:ml-4 mt-4 sm:mt-0">
               <div className="mb-2">
-                <h2 className="font-bold text-lg">{consulta?.paciente?.nome}</h2>
-                <h2 className="text-base">{consulta?.paciente?.idade}</h2>
+                <h2 className="font-bold text-lg">
+                  {consulta?.nome}
+                </h2>
+                <h2 className="text-base">{consulta?.idade} Anos</h2>
               </div>
 
               <div className="mt-36 sm:mt-25">
-                <h2 className="text-base">{consulta?.paciente?.dono}</h2>
+                <h2 className="text-base">{consulta?.dono}</h2>
                 <h2 className="text-base">{consulta?.medico}</h2>
               </div>
             </div>
@@ -188,16 +171,16 @@ useEffect(() => {
 
           {/* div de consultas */}
           <div className="w-full border border-[#D9D9D9] rounded-3xl mt-3 md:mt-4 p-3 md:p-4 flex flex-col items-center gap-y-3 mb-6">
-  {(consulta?.historico ?? []).map((item, index) => (
-    <ConsultCard
-      key={index}
-      date={item.data}
-      time={item.hora}
-      title={item.titulo}
-      doctor={item.medico}
-    />
-  ))}
-</div>
+            {(consulta?.historico ?? []).map((item, index) => (
+              <ConsultCard
+                key={index}
+                date={item.data}
+                time={item.hora}
+                title={item.titulo}
+                doctor={item.medico}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

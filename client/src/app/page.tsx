@@ -12,6 +12,7 @@ import api from "@/services/api";
 
 // Interface para tipar os dados da consulta
 interface ConsultaProps {
+  idPaciente: number;
   idConsulta: number | null;
   nomeMedico: string;
   nomePet: string;
@@ -42,6 +43,7 @@ export default function Home() {
         const data = response.data;
 
         const transformed = data.map((item: any) => {
+          const idPaciente = item.idPaciente;
           const doctor = item.consultations?.[0] || {};
           const nomeMedico = doctor.doctorName || "Médico não informado";
           const idConsulta = doctor.idConsulta || null;
@@ -64,6 +66,7 @@ export default function Home() {
           }
 
           return {
+            idPaciente,
             idConsulta,
             nomeMedico,
             nomePet,
@@ -74,7 +77,6 @@ export default function Home() {
             especiePet,
           };
         });
-
         setConsultas(transformed);
       } catch (err: any) {
         console.log(err.response?.data);
@@ -92,10 +94,13 @@ export default function Home() {
     // Filtro por data do calendário: se uma data foi selecionada,
     // formatamos a data selecionada (apenas dia e mês) e comparamos com a consulta.
     if (dataSelecionada) {
-      const dataSelecionadaFormatada = dataSelecionada.toLocaleDateString("pt-BR", {
-        day: "2-digit",
-        month: "2-digit",
-      });
+      const dataSelecionadaFormatada = dataSelecionada.toLocaleDateString(
+        "pt-BR",
+        {
+          day: "2-digit",
+          month: "2-digit",
+        }
+      );
       if (consulta.data !== dataSelecionadaFormatada) return false;
     }
 
@@ -142,10 +147,11 @@ export default function Home() {
 
       <div className="mt-[2%] flex items-center justify-between">
         <span className="ml-[10%] inline-block">
-          <Switch 
-          primeiro="Histórico" 
-          segundo="Agendamento"
-          viewMode={(mode) => setViewMode(mode)} />
+          <Switch
+            primeiro="Histórico"
+            segundo="Agendamento"
+            viewMode={(mode) => setViewMode(mode)}
+          />
         </span>
 
         <div className="flex gap-4 mr-[10%]">
@@ -157,11 +163,11 @@ export default function Home() {
         </div>
       </div>
 
-      <Link href={"detalhes"}>
-        <div className="flex flex-wrap gap-6 ml-[10%] mt-[2%]">
-          {consultasFiltradas.map((consulta, index) => (
+      <div className="flex flex-wrap gap-6 ml-[10%] mt-[2%]">
+        {consultasFiltradas.map((consulta, index) => (
+          <Link href={`/detalhes/${consulta.idPaciente}`} key={consulta.idPaciente}>
             <Textblock
-              key={consulta.idConsulta || index}
+              key={consulta.idPaciente}
               nomeMedico={consulta.nomeMedico}
               nomePet={consulta.nomePet}
               nomeDono={consulta.nomeDono}
@@ -170,9 +176,9 @@ export default function Home() {
               categoriaConsulta={consulta.categoriaConsulta}
               especieAnimal={consulta.especiePet}
             />
-          ))}
-        </div>
-      </Link>
+          </Link>
+        ))}
+      </div>
 
       <Link href={"/registro"}>
         <CustomButton
